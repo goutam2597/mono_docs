@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mono Vendor app documentation: architecture, 27 public screens, API configuration, Android push, builds, and release readiness.">
+  <meta name="theme-color" content="#080c11">
+  <title>Mono Vendor — App Documentation</title>
+  <link rel="icon" type="image/png" href="assets/images/mono-vendor-app-icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to documentation</a>
+  <div class="site-grid" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Mono Vendor documentation home">
+      <span class="brand-mark"><img src="assets/images/mono-vendor-app-icon.png" alt=""></span>
+      <span class="brand-copy">
+        <strong>MONO VENDOR</strong>
+        <small>Flutter app</small>
+      </span>
+    </a>
+    <div class="header-actions">
+      <span class="build-chip"><i aria-hidden="true"></i> mono_vendor 1.0.0+1</span>
+      <button class="toc-toggle" id="toc-toggle" type="button" aria-label="Open contents" aria-controls="toc-drawer" aria-expanded="false">
+        <span class="menu-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Contents</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="drawer-scrim" data-drawer-scrim hidden></div>
+
+    <div class="guide-shell">
+      <aside class="toc-drawer" id="toc-drawer" aria-label="On this page" data-toc-drawer>
+        <div class="toc-header">
+          <div>
+            <span class="toc-kicker">On this page</span>
+            <strong>Vendor app</strong>
+          </div>
+          <button class="icon-button toc-close" type="button" data-drawer-close aria-label="Close contents"><span aria-hidden="true">×</span></button>
+        </div>
+        <nav class="toc-group" aria-label="Mono Vendor guide contents">
+          <span class="toc-label">Overview</span>
+          <a href="#introduction">Product overview</a>
+          <span class="toc-label">Architecture</span>
+          <a href="#folder-structure">Project structure</a>
+          <a href="#screens">Screen inventory</a>
+          <a href="#requirements">Requirements</a>
+          <a href="#installation">Installation</a>
+          <a href="#third-party-packages">Direct dependencies</a>
+          <span class="toc-label">Integration</span>
+          <a href="#backend-api-setup">API client &amp; endpoints</a>
+          <a href="#environment-configuration">Environment configuration</a>
+          <a href="#mobile-app-setting">Mobile app settings</a>
+          <a href="#firebase-setup">Android push &amp; Ably</a>
+          <a href="#ios-setup">iOS signing &amp; push</a>
+          <span class="toc-label">Build &amp; release</span>
+          <a href="#build-run">Build &amp; run</a>
+          <a href="#publish-app">Release readiness</a>
+          <a href="#developer-guide">Extension guide</a>
+          <a href="#support">Support &amp; limitations</a>
+        </nav>
+        <div class="toc-meta"><span>DOC / MV-1.0.0</span><span>Flutter app</span></div>
+      </aside>
+
+      <div class="doc-stage">
+        <section class="doc-panel" id="vendor-guide" aria-label="Mono Vendor documentation">
+<section class="doc-section doc-section--intro" id="introduction" data-section-title="Product overview">
+  <div class="ov" id="top" aria-labelledby="ov-title">
+    <div class="ov-bar">
+      <p class="ov-kicker"><span>Vendor app documentation</span><span>Setup · Build · Ship</span></p>
+      <span class="ov-signal"><i aria-hidden="true"></i>Android · iOS</span>
+    </div>
+
+    <div class="ov-head">
+      <div class="ov-heading">
+        <h1 id="ov-title">Mono Vendor.<em> App documentation.</em></h1>
+        <p class="ov-note"><span aria-hidden="true">●</span> Complete setup, API, and release guide.</p>
+      </div>
+      <div class="ov-side">
+        <p class="ov-lede">A corrected operations guide for the current <code>mono_vendor</code> Flutter project: 27 public <code>*Screen</code> classes plus <code>MainVendorShell</code>, the actual layered source tree, locked packages, local API wiring, Android push, and the release gaps still visible in the repository.</p>
+        <div class="ov-actions">
+          <button class="action-button action-button--primary" type="button" data-scroll-to="installation">Run the app <span aria-hidden="true">↘</span></button>
+          <button class="action-button" type="button" data-scroll-to="screens">Inspect screen map <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ov-kpis" aria-label="Mono Vendor headline facts">
+      <article class="ov-kpi">
+        <span class="status-index">A / 01</span>
+        <p>Public screen classes</p>
+        <strong>27 screens + MainVendorShell</strong>
+        <span class="status-badge status-badge--blue">Included</span>
+      </article>
+      <article class="ov-kpi">
+        <span class="status-index">A / 02</span>
+        <p>Application identity</p>
+        <strong>com.mono.vendor.app</strong>
+        <span class="status-badge status-badge--green">1.0.0+1</span>
+      </article>
+      <article class="ov-kpi">
+        <span class="status-index">A / 03</span>
+        <p>Active API default</p>
+        <strong>192.168.0.187 / api / v1</strong>
+        <span class="status-badge status-badge--amber">Local LAN</span>
+      </article>
+    </div>
+  </div>
+
+  <h2 class="section-title">Mono Vendor overview</h2>
+  <p><code>mono_vendor</code> is the checked-in Flutter application package. Its Dart description is <strong>“Mono Marketplace Vendor Management Application”</strong>, its declared version is <code>1.0.0+1</code>, and the Dart-facing app name is <strong>Mono Vendor</strong>. This page documents the repository as it exists now, including its real branding mismatch, local API default, and unfinished release configuration.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table identity-table">
+      <thead>
+        <tr><th scope="col">Detail</th><th scope="col">Value</th><th scope="col">Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Dart package</td><td><code>mono_vendor</code></td><td><code>pubspec.yaml</code></td></tr>
+        <tr><td>Version</td><td><code>1.0.0+1</code></td><td><code>pubspec.yaml</code></td></tr>
+        <tr><td>Description</td><td>Mono Marketplace Vendor Management Application</td><td><code>pubspec.yaml</code></td></tr>
+        <tr><td>Android namespace / application ID</td><td><code>com.mono.vendor.app</code></td><td><code>android/app/build.gradle.kts</code></td></tr>
+        <tr><td>iOS bundle ID</td><td><code>com.mono.vendor.app</code></td><td><code>ios/Runner.xcodeproj/project.pbxproj</code></td></tr>
+        <tr><td>Top-level routes</td><td><code>/</code>, <code>/login</code>, <code>/register</code>, <code>/dashboard</code></td><td><code>lib/main.dart</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">What the application actually manages</h3>
+  <p>The source-backed surface is a vendor commerce workspace: dashboard reporting, product catalog and bundles, taxonomy requests and custom definitions, orders, delivery requests and tracking, media, customer chat, followers, notifications, AI quota, package plans, settlements, withdrawals, and store settings.</p>
+
+  <div class="platform-guides" aria-label="Mono Vendor functional areas">
+    <article class="platform-guide">
+      <h3 class="heading-2">Catalog</h3>
+      <p>Products use a five-step form. Bundles use a separate four-step form. Categories, brands, attributes, FAQs, and the media library are independent screens in the shell.</p>
+    </article>
+    <article class="platform-guide">
+      <h3 class="heading-2">Commerce</h3>
+      <p>Order, delivery, wallet, package, AI-credit, and hosted-checkout workflows use repositories and API endpoints. A local Flutter package manager is not part of the app.</p>
+    </article>
+    <article class="platform-guide">
+      <h3 class="heading-2">Workspace</h3>
+      <p>Provider supplies state, Ably supplies server-authorized realtime sessions, and Android FCM is initialized only after the authenticated shell mounts.</p>
+    </article>
+  </div>
+
+  <div class="info-block is-warning">
+    <p><strong>Source boundary:</strong> there is no standalone business-listing module, payment-log screen, support-ticket workflow, map/geolocation package, commercial UI-suite dependency, or payment-gateway SDK in the current project. Hosted purchases run through <code>flutter_inappwebview</code> and backend status polling.</p>
+  </div>
+
+  <h3 class="heading-2">Route map and shell behavior</h3>
+  <p>Only four routes are registered with Flutter’s named router. The remaining drawer destinations switch bodies inside <code>MainVendorShell</code>; the drawer is available on Overview, while sub-screens use a back-to-Overview bar.</p>
+  <pre><code class="code-block">MaterialApp(
+  initialRoute: '/',
+  routes: {
+    '/':          SplashScreen,
+    '/login':     VendorLoginScreen,
+    '/register':  VendorRegisterScreen,
+    '/dashboard': MainVendorShell,
+  },
+)</code></pre>
+</section>
+
+<section class="doc-section" id="folder-structure" data-section-title="Project structure">
+  <h2 class="section-title">The layered source tree that exists now</h2>
+  <p><code>lib/</code> is organized by technical layer and by feature folders inside <code>screens/</code>. Generated caches and IDE state are not part of the documented source architecture.</p>
+
+  <pre><code class="code-block">mono_vendor/
+├─ .gitignore
+├─ .metadata
+├─ README.md
+├─ analysis_options.yaml
+├─ analyze_errors.txt
+├─ analyze_out.log
+├─ pubspec.yaml
+├─ pubspec.lock
+├─ assets/
+│  ├─ logo.png
+│  └─ icons/                 app icon, logo, drawer + UI SVGs
+├─ lib/
+│  ├─ main.dart
+│  ├─ core/                   constants, logger, translations, formatting, RTL, presence
+│  ├─ models/                 dashboard, AI, bundle, chat, delivery, FAQ, follower, media,
+│  │                          notification, order, package tier, product, profile, taxonomy, wallet
+│  ├─ providers/              AI quota, locale, theme, auth, dashboard, follower, notification,
+│  │                          order, product, wallet
+│  ├─ repositories/           translation, AI, auth, bundle, chat, dashboard, delivery, FAQ,
+│  │                          follower, media, notification, order, package, product, settings,
+│  │                          taxonomy, wallet
+│  ├─ screens/                shell, splash, auth, and feature screen folders
+│  ├─ services/               Ably chat, Ably notifications, API client, endpoints, FCM
+│  ├─ theme/                  app_colors.dart, app_theme.dart
+│  └─ widgets/                app bars, buttons, dialogs, drawer, fields, HTML, filters,
+│                             search, status, empty, error, and shared UI
+├─ android/
+├─ ios/
+├─ macos/
+├─ web/
+├─ windows/
+└─ test/</code></pre>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead>
+        <tr><th scope="col">Layer</th><th scope="col">Responsibility</th><th scope="col">Representative files</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Core</td><td>Cross-cutting constants, logging, translations, formatting, RTL icon behavior, chat presence</td><td><code>app_constants.dart</code>, <code>app_logger.dart</code>, <code>app_translations.dart</code></td></tr>
+        <tr><td>Models</td><td>Data shapes and JSON parsing used by providers and screens</td><td><code>vendor_product.dart</code>, <code>vendor_order.dart</code>, <code>vendor_wallet.dart</code></td></tr>
+        <tr><td>Providers</td><td><code>ChangeNotifier</code> state, loading, mutations, and refresh logic</td><td><code>vendor_auth_provider.dart</code>, <code>vendor_dashboard_provider.dart</code></td></tr>
+        <tr><td>Repositories</td><td>HTTP calls, endpoint use, parsing, and platform service access</td><td><code>vendor_auth_repository.dart</code>, <code>vendor_notification_repository.dart</code></td></tr>
+        <tr><td>Screens</td><td>Public <code>*Screen</code> classes plus internal widgets and form sections</td><td><code>dashboard_screen.dart</code>, <code>product_form/</code>, <code>delivery/</code></td></tr>
+        <tr><td>Services</td><td>Shared API, realtime, and push infrastructure</td><td><code>api_client.dart</code>, <code>ably_vendor_chat_service.dart</code>, <code>firebase_push_service.dart</code></td></tr>
+        <tr><td>Theme / widgets</td><td>Color constants, light/dark themes, and reusable presentation components</td><td><code>app_colors.dart</code>, <code>app_drawer.dart</code>, <code>empty_state.dart</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-block">
+    <p><strong>Do not treat generated folders as architecture.</strong> <code>.dart_tool/</code>, <code>.idea/</code>, <code>build/</code>, Gradle caches, and generated local configuration are workspace byproducts, not the app’s source-layer design.</p>
+  </div>
+</section>
+
+<section class="doc-section" id="screens" data-section-title="Screen inventory">
+  <h2 class="section-title">Twenty-seven public screens, plus the shell</h2>
+  <p>The class count comes from public classes named <code>*Screen</code> in <code>lib/screens/</code>. Wizard sections, bundle steps, delivery tabs, dialogs, cards, and controllers are internal subviews; they are not additional public screens.</p>
+
+  <h3 class="heading-2">Drawer and internal destination map</h3>
+  <div class="table-wrap">
+    <table class="packages-table drawer-map-table">
+      <thead><tr><th scope="col">Drawer group</th><th scope="col">Destinations</th></tr></thead>
+      <tbody>
+        <tr><td>Main</td><td>Overview, Orders, Inbox, Media, Followers</td></tr>
+        <tr><td>Catalog</td><td>Products, Product bundles, Categories, Brands, Attributes, FAQs</td></tr>
+        <tr><td>Delivery</td><td>Requests, History, Tracking</td></tr>
+        <tr><td>Payouts</td><td>Settlements, Withdrawals</td></tr>
+        <tr><td>Scale</td><td>Packages, AI credits when <code>AiQuotaProvider.aiEnabled</code> is true</td></tr>
+        <tr><td>System</td><td>Settings; the account dock also exposes settings and logout</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Public screen classes</h3>
+  <div class="table-wrap">
+    <table class="packages-table screen-inventory-table">
+      <thead><tr><th scope="col">#</th><th scope="col">Public class</th><th scope="col">Source-backed workflow</th></tr></thead>
+      <tbody>
+        <tr><td>01</td><td><code>SplashScreen</code></td><td>Animated Mono logo, wordmark, and progress; routes an authenticated vendor to the dashboard.</td></tr>
+        <tr><td>02</td><td><code>VendorLoginScreen</code></td><td>Email/password validation, sign-in, error banner, and a route into vendor registration.</td></tr>
+        <tr><td>03</td><td><code>VendorRegisterScreen</code></td><td>Store name, contact name, business email, phone, specialty, password, and confirmation; submits the registration payload.</td></tr>
+        <tr><td>04</td><td><code>DashboardScreen</code></td><td>Store status, 30-day sales/orders/AOV/live products, pending and out-of-stock summaries, fulfillment pipeline, <code>fl_chart</code> sales/orders toggle, recent orders, top products, low stock, conditional AI usage, and catalog actions.</td></tr>
+        <tr><td>05</td><td><code>ProductListScreen</code></td><td>Search, status filters, product cards, and add/edit/delete entry points.</td></tr>
+        <tr><td>06</td><td><code>ProductFormScreen</code></td><td>Five internal steps: Description, Media, Details, Pricing, and Fulfillment. Includes AI copy/translation, media, taxonomy, status, price, stock, SKU, variations, and physical/digital delivery.</td></tr>
+        <tr><td>07</td><td><code>BundleListScreen</code></td><td>Bundle statistics, search, status filters, and add/edit/delete entry points.</td></tr>
+        <tr><td>08</td><td><code>BundleFormScreen</code></td><td>Four internal steps: information, media, product builder, and pricing/SEO. Before the bundle can be saved, the form requires at least two selected products, and every selected product must still be published.</td></tr>
+        <tr><td>09</td><td><code>CategoriesScreen</code></td><td>Available categories and personal requests, search, request dialog, and request status/rejection metadata.</td></tr>
+        <tr><td>10</td><td><code>BrandsScreen</code></td><td>All/custom/global filters, custom-brand editing, and read-only global brands.</td></tr>
+        <tr><td>11</td><td><code>AttributesScreen</code></td><td>All/custom/global filters and custom attribute/value management.</td></tr>
+        <tr><td>12</td><td><code>StoreFaqsScreen</code></td><td>Language selector, FAQ add/edit/delete, and AI translation context.</td></tr>
+        <tr><td>13</td><td><code>MediaLibraryScreen</code></td><td>Search, all/image/file filters, multi-image upload, details, copy URL, delete, and picker mode.</td></tr>
+        <tr><td>14</td><td><code>OrderListScreen</code></td><td>Search plus all, pending, processing, shipped, delivered, and cancelled filters.</td></tr>
+        <tr><td>15</td><td><code>OrderDetailScreen</code></td><td>Order, customer, items, notes, earnings, status timeline, and a conditional status update sheet.</td></tr>
+        <tr><td>16</td><td><code>DeliveryScreen</code></td><td>Requests, History, and Tracking tabs, request creation dialog, and tracking-detail entry.</td></tr>
+        <tr><td>17</td><td><code>DeliveryTrackingDetailScreen</code></td><td>Read-only order-level shipment timeline and shipment states.</td></tr>
+        <tr><td>18</td><td><code>VendorChatListScreen</code></td><td>Unified customer conversations, search, all/unread filters, unread count, and realtime updates.</td></tr>
+        <tr><td>19</td><td><code>VendorChatThreadScreen</code></td><td>Customer/product context, Ably presence, history, image/file replies, delivered marking, and RTL bubbles.</td></tr>
+        <tr><td>20</td><td><code>FollowersScreen</code></td><td>Paginated infinite-scroll followers and entry into a customer conversation.</td></tr>
+        <tr><td>21</td><td><code>NotificationsScreen</code></td><td>All, Orders, Chats, Wallet, and System tabs; date grouping, unread badges, read state, and deep links. The UI has no swipe-to-delete gesture.</td></tr>
+        <tr><td>22</td><td><code>AiCreditsScreen</code></td><td>Copy, translation, and image quota meters; purchase history and packs; hosted checkout.</td></tr>
+        <tr><td>23</td><td><code>SettlementsScreen</code></td><td>Date range, gross/commission/net totals, load more, CSV export, and order-detail links.</td></tr>
+        <tr><td>24</td><td><code>WithdrawalRequestScreen</code></td><td>Available balance, amount rules, backend-defined method and fields, and an optional note.</td></tr>
+        <tr><td>25</td><td><code>PackagesScreen</code></td><td>Package/commission status, current and pending subscriptions, API-provided plan cards/limits, and hosted checkout.</td></tr>
+        <tr><td>26</td><td><code>StoreSettingsScreen</code></td><td>Pause/resume, dark/light selection, backend language, profile/address, change-password dialog, and logout.</td></tr>
+        <tr><td>27</td><td><code>VendorCheckoutWebviewScreen</code></td><td>Hosted purchase WebView, progress, status polling, backend return/custom <code>mono://</code> handling, and close confirmation.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-block">
+    <p><strong>Subview accounting:</strong> the product form contributes five steps, the bundle form four steps, and delivery three tabs. Dialogs, dashboard cards, list cards, form sections, and controllers remain implementation details inside their owning public screen.</p>
+  </div>
+
+  <h3 class="heading-2">Actual Android capture set</h3>
+  <p>These are the current app captures, not generated mockups. They show the native splash and the current login/registration UI reached on a connected Android device.</p>
+  <div class="screen-gallery-grid device-capture-grid" aria-label="Mono Vendor Android device captures">
+    <figure class="screen-card">
+      <div class="screen-card-img"><img src="assets/images/device/device-launch.png" alt="Mono Vendor Android splash screen with the green circular Mono bag logo on a black background."></div>
+      <figcaption class="screen-card-info"><span class="screen-card-tag">Launch</span><strong class="screen-card-title">Mono splash</strong><span class="screen-card-desc">The branded native launch state before the Flutter Vendor Portal login appears.</span></figcaption>
+    </figure>
+    <figure class="screen-card">
+      <div class="screen-card-img"><img src="assets/images/device/device-after-launch.png" alt="Mono Vendor login screen with the app icon, Vendor Portal heading, email and password fields, sign-in button, and register link."></div>
+      <figcaption class="screen-card-info"><span class="screen-card-tag">Authentication</span><strong class="screen-card-title">Vendor login</strong><span class="screen-card-desc">The current login/entry surface and its route into store registration.</span></figcaption>
+    </figure>
+    <figure class="screen-card">
+      <div class="screen-card-img"><img src="assets/images/device/device-register-attempt.png" alt="Top of the Apply as Vendor registration form showing store name, contact name, business email, phone, specialty, and password fields."></div>
+      <figcaption class="screen-card-info"><span class="screen-card-tag">Registration / 01</span><strong class="screen-card-title">Store application</strong><span class="screen-card-desc">The upper portion of the current vendor registration workflow.</span></figcaption>
+    </figure>
+    <figure class="screen-card">
+      <div class="screen-card-img"><img src="assets/images/device/device-register-lower.png" alt="Lower portion of the vendor registration form showing password confirmation and the Submit Application button."></div>
+      <figcaption class="screen-card-info"><span class="screen-card-tag">Registration / 02</span><strong class="screen-card-title">Submit application</strong><span class="screen-card-desc">The lower fields and final action in the same registration screen.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="doc-section" id="requirements" data-section-title="Requirements">
+  <h2 class="section-title">Toolchain and target requirements</h2>
+  <p>The lockfile and platform projects define the supported toolchain floor. These are repository requirements, not a claim that every target has been release-tested.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Target</th><th scope="col">Requirement</th><th scope="col">Where it lives</th></tr></thead>
+      <tbody>
+        <tr><td>Dart</td><td><code>^3.13.3</code> in <code>pubspec.yaml</code></td><td>Lock SDK floor: <code>&gt;=3.13.3 &lt;4.0.0</code></td></tr>
+        <tr><td>Flutter</td><td><code>&gt;=3.44.0</code></td><td><code>pubspec.lock</code></td></tr>
+        <tr><td>Android</td><td>compile SDK 37; minimum runtime is <code>maxOf(flutter.minSdkVersion, 23)</code>; Java/Kotlin 17</td><td><code>android/app/build.gradle.kts</code></td></tr>
+        <tr><td>Android build plugins</td><td>AGP 9.1.0; Kotlin 2.4.0; Gradle 9.3.1; Google services 4.4.2</td><td><code>android/settings.gradle.kts</code>, wrapper properties</td></tr>
+        <tr><td>iOS</td><td>deployment target 15.0; bundle <code>com.mono.vendor.app</code></td><td><code>ios/Runner.xcodeproj/project.pbxproj</code></td></tr>
+        <tr><td>macOS</td><td>deployment target 12.0; bundle <code>com.mono.monoVendor</code></td><td><code>macos/Runner.xcodeproj/project.pbxproj</code></td></tr>
+        <tr><td>Web / Windows</td><td>Target folders exist, but mobile-only <code>dart:io</code> imports mean the app targets Android and iOS only.</td><td><code>lib/</code> plus platform folders</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Before the first run</h3>
+  <ul class="list-item">
+    <li>Use Flutter 3.44.0 or newer and a Dart SDK compatible with the project constraint.</li>
+    <li>For Android, run on an API 23+ device or emulator and make the local API host reachable from that device.</li>
+    <li>For iOS, open the generated <code>Runner.xcworkspace</code> on macOS; no signing team is checked in.</li>
+    <li>Do not assume web or Windows parity: the current Dart source contains <code>dart:io</code> dependencies.</li>
+  </ul>
+</section>
+
+<section class="doc-section" id="installation" data-section-title="Installation">
+  <h2 class="section-title">Install and launch from the repository</h2>
+  <p>The project is a standard Flutter application rooted at <code>mono_vendor/</code>. Resolve packages from the checked-in lockfile, choose a visible target, and run normally.</p>
+
+  <pre><code class="code-block-run">cd mono_vendor</code></pre>
+  <pre><code class="code-block-run">flutter pub get</code></pre>
+  <pre><code class="code-block-run">flutter devices</code></pre>
+  <pre><code class="code-block-run">flutter run -d &lt;device-id&gt;</code></pre>
+
+  <h3 class="heading-2">Run sequence</h3>
+  <ol class="list-item">
+    <li>Open the <code>mono_vendor</code> project folder in Android Studio or another Flutter-enabled editor.</li>
+    <li>Run <code>flutter pub get</code>; the lockfile resolves 187 packages, including transitives.</li>
+    <li>Confirm the selected device in <code>flutter devices</code>.</li>
+    <li>Run <code>flutter run -d &lt;device-id&gt;</code>. Android Studio can perform the same launch through its Flutter run configuration.</li>
+    <li>Expect <code>SplashScreen</code>, then login or registration when no valid token is restored.</li>
+  </ol>
+
+  <div class="info-block is-warning">
+    <p><strong>LAN dependency:</strong> the active API default is plain HTTP on <code>192.168.0.187</code>. The Android manifest allows cleartext traffic, but the device still needs a network route to that host. This is a local development configuration, not a documented production endpoint.</p>
+  </div>
+
+  <h3 class="heading-2">Android Studio evidence</h3>
+  <p>The hero capture is the full-HD project view from the current source. It shows the layered <code>lib/</code> tree and the active API constant in <code>api_client.dart</code>; use the lightbox to inspect it at full size.</p>
+</section>
+
+<section class="doc-section" id="third-party-packages" data-section-title="Direct dependencies">
+  <h2 class="section-title">Exact direct declarations and locked versions</h2>
+  <p><code>pubspec.lock</code> contains 187 packages in total. The table below lists the 24 hosted runtime packages, two hosted development packages, and three SDK entries declared directly by this project.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table dependency-table">
+      <thead><tr><th scope="col">Package</th><th scope="col">Declared constraint</th><th scope="col">Locked version</th><th scope="col">Role in current source</th></tr></thead>
+      <tbody>
+        <tr><td><code>cupertino_icons</code></td><td><code>^1.0.9</code></td><td><code>1.0.9</code></td><td>Declared direct icon package; no current <code>lib/</code> import.</td></tr>
+        <tr><td><code>provider</code></td><td><code>^6.1.5+1</code></td><td><code>6.1.5+1</code></td><td>Application state and dependency injection across providers and screens.</td></tr>
+        <tr><td><code>dio</code></td><td><code>^5.11.1</code></td><td><code>5.11.1</code></td><td>HTTP client, interceptors, auth headers, errors, and request logging.</td></tr>
+        <tr><td><code>ably_flutter</code></td><td><code>^1.2.44</code></td><td><code>1.2.44</code></td><td>Server-authorized realtime customer chat and notification channels.</td></tr>
+        <tr><td><code>dart_quill_delta</code></td><td><code>^10.8.3</code></td><td><code>10.8.3</code></td><td>Rich-content delta model in the editor and HTML conversion path.</td></tr>
+        <tr><td><code>flutter_quill</code></td><td><code>^11.6.0</code></td><td><code>11.6.0</code></td><td>Rich text editing controls for product and bundle content.</td></tr>
+        <tr><td><code>html</code></td><td><code>^0.15.6</code></td><td><code>0.15.7</code></td><td>HTML parsing/rendering for server-provided rich content.</td></tr>
+        <tr><td><code>vsc_quill_delta_to_html</code></td><td><code>^1.0.5</code></td><td><code>1.0.5</code></td><td>Quill delta conversion for the rich-content path.</td></tr>
+        <tr><td><code>firebase_core</code></td><td><code>^4.15.0</code></td><td><code>4.15.0</code></td><td>Android Firebase initialization in the push service.</td></tr>
+        <tr><td><code>firebase_analytics</code></td><td><code>^12.6.0</code></td><td><code>12.6.0</code></td><td>Declared direct package; no current <code>lib/</code> import.</td></tr>
+        <tr><td><code>firebase_messaging</code></td><td><code>^16.7.0</code></td><td><code>16.7.0</code></td><td>FCM listeners, permission, token refresh, and notification routing.</td></tr>
+        <tr><td><code>flutter_local_notifications</code></td><td><code>^22.3.1</code></td><td><code>22.3.1</code></td><td>Android channel, permission plumbing, foreground tray notifications, and taps.</td></tr>
+        <tr><td><code>flutter_cache_manager</code></td><td><code>^3.4.5</code></td><td><code>3.4.5</code></td><td>Cached remote media and notification big-picture images.</td></tr>
+        <tr><td><code>flutter_secure_storage</code></td><td><code>^11.2.0</code></td><td><code>11.2.0</code></td><td>Auth token and stable notification device ID storage.</td></tr>
+        <tr><td><code>shared_preferences</code></td><td><code>^2.5.5</code></td><td><code>2.5.5</code></td><td>Theme, locale, cached base URL, and related client preferences.</td></tr>
+        <tr><td><code>flutter_svg</code></td><td><code>^2.3.0</code></td><td><code>2.3.0</code></td><td>Drawer, app bar, and UI SVG assets.</td></tr>
+        <tr><td><code>cached_network_image</code></td><td><code>^4.0.0</code></td><td><code>4.0.0</code></td><td>Cached backend media across product, bundle, order, and media screens.</td></tr>
+        <tr><td><code>fl_chart</code></td><td><code>^1.2.0</code></td><td><code>1.2.0</code></td><td>Dashboard sales and order chart. No chart license key is referenced.</td></tr>
+        <tr><td><code>intl</code></td><td><code>^0.20.3</code></td><td><code>0.20.3</code></td><td>Date, number, and locale-aware formatting.</td></tr>
+        <tr><td><code>image_picker</code></td><td><code>^1.2.3</code></td><td><code>1.2.3</code></td><td>Local media selection for upload workflows.</td></tr>
+        <tr><td><code>logger</code></td><td><code>^2.8.0</code></td><td><code>2.8.0</code></td><td>Structured application and network logging.</td></tr>
+        <tr><td><code>url_launcher</code></td><td><code>^6.3.2</code></td><td><code>6.3.2</code></td><td>External links from vendor-facing workflows.</td></tr>
+        <tr><td><code>flutter_inappwebview</code></td><td><code>^6.1.5</code></td><td><code>6.1.5</code></td><td>Hosted package and AI-credit checkout with return handling.</td></tr>
+        <tr><td><code>share_plus</code></td><td><code>^13.3.0</code></td><td><code>13.3.0</code></td><td>Platform sharing actions in the current app.</td></tr>
+        <tr><td><code>flutter_lints</code> <small>dev</small></td><td><code>^6.0.0</code></td><td><code>6.0.0</code></td><td>Dart/Flutter static lint rules.</td></tr>
+        <tr><td><code>flutter_launcher_icons</code> <small>dev</small></td><td><code>^0.14.4</code></td><td><code>0.14.4</code></td><td>Generates Android, iOS, and web launcher icons.</td></tr>
+        <tr><td><code>flutter</code>, <code>flutter_localizations</code></td><td>SDK</td><td>SDK-provided</td><td>Framework and localization delegates.</td></tr>
+        <tr><td><code>flutter_test</code> <small>dev</small></td><td>SDK</td><td>SDK-provided</td><td>Widget and unit test runner.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-block">
+    <p><strong>Capability boundary:</strong> the current chart implementation is <code>fl_chart</code>. The project declares no map/geolocation dependency and no payment-gateway SDK; checkout remains a hosted WebView workflow.</p>
+  </div>
+</section>
+
+<section class="doc-section" id="backend-api-setup" data-section-title="API client and endpoints">
+  <h2 class="section-title">The API client is fixed to a local development default</h2>
+  <p><code>lib/services/api_client.dart</code> owns the global Dio client. The active default is the same local LAN HTTP URL shown in the Android Studio capture.</p>
+
+  <pre><code class="code-block-run">http://192.168.0.187/mono/mono_market/api/v1</code></pre>
+
+  <div class="ov-console" aria-label="Mono Vendor project open in Android Studio with api_client.dart active">
+    <div class="console-topline">
+      <span>MONO_VENDOR / lib/services/api_client.dart</span>
+      <span class="console-live"><i aria-hidden="true"></i>FLUTTER</span>
+    </div>
+    <div class="ov-wide">
+      <img src="assets/images/ide/android-studio-mono-vendor-full-hd.png" alt="Full-screen Android Studio capture of the Mono Vendor project showing the layered lib tree and the active API base URL in api_client.dart.">
+    </div>
+    <div class="console-foot">
+      <span>Active file <code>api_client.dart</code></span>
+      <span>Base URL <code>192.168.0.187 / api / v1</code></span>
+      <span>Capture <code>1920 × 1080 / Android Studio</code></span>
+      <span>Transport <code>HTTP / LAN</code></span>
+    </div>
+  </div>
+
+  <h3 class="heading-2">Current client behavior</h3>
+  <ul class="list-item">
+    <li>Adds <code>Authorization: Bearer &lt;token&gt;</code> when a token is available.</li>
+    <li>Adds <code>X-Locale</code> and <code>Accept-Language</code> from the vendor language preference, defaulting to <code>en</code>.</li>
+    <li>Uses a 15-second connect timeout and a 30-second receive timeout. No explicit <code>sendTimeout</code> is configured in the current client.</li>
+    <li>Redacts credentials and tokens from request logs and truncates long bodies.</li>
+    <li>Resolves relative media paths against the active API base.</li>
+    <li>On HTTP 401, clears the token and invokes the logout/redirect callback registered in <code>main.dart</code>.</li>
+    <li>Restores <code>vendor_api_base_url</code> from <code>SharedPreferences</code> when present.</li>
+  </ul>
+
+  <h3 class="heading-2">Endpoint registry groups</h3>
+  <div class="table-wrap">
+    <table class="packages-table endpoint-table">
+      <thead><tr><th scope="col">Registry group</th><th scope="col">Paths / behavior</th></tr></thead>
+      <tbody>
+        <tr><td>Auth &amp; account</td><td><code>/vendor/auth/login</code>, <code>/vendor/auth/register</code>, <code>/vendor/auth/logout</code>, profile GET/PUT, change password, pause/resume</td></tr>
+        <tr><td>Dashboard</td><td><code>/vendor/dashboard</code></td></tr>
+        <tr><td>Products &amp; catalog</td><td>Products, categories, brands, attributes, vendor languages, category requests, custom brand/attribute stores</td></tr>
+        <tr><td>Bundles</td><td>Product bundles, candidates, bundle detail</td></tr>
+        <tr><td>Orders</td><td>Orders, order detail, status update, digital delivery</td></tr>
+        <tr><td>Delivery</td><td>Requests, cancel request, history, tracking, order tracking</td></tr>
+        <tr><td>Media</td><td>Media list, upload, media detail</td></tr>
+        <tr><td>Chat &amp; followers</td><td>Unified messages, start conversation, token request, conversation, reply, poll, delivered, followers</td></tr>
+        <tr><td>Notifications</td><td>Inbox, unread count, register/unregister token, read-all, bulk mark/delete, per-item read/delete</td></tr>
+        <tr><td>AI</td><td>Quota, copy, image, translation, credits, and credit-pack checkout</td></tr>
+        <tr><td>FAQs &amp; packages</td><td>Store FAQs, package list, package checkout</td></tr>
+        <tr><td>Wallet</td><td>Wallet, settlements, withdrawals</td></tr>
+        <tr><td>Settings</td><td>Settings, payout details, notification settings</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Authentication and translations</h3>
+  <p>Login and registration post credentials or the registration payload to the vendor auth endpoints. Profile updates use <code>PUT /vendor/profile</code>. Language discovery uses <code>GET /languages?scope=mobile</code>; translation bundles use <code>GET /translations/{code}</code> in <code>TranslationRepository</code>.</p>
+
+  <div class="info-block is-warning">
+    <p><strong>Do not publish this URL as a production default.</strong> It is plain HTTP on a private LAN address. The app source also enables cleartext traffic on Android and arbitrary loads on iOS; production hardening must be decided and implemented outside this documentation-only change.</p>
+  </div>
+</section>
+
+<section class="doc-section" id="environment-configuration" data-section-title="Environment configuration">
+  <h2 class="section-title">No hidden environment-variable base URL</h2>
+  <p>The repository has no <code>--dart-define</code> path, no environment-file loader, and no current UI caller for <code>ApiClient.setBaseUrl</code>. Store Settings does not expose a server URL.</p>
+
+  <h3 class="heading-2">How the active URL is selected</h3>
+  <ol class="list-item">
+    <li><code>ApiClient</code> starts with <code>defaultBaseUrl</code>.</li>
+    <li>After initialization, a non-empty <code>vendor_api_base_url</code> value in <code>SharedPreferences</code> overrides it.</li>
+    <li>Otherwise the compiled-in local LAN default remains active.</li>
+  </ol>
+
+  <pre><code class="code-block">static const defaultBaseUrl =
+    'http://192.168.0.187/mono/mono_market/api/v1';</code></pre>
+
+  <div class="info-block">
+    <p><strong>Current change paths:</strong> update the constant in source, call <code>setBaseUrl</code> from code, or pre-seed the SharedPreferences key. A documented settings screen or dart-define override would be a future source change, not a current capability.</p>
+  </div>
+
+  <h3 class="heading-2">Transport security flags</h3>
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Platform file</th><th scope="col">Current setting</th><th scope="col">Implication</th></tr></thead>
+      <tbody>
+        <tr><td><code>android/app/src/main/AndroidManifest.xml</code></td><td><code>android:usesCleartextTraffic="true"</code></td><td>Allows the current HTTP LAN URL on Android.</td></tr>
+        <tr><td><code>ios/Runner/Info.plist</code></td><td><code>NSAllowsArbitraryLoads = true</code></td><td>Allows arbitrary network loads on iOS.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="doc-section" id="mobile-app-setting" data-section-title="Mobile app settings">
+  <h2 class="section-title">Branding, palette, launcher assets, and settings</h2>
+  <p>The app’s real display labels are not identical. Preserve that distinction when changing store metadata, launcher output, screenshots, or documentation.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table branding-table">
+      <thead><tr><th scope="col">Surface</th><th scope="col">Current value</th></tr></thead>
+      <tbody>
+        <tr><td>Dart app title</td><td><code>Mono Vendor</code> from <code>AppConstants.appName</code></td></tr>
+        <tr><td>Android launcher label</td><td><code>Mono V</code> from <code>AndroidManifest.xml</code></td></tr>
+        <tr><td>iOS display name</td><td><code>Mono Vendor</code> from <code>Info.plist</code></td></tr>
+        <tr><td>Android / iOS ID</td><td><code>com.mono.vendor.app</code></td></tr>
+        <tr><td>Dark / light control</td><td>Inside <code>StoreSettingsScreen</code>, not the navigation drawer</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Primary theme colors</h3>
+  <div class="color-grid" aria-label="Mono Vendor theme color palette">
+    <div class="color-chip"><i style="--swatch:#0F172A"></i><span><strong>Slate</strong><code>#0F172A</code></span></div>
+    <div class="color-chip"><i style="--swatch:#059669"></i><span><strong>Emerald</strong><code>#059669</code></span></div>
+    <div class="color-chip"><i style="--swatch:#34D399"></i><span><strong>Emerald light</strong><code>#34D399</code></span></div>
+    <div class="color-chip"><i style="--swatch:#2563EB"></i><span><strong>Sapphire</strong><code>#2563EB</code></span></div>
+    <div class="color-chip"><i style="--swatch:#F59E0B"></i><span><strong>Amber</strong><code>#F59E0B</code></span></div>
+    <div class="color-chip"><i style="--swatch:#8B5CF6"></i><span><strong>Purple</strong><code>#8B5CF6</code></span></div>
+    <div class="color-chip"><i style="--swatch:#14B8A6"></i><span><strong>Teal</strong><code>#14B8A6</code></span></div>
+    <div class="color-chip"><i style="--swatch:#0EA5E9"></i><span><strong>Sky</strong><code>#0EA5E9</code></span></div>
+    <div class="color-chip"><i style="--swatch:#EF4444"></i><span><strong>Danger</strong><code>#EF4444</code></span></div>
+  </div>
+  <p><code>pubspec.yaml</code> declares no font family or bundled font assets. The app uses Flutter theme typography and a small number of explicit monospace contexts.</p>
+
+  <h3 class="heading-2">Launcher icon configuration</h3>
+  <p><code>flutter_launcher_icons</code> uses <code>assets/icons/app_icon.png</code> and <code>app_icon_foreground.png</code>, with an adaptive background of <code>#059669</code>. Its generation setting says <code>min_sdk_android: 21</code>; the actual Android app currently builds with <code>maxOf(flutter.minSdkVersion, 23)</code>. These values serve different purposes and are not interchangeable.</p>
+</section>
+
+<section class="doc-section" id="firebase-setup" data-section-title="Android push and Ably">
+  <h2 class="section-title">Android FCM is lazy; realtime uses server-issued Ably tokens</h2>
+  <p><code>main.dart</code> initializes API, theme, locale, and auth providers, but it does not initialize Firebase. Authenticated <code>MainVendorShell</code> binds the notification store, connects Ably notifications, then starts FCM in the background.</p>
+
+  <pre><code class="code-block">main()
+  └─ MonoVendorApp
+      └─ authenticated MainVendorShell
+          ├─ bind VendorNotificationStore
+          ├─ connect Ably notification channel
+          └─ FirebasePushService.initialize()
+              ├─ Android guard
+              ├─ high_importance_channel
+              ├─ request notification permission
+              ├─ register foreground/open/refresh listeners
+              └─ register device token</code></pre>
+
+  <h3 class="heading-2">Set up your own Firebase project, step by step</h3>
+  <p>The repository ships with a working <code>google-services.json</code> so the app runs immediately, but that file points at a shared Firebase project. Create your own before you publish. The whole process takes about ten minutes and needs only a free Google account.</p>
+
+  <ol class="list-item">
+    <li><strong>Create the project.</strong> Open <a href="https://console.firebase.google.com" target="_blank" rel="noopener">console.firebase.google.com</a>, click <em>Add project</em>, give it a name such as <code>mono-vendor</code>, and disable Google Analytics unless you want it. The project finishes creating after you confirm the analytics choice.</li>
+    <li><strong>Add the Android app.</strong> On the project overview click the <em>Android</em> icon. Enter the package name — it must match your <code>applicationId</code> character for character, so use <code>com.mono.vendor.app</code> if you have not renamed it yet. Give the app a nickname and download <code>google-services.json</code>.</li>
+    <li><strong>Place the config file.</strong> Copy it to <code>android/app/google-services.json</code>, replacing the bundled one. Both the filename and the folder are required by the Google Services Gradle plugin; a wrong path builds fine but throws <code>Default FirebaseApp is not initialized</code> at runtime.</li>
+    <li><strong>Enable Cloud Messaging.</strong> In the left sidebar open <em>Build → Cloud Messaging</em>. The <em>Send test message</em> button confirms the project can deliver notifications. Nothing else is required for FCM to work.</li>
+    <li><strong>Leave the channel to the app.</strong> The app creates an Android notification channel named <code>high_importance_channel</code> (“Orders and Updates”) at runtime. Do not create a matching channel in the console — the app owns it, and a duplicate console channel is ignored.</li>
+    <li><strong>Rebuild rather than hot reload.</strong> Changing <code>google-services.json</code> needs a full rebuild. Stop the app and run <code>flutter run -d &lt;android-device-id&gt;</code> again, adding <code>flutter clean</code> first if the old configuration appears to be cached.</li>
+  </ol>
+
+  <div class="info-block">
+    <p><strong>Finding your values.</strong> Project settings → <em>Your apps</em> shows the registered package name and the API key. Never commit a service-account key or a private key file. The API key inside <code>google-services.json</code> identifies the project but is not a secret by itself — access is governed by Firebase security rules.</p>
+  </div>
+
+  <h3 class="heading-2">Android push facts</h3>
+  <ul class="list-item">
+    <li><code>android/app/google-services.json</code> is tracked and contains the <code>com.mono.vendor.app</code> client. Replace the placeholder values with your own Firebase credentials.</li>
+    <li>The Android channel is <code>high_importance_channel</code>, labeled “Orders and Updates”.</li>
+    <li>Token registration posts to <code>/vendor/notifications/register-token</code>; logout unregisters through <code>/vendor/notifications/unregister-token</code>.</li>
+    <li>A stable <code>vendor_notification_device_id</code> is created and kept in secure storage.</li>
+    <li><code>FirebasePushService.initialize()</code> returns without work on non-Android targets.</li>
+  </ul>
+
+  <h3 class="heading-2">Ably chat and notifications</h3>
+  <p><code>ably_vendor_chat_service.dart</code> and <code>ably_vendor_notification_service.dart</code> request token requests from the backend chat-token endpoint and use Ably auth callbacks. No hard-coded Ably API key is present in the current Dart source.</p>
+
+  <div class="info-block is-warning">
+    <p><strong>iOS provisioning is developer-supplied.</strong> Generated plugin registration can include Firebase plugins, but Apple signing, APNs credentials, the Firebase plist, and the iOS Dart initialization path must be configured by the developer. Follow the iOS setup section below to complete the integration.</p>
+  </div>
+</section>
+
+<section class="doc-section" id="ios-setup" data-section-title="iOS signing and push">
+  <h2 class="section-title">iOS setup: signing, Firebase, and push notifications</h2>
+  <p>Complete the setup below to take the generated iOS target from local development to a signed build with APNs and Firebase Cloud Messaging. The Flutter shell and bundle identifier are present in the repository; Apple credentials, APNs credentials, and the Firebase iOS configuration are supplied through Xcode, Firebase, and the Apple Developer portal.</p>
+
+  <div class="info-block">
+    <p><strong>Before you begin:</strong> use macOS with Xcode, Flutter 3.44.0 or newer, CocoaPods, an Apple Developer team, and access to the Firebase project. Keep the APNs <code>.p8</code> key, signing assets, and private credentials outside source control.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Setup area</th><th scope="col">Required configuration</th></tr></thead>
+      <tbody>
+        <tr><td>Workspace</td><td>Open <code>ios/Runner.xcworkspace</code> after resolving Flutter packages and CocoaPods.</td></tr>
+        <tr><td>Bundle / target</td><td>Use <code>com.mono.vendor.app</code> with an iOS 15.0 deployment target.</td></tr>
+        <tr><td>Apple signing</td><td>Select the organization’s development team in Xcode and use automatic signing for development and distribution.</td></tr>
+        <tr><td>Firebase iOS app</td><td>Register <code>com.mono.vendor.app</code> in Firebase and add its <code>GoogleService-Info.plist</code> to the Runner target.</td></tr>
+        <tr><td>Push notifications</td><td>Enable Push Notifications and the Remote notifications background mode in the Runner target.</td></tr>
+        <tr><td>Dart initialization</td><td>Update the Android-only guard in <code>lib/services/firebase_push_service.dart</code> so iOS initialization and token registration are allowed.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">1. Prepare Apple and Firebase access</h3>
+  <ul class="list-item">
+    <li>In the Apple Developer portal, create or select an App ID for <code>com.mono.vendor.app</code> and enable App Push Notifications.</li>
+    <li>Create an APNs authentication key and save the <code>.p8</code> file securely. Record its Key ID and Apple Team ID; do not paste the key or private material into this guide.</li>
+    <li>In the Firebase project used by this app, register an iOS app with the exact bundle ID <code>com.mono.vendor.app</code>, then download <code>GoogleService-Info.plist</code>.</li>
+  </ul>
+
+  <h3 class="heading-2">2. Resolve Flutter and CocoaPods</h3>
+  <pre><code class="code-block-run">flutter pub get
+cd ios
+pod install
+cd ..
+open Runner.xcworkspace</code></pre>
+  <p>The repository does not check in a Podfile. If CocoaPods reports that the file is missing, restore the standard Flutter iOS Podfile for the installed Flutter SDK, review it, and then run <code>pod install</code>. Always open the workspace, not the bare <code>Runner.xcodeproj</code>.</p>
+
+  <h3 class="heading-2">3. Configure signing in Xcode</h3>
+  <ol class="list-item">
+    <li>Open <code>ios/Runner.xcworkspace</code> and select the <code>Runner</code> project.</li>
+    <li>Open <strong>Signing &amp; Capabilities</strong> for the Runner target.</li>
+    <li>Enable <strong>Automatically manage signing</strong>, select the organization’s Apple Developer team, and confirm the bundle identifier is <code>com.mono.vendor.app</code>.</li>
+    <li>Keep the deployment target at iOS 15.0 or higher, choose a physical iPhone for notification testing, and resolve any signing errors before continuing.</li>
+  </ol>
+
+  <h3 class="heading-2">4. Add the Firebase iOS configuration</h3>
+  <ol class="list-item">
+    <li>Drag <code>GoogleService-Info.plist</code> into the <code>ios/Runner</code> directory.</li>
+    <li>In Xcode, open the file’s inspector and confirm <strong>Target Membership</strong> includes <strong>Runner</strong>.</li>
+    <li>Do not add API keys, APNs private keys, or signing credentials to documentation, source comments, or screenshots.</li>
+  </ol>
+
+  <h3 class="heading-2">5. Enable APNs and background delivery</h3>
+  <ol class="list-item">
+    <li>In <strong>Signing &amp; Capabilities</strong>, add the <strong>Push Notifications</strong> capability to the Runner target.</li>
+    <li>Add <strong>Background Modes</strong> and enable <strong>Remote notifications</strong>.</li>
+    <li>In Firebase Console, open <strong>Project settings → Cloud Messaging → iOS</strong>, upload the APNs <code>.p8</code> key, and enter its Key ID and Apple Team ID.</li>
+    <li>Build and run on a physical iPhone, allow notifications when prompted, and confirm the app receives a foreground and background test message.</li>
+  </ol>
+
+  <h3 class="heading-2">6. Enable the Dart-side iOS path</h3>
+  <p>The current <code>FirebasePushService.initialize()</code> returns immediately unless the platform is Android. For iOS push, change that guard so both Android and iOS continue through the existing Firebase initialization, permission request, foreground handling, and token registration flow. Keep the authenticated lazy initialization in <code>MainVendorShell</code>; do not initialize a second unrelated notification service.</p>
+  <pre><code class="code-block">final supportedPlatform = Platform.isAndroid || Platform.isIOS;
+if (!supportedPlatform) return;
+
+await Firebase.initializeApp();
+// Keep the existing permission, listener, and token flow below.</code></pre>
+  <p>After the app signs in, verify that the device token is sent to <code>/vendor/notifications/register-token</code> and that logout calls <code>/vendor/notifications/unregister-token</code>. Confirm that the existing <code>high_importance_channel</code> behavior remains unchanged for Android.</p>
+
+  <h3 class="heading-2">7. Build, test, and release</h3>
+  <pre><code class="code-block-run">flutter run -d &lt;ios-device-id&gt;
+flutter build ios --no-codesign
+flutter build ipa --release</code></pre>
+  <ul class="list-item">
+    <li>Use <code>flutter build ios --no-codesign</code> as a compile/configuration check before enabling distribution.</li>
+    <li>Test login, notification permission, foreground delivery, background delivery, deep links, and logout unregistration on a physical device.</li>
+    <li>For TestFlight or the App Store, select the correct team and distribution profile in Xcode, increment the build number, archive the Runner scheme, and validate the IPA before upload.</li>
+  </ul>
+</section>
+
+<section class="doc-section" id="build-run" data-section-title="Build and run">
+  <h2 class="section-title">Build commands and expected targets</h2>
+  <p>Use the normal Flutter commands after package resolution. Select a real device ID rather than assuming an emulator name.</p>
+
+  <h3 class="heading-2">Android debug run</h3>
+  <pre><code class="code-block-run">flutter pub get</code></pre>
+  <pre><code class="code-block-run">flutter run -d &lt;android-device-id&gt;</code></pre>
+  <pre><code class="code-block-run">flutter build apk --debug</code></pre>
+  <p>Android application ID and namespace are both <code>com.mono.vendor.app</code>. The debug build can use the bundled Google services client and the local HTTP development URL.</p>
+
+  <h3 class="heading-2">Change the application ID before you publish</h3>
+  <p>Both platforms ship with the identifier <code>com.mono.vendor.app</code>, which is a real reverse-domain identifier and builds fine. Google Play and the App Store each require the identifier to belong to the account publishing the app, so replace it with your own before your first upload. Pick a domain you own — for example <code>com.yourcompany.mono.vendor</code>.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Platform</th><th scope="col">File</th><th scope="col">What to change</th></tr></thead>
+      <tbody>
+        <tr><td>Android namespace</td><td><code>android/app/build.gradle.kts</code></td><td><code>namespace = "com.yourcompany.mono.vendor"</code></td></tr>
+        <tr><td>Android application ID</td><td><code>android/app/build.gradle.kts</code></td><td><code>applicationId = "com.yourcompany.mono.vendor"</code></td></tr>
+        <tr><td>iOS bundle ID</td><td><code>ios/Runner.xcodeproj/project.pbxproj</code></td><td><code>PRODUCT_BUNDLE_IDENTIFIER</code> for the <code>Runner</code> target (leave the <code>.RunnerTests</code> entries alone unless you rename them too)</td></tr>
+        <tr><td>Firebase Android app</td><td>Firebase console</td><td>Re-register the app under the new package name and download a fresh <code>google-services.json</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Renaming the Android package also means moving the Kotlin sources to match: <code>android/app/src/main/kotlin/com/mono/vendor/app/MainActivity.kt</code> becomes <code>android/app/src/main/kotlin/com/yourcompany/mono/vendor/app/MainActivity.kt</code>, and its <code>package</code> line must change too. Forget this and the build fails with a <code>Namespace 'com.mono.vendor.app' is not a valid namespace</code> error pointing at the manifest.</p>
+
+  <h3 class="heading-2">Android SDK levels are pinned deliberately</h3>
+  <p><code>android/app/build.gradle.kts</code> sets <code>compileSdk = 37</code> and pins <code>targetSdk = 36</code> as an explicit integer rather than <code>flutter.targetSdkVersion</code>. The Flutter value resolves to 35 on Flutter 3.29 and newer, which is below the current Google Play submission requirement, so the explicit number keeps your uploads accepted as you upgrade Flutter. <code>minSdk</code> stays at <code>maxOf(flutter.minSdkVersion, 23)</code> because Firebase Messaging and <code>flutter_local_notifications</code> need a modern minimum.</p>
+
+  <h3 class="heading-2">iOS run</h3>
+  <pre><code class="code-block-run">open ios/Runner.xcworkspace</code></pre>
+  <p>On macOS, open the workspace, select a development team and runnable signing configuration in Xcode, then complete the iOS setup section before testing notifications.</p>
+
+  <h3 class="heading-2">Other generated targets</h3>
+  <p>macOS declares deployment target 12.0. Web and Windows folders are generated Flutter targets, but mobile-only imports mean the current source does not verify web support. Treat any such build as an engineering task, not an existing guarantee.</p>
+</section>
+
+<section class="doc-section" id="publish-app" data-section-title="Release readiness">
+  <h2 class="section-title">Release blockers visible in source</h2>
+  <p>The repository is runnable source, but it does not contain production signing or production transport configuration. A release build command can still be issued, yet that is not the same as a store-ready artifact.</p>
+
+  <div class="table-wrap blocker-table-wrap">
+    <table class="packages-table blocker-table">
+      <thead><tr><th scope="col">Blocker</th><th scope="col">Source evidence</th><th scope="col">Required decision</th></tr></thead>
+      <tbody>
+        <tr><td>Android release uses debug signing</td><td><code>android/app/build.gradle.kts</code> assigns <code>signingConfigs.getByName("debug")</code> to <code>release</code>.</td><td>Create and manage a real release keystore outside source control, then configure the release build securely.</td></tr>
+        <tr><td>No signing material</td><td>No <code>key.properties</code>, JKS, or upload keystore is checked in.</td><td>Provision the organization’s signing material and recovery process.</td></tr>
+        <tr><td>Local HTTP API</td><td>Default is <code>http://192.168.0.187/...</code>.</td><td>Choose and implement a production API transport and base URL.</td></tr>
+        <tr><td>Cleartext / arbitrary loads</td><td>Android and iOS flags currently permit unencrypted transport.</td><td>Tighten transport policy for the release platform.</td></tr>
+        <tr><td>iOS signing and push</td><td>Apple team, profile, APNs capability, and Firebase plist are environment-specific.</td><td>Follow the iOS setup section to provision signing, APNs, Firebase, and the Dart initialization path.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-block is-warning">
+    <p><strong>Release status:</strong> Android release signing is currently a debug-key placeholder. Do not present the current release build as suitable for store distribution.</p>
+  </div>
+</section>
+
+<section class="doc-section" id="developer-guide" data-section-title="Extension guide">
+  <h2 class="section-title">Add work along the project’s actual layers</h2>
+  <p>Mono Vendor uses repositories behind providers, with public screens selected by the shell. Extend the current layers rather than introducing a second navigation or state system.</p>
+
+  <h3 class="heading-2">Source-backed extension sequence</h3>
+  <ol class="list-item">
+    <li>Add or update the data shape under <code>lib/models/</code>.</li>
+    <li>Add the server path to <code>lib/services/api_endpoints.dart</code> when a new endpoint is required.</li>
+    <li>Implement request, response parsing, and error behavior in the matching <code>lib/repositories/</code> class.</li>
+    <li>Expose loading, mutation, and refresh state through a <code>ChangeNotifier</code> in <code>lib/providers/</code>.</li>
+    <li>Register a persistent provider in the <code>MultiProvider</code> list in <code>lib/main.dart</code> when its lifetime is app-wide.</li>
+    <li>Build the public UI under the appropriate <code>lib/screens/</code> feature folder and reuse <code>lib/widgets/</code> components.</li>
+    <li>For a shell destination, add an <code>AppConstants</code> key, drawer selection, title mapping, and <code>_buildActiveBody()</code> case in <code>MainVendorShell</code>.</li>
+    <li>Add focused tests under <code>test/</code> for parsing, provider behavior, or widget output.</li>
+  </ol>
+
+  <pre><code class="code-block">Screen
+  └─ Provider&lt;ChangeNotifier&gt;
+      └─ Repository
+          ├─ ApiEndpoints path
+          ├─ ApiClient / service
+          └─ Model parsing</code></pre>
+
+  <h3 class="heading-2">Worked example: add a wishlist feature module</h3>
+  <p>Here is the sequence above applied to one concrete feature, so you can copy the shape rather than infer it. The example adds a vendor wishlist backed by a <code>GET /vendor/wishlist</code> endpoint.</p>
+
+  <ol class="list-item">
+    <li><strong>Model — <code>lib/models/vendor_wishlist_item.dart</code>.</strong> A plain data class with <code>fromJson</code>, matching the field names the endpoint returns.</li>
+    <li><strong>Endpoint — <code>lib/services/api_endpoints.dart</code>.</strong> Add a static path constant alongside the existing vendor routes; never inline a URL in a repository.</li>
+    <li><strong>Repository — <code>lib/repositories/wishlist_repository.dart</code>.</strong> Takes an <code>ApiClient</code>, calls the endpoint, maps the response into the model, and returns typed data or throws — no widget types.</li>
+    <li><strong>Provider — <code>lib/providers/wishlist_provider.dart</code>.</strong> A <code>ChangeNotifier</code> holding <code>items</code>, <code>isLoading</code>, and <code>error</code>, with <code>load()</code> and <code>toggle(item)</code>. Register it in the <code>MultiProvider</code> list in <code>lib/main.dart</code> if it should survive navigation.</li>
+    <li><strong>Screen — <code>lib/screens/wishlist/wishlist_screen.dart</code>.</strong> A public <code>*Screen</code> class that watches the provider and renders loading, empty, error, and populated states. Reuse existing <code>lib/widgets/</code> cards instead of restyling.</li>
+    <li><strong>Navigation.</strong> Push the screen with <code>Navigator.push</code> from an existing entry point. Only touch <code>MainVendorShell</code> if the feature is a new permanent drawer destination, in which case add the <code>AppConstants</code> key, the drawer item, the title mapping, and the <code>_buildActiveBody()</code> case together.</li>
+  </ol>
+
+  <pre><code class="code-block">lib/
+├─ models/vendor_wishlist_item.dart        ← new
+├─ services/api_endpoints.dart             ← add wishlist path
+├─ repositories/wishlist_repository.dart   ← new
+├─ providers/wishlist_provider.dart        ← new
+├─ screens/wishlist/wishlist_screen.dart   ← new
+└─ widgets/wishlist_tile.dart              ← new, if reused
+
+main.dart                                  ← register provider (if app-wide)</code></pre>
+
+  <div class="info-block">
+    <p><strong>Test the boundary, not the pixels.</strong> A repository test that asserts <code>fromJson</code> handles a missing optional field, and a provider test that asserts <code>load()</code> sets <code>error</code> on failure, cover the parts most likely to break. Widget tests are worth adding when a screen has a non-trivial empty or error state.</p>
+  </div>
+
+  <div class="info-block">
+    <p><strong>Keep navigation truthful.</strong> The shell drawer belongs on Overview. Internal subviews should remain inside their owning screen unless a new public <code>*Screen</code> class is deliberately added and counted in the inventory.</p>
+  </div>
+</section>
+
+<section class="doc-section" id="support" data-section-title="Support and limitations">
+  <h2 class="section-title">Communication exists; a support-ticket system does not</h2>
+  <p>Mono Vendor communicates with customers through the unified chat list/thread, follower conversation entry, notifications, and server-authorized Ably sessions. Store Settings exposes account and logout actions. These are the source-backed communication paths.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Checked item</th><th scope="col">Source result</th></tr></thead>
+      <tbody>
+        <tr><td>Customer communication</td><td>Unified chat, thread replies, presence, followers, and notifications are implemented.</td></tr>
+        <tr><td>Support-ticket endpoint</td><td>No support-ticket endpoint or repository exists.</td></tr>
+        <tr><td>Support contact</td><td>No email address, phone number, or external support contact is defined in this repository.</td></tr>
+        <tr><td>Payments</td><td>Settlements, withdrawals, and hosted checkout exist; there is no payment-log screen.</td></tr>
+        <tr><td>Maps</td><td>No map/geolocation package is declared.</td></tr>
+        <tr><td>Screen count</td><td>27 public <code>*Screen</code> classes plus <code>MainVendorShell</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Known source limitations</h3>
+  <ul class="list-item">
+    <li>The active API is a local cleartext LAN URL.</li>
+    <li>Android release mode is debug-signed.</li>
+    <li>iOS requires developer-provided Apple signing, APNs, Firebase plist, and Dart push initialization; the setup steps are documented above.</li>
+    <li>The app targets Android and iOS; mobile-only <code>dart:io</code> imports prevent a web build.</li>
+    <li>No source-backed support-ticket workflow or support contact exists.</li>
+  </ul>
+
+  <p>Add your own credentials, signing keys, and production API base URL before you publish. They are intentionally left out of the source package so your keys stay private.</p>
+</section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <p><strong>Mono Vendor</strong></p>
+      <small>Flutter app documentation</small>
+    </div>
+    <p>Documentation for <code>mono_vendor</code> 1.0.0+1.</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <dialog class="lightbox" id="image-lightbox" aria-labelledby="lightbox-caption">
+    <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer"><span aria-hidden="true">×</span></button>
+    <img id="lightbox-image" src="assets/images/mono-vendor-app-icon.png" alt="">
+    <div class="lightbox-bar">
+      <p id="lightbox-caption"></p>
+      <span class="lightbox-counter" id="lightbox-counter"></span>
+    </div>
+    <div class="lightbox-nav">
+      <button class="lightbox-step" type="button" data-lightbox-prev>← Previous</button>
+      <button class="lightbox-step" type="button" data-lightbox-close>Close</button>
+      <button class="lightbox-step" type="button" data-lightbox-next>Next →</button>
+    </div>
+  </dialog>
+
+  <noscript>
+    <style>.toc-drawer, .toc-toggle, .action-button { display: none !important; } .guide-shell { display: block; }</style>
+    <p class="noscript-note">JavaScript is disabled. All Mono Vendor documentation sections are shown below.</p>
+  </noscript>
+</body>
+</html>
