@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MonoSMS gateway app documentation: architecture, device pairing, the queue-driven send pipeline, inbound SMS, Android services, and build configuration.">
+  <meta name="theme-color" content="#080c11">
+  <title>MonoSMS Gateway — App Documentation</title>
+  <link rel="icon" type="image/png" href="assets/images/mono-sms-app-icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to documentation</a>
+  <div class="site-grid" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="MonoSMS gateway documentation home">
+      <span class="brand-mark"><img src="assets/images/mono-sms-app-icon.png" alt=""></span>
+      <span class="brand-copy">
+        <strong>MONO SMS GATEWAY</strong>
+        <small>Flutter app</small>
+      </span>
+    </a>
+    <div class="header-actions">
+      <span class="build-chip"><i aria-hidden="true"></i> sms_gateway 1.0.0+1</span>
+      <button class="toc-toggle" id="toc-toggle" type="button" aria-label="Open contents" aria-controls="toc-drawer" aria-expanded="false">
+        <span class="menu-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Contents</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="drawer-scrim" data-drawer-scrim hidden></div>
+
+    <div class="guide-shell">
+      <aside class="toc-drawer" id="toc-drawer" aria-label="On this page" data-toc-drawer>
+        <div class="toc-header">
+          <div>
+            <span class="toc-kicker">On this page</span>
+            <strong>SMS gateway app</strong>
+          </div>
+          <button class="icon-button toc-close" type="button" data-drawer-close aria-label="Close contents"><span aria-hidden="true">×</span></button>
+        </div>
+        <nav class="toc-group" aria-label="MonoSMS gateway guide contents">
+          <span class="toc-label">Overview</span>
+          <a href="#introduction">Product overview</a>
+          <span class="toc-label">Architecture</span>
+          <a href="#folder-structure">Project structure</a>
+          <a href="#screens">Screen inventory</a>
+          <a href="#requirements">Requirements</a>
+          <span class="toc-label">Setup</span>
+          <a href="#installation">Install &amp; run</a>
+          <a href="#third-party-packages">Direct dependencies</a>
+          <a href="#environment-configuration">Build-time configuration</a>
+          <a href="#build-run">Build &amp; release</a>
+          <span class="toc-label">Integration</span>
+          <a href="#pairing">Admin sign-in &amp; pairing</a>
+          <a href="#backend-api-setup">API client &amp; endpoints</a>
+          <a href="#message-flow">Send pipeline</a>
+          <a href="#inbound">Inbound SMS</a>
+          <a href="#android-setup">Android platform layer</a>
+          <a href="#firebase-setup">FCM wake channel</a>
+          <span class="toc-label">Operations</span>
+          <a href="#admin-panel">Admin panel controls</a>
+          <a href="#security">Security &amp; privacy</a>
+          <a href="#developer-guide">Extension guide</a>
+          <a href="#support">Support &amp; limitations</a>
+        </nav>
+        <div class="toc-meta"><span>DOC / SG-1.0.0</span><span>Flutter app</span></div>
+      </aside>
+
+      <div class="doc-stage">
+        <section class="doc-panel" id="sms-guide" aria-label="MonoSMS gateway documentation">
+
+<!-- ================================================== introduction -->
+<section class="doc-section doc-section--intro" id="introduction" data-section-title="Product overview">
+  <div class="ov" id="top" aria-labelledby="ov-title">
+    <div class="ov-bar">
+      <p class="ov-kicker"><span>SMS gateway documentation</span><span>Pair · Send · Operate</span></p>
+      <span class="ov-signal"><i aria-hidden="true"></i>Android device</span>
+    </div>
+
+    <div class="ov-head">
+      <div class="ov-heading">
+        <h1 id="ov-title">MonoSMS.<em> Gateway app documentation.</em></h1>
+        <p class="ov-note"><span aria-hidden="true">●</span> Self-hosted SMS delivery on your own SIM.</p>
+      </div>
+      <div class="ov-side">
+        <p class="ov-lede">A complete operations guide for the <code>sms_gateway</code> Flutter project: the device-side companion that turns one Android phone into the MONO Marketplace SMS sender — pairing through an administrator account, claiming the backend's queued messages, sending them over the phone's own SIM, and forwarding inbound replies.</p>
+        <div class="ov-actions">
+          <button class="action-button action-button--primary" type="button" data-scroll-to="installation">Run the app <span aria-hidden="true">↘</span></button>
+          <button class="action-button" type="button" data-scroll-to="message-flow">Send pipeline <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ov-kpis" aria-label="MonoSMS headline facts">
+      <article class="ov-kpi">
+        <span class="status-index">A / 01</span>
+        <p>Public screens</p>
+        <strong>3 screens + auth gate</strong>
+        <span class="status-badge status-badge--blue">Splash · Login · Home</span>
+      </article>
+      <article class="ov-kpi">
+        <span class="status-index">A / 02</span>
+        <p>Application identity</p>
+        <strong>com.mono.sms_gateway</strong>
+        <span class="status-badge status-badge--green">1.0.0+1</span>
+      </article>
+      <article class="ov-kpi">
+        <span class="status-index">A / 03</span>
+        <p>API default</p>
+        <strong>monomarket.site / api / v1</strong>
+        <span class="status-badge status-badge--amber">--dart-define</span>
+      </article>
+    </div>
+  </div>
+
+  <h2 class="section-title">The gateway in one paragraph</h2>
+  <p><code>sms_gateway</code> is a single-purpose Flutter application, declared in <code>pubspec.yaml</code> as <strong>“Self-hosted SMS gateway: sends queued messages from the device's own SIM.”</strong> It runs on one Android phone that a store administrator owns. The app signs in with admin-panel credentials, exchanges them for a narrow device token, and from then on performs exactly three jobs: report its health to the backend, claim queued SMS messages and send them over the SIM, and forward inbound SMS back to the backend. Every business decision — recipient, body, timing, retry limits — belongs to the backend; the device only dials.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table identity-table">
+      <thead>
+        <tr><th scope="col">Detail</th><th scope="col">Value</th><th scope="col">Source</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Dart package</td><td><code>sms_gateway</code></td><td><code>pubspec.yaml</code></td></tr>
+        <tr><td>Version</td><td><code>1.0.0+1</code></td><td><code>pubspec.yaml</code></td></tr>
+        <tr><td>Description</td><td>Self-hosted SMS gateway: sends queued messages from the device's own SIM</td><td><code>pubspec.yaml</code></td></tr>
+        <tr><td>App label (launcher)</td><td><code>MonoSMS</code></td><td><code>AndroidManifest.xml</code></td></tr>
+        <tr><td>Android application ID</td><td><code>com.mono.sms_gateway</code></td><td><code>android/app/build.gradle.kts</code></td></tr>
+        <tr><td>API base URL</td><td><code>String.fromEnvironment('GATEWAY_API_URL')</code>, default <code>https://monomarket.site/api/v1</code></td><td><code>lib/core/gateway_config.dart</code></td></tr>
+        <tr><td>Routes</td><td><code>/login</code>, <code>/home</code> inside one Navigator; an auth gate picks between them</td><td><code>lib/main.dart</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">How it fits the marketplace</h3>
+  <p>The marketplace backend owns two SMS providers: a hosted Twilio provider and this self-hosted gateway provider. When the gateway is the active provider, every outgoing message — order and OTP notifications, admin test sends — is written to the <code>sms_messages</code> queue instead of an HTTP call to a third party. This app is the worker that drains that queue.</p>
+
+  <div class="platform-guides" aria-label="MonoSMS functional areas">
+    <article class="platform-guide">
+      <h3 class="heading-2">Pairing</h3>
+      <p>An administrator signs in with panel credentials. The backend verifies the <code>sms.gateway.manage</code> permission, then the app exchanges the admin token for a long-lived device token. Nothing on the phone is user-configurable.</p>
+    </article>
+    <article class="platform-guide">
+      <h3 class="heading-2">Sending</h3>
+      <p>FCM data pushes are only a wake signal. The device claims a batch, sends each message through Android's SMS manager, and reports <code>sent</code> or <code>failed</code> per message. A 5-minute claim timeout returns silent claims to the queue.</p>
+    </article>
+    <article class="platform-guide">
+      <h3 class="heading-2">Reliability</h3>
+      <p>Layered recovery: manifest-registered receivers, a data-sync foreground service, WorkManager queue passes, a 15-minute fallback poll, and a scheduled backend recovery command. Missed pushes never lose messages.</p>
+    </article>
+  </div>
+</section>
+
+<!-- =============================================== folder-structure -->
+<section class="doc-section" id="folder-structure" data-section-title="Project structure">
+  <h2 class="section-title">A deliberately small source tree</h2>
+  <p>The app is around 2,800 lines of Dart plus a focused Kotlin layer. <code>lib/</code> is organized by technical layer; there are no feature folders because there is one feature.</p>
+
+  <pre><code class="code-block">sms_gateway/
+├─ pubspec.yaml              dependencies, launcher icons, assets
+├─ pubspec.lock
+├─ analysis_options.yaml     flutter_lints
+├─ assets/
+│  └─ icons/                 app_icon.png, adaptive foreground, logo.svg
+├─ lib/
+│  ├─ main.dart              bootstrap, Firebase init, auth gate, routes
+│  ├─ core/
+│  │  ├─ gateway_config.dart compiled-in API base URL
+│  │  └─ app_logger.dart     ring-buffer logger + payload redaction
+│  ├─ providers/
+│  │  └─ gateway_provider.dart  the whole device state machine (461 lines)
+│  ├─ screens/
+│  │  ├─ splash_screen.dart  neutral boot screen
+│  │  ├─ login_screen.dart   admin sign-in form
+│  │  └─ home_screen.dart    dashboard: status, queue, service, log
+│  ├─ services/
+│  │  ├─ api_client.dart     device API (Dio) + token storage
+│  │  ├─ admin_session.dart  admin sign-in + device registration
+│  │  ├─ device_bridge.dart  single MethodChannel to Kotlin
+│  │  ├─ device_identity.dart SIM-accurate device name and id
+│  │  └─ fcm_service.dart    Firebase wake listeners
+│  ├─ theme/
+│  │  └─ app_theme.dart      Material 3 dark theme
+│  └─ widgets/               AppCard, PrimaryButton
+└─ android/
+   └─ app/src/main/kotlin/com/mono/sms_gateway/
+      ├─ MainActivity.kt      Flutter entry, hosts the channel handler
+      ├─ GatewayNative.kt     MethodChannel: send, SIM, service control
+      ├─ GatewayService.kt    data-sync foreground service
+      ├─ GatewaySync.kt       authenticated queue pass (native)
+      ├─ GatewaySyncWorker.kt WorkManager wrapper for background passes
+      ├─ GatewayMessagingService.kt  FCM entry, schedules native sync
+      ├─ SmsReceiver.kt       manifest inbound-SMS receiver
+      ├─ SmsResultReceiver.kt per-message send result callback
+      ├─ BootReceiver.kt      re-arms after reboot / app update
+      ├─ RestartReceiver.kt   restart when the app is swiped away
+      └─ GatewayEvents.kt     shared event plumbing</code></pre>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead>
+        <tr><th scope="col">Layer</th><th scope="col">Responsibility</th><th scope="col">Representative files</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Core</td><td>Compiled configuration and the shared logger with redaction</td><td><code>gateway_config.dart</code>, <code>app_logger.dart</code></td></tr>
+        <tr><td>Providers</td><td>One <code>ChangeNotifier</code> owning status, permissions, timers, counters, and the on-screen log</td><td><code>gateway_provider.dart</code></td></tr>
+        <tr><td>Screens</td><td>Three public <code>*Screen</code> classes; dashboard cards are internal widgets</td><td><code>home_screen.dart</code>, <code>login_screen.dart</code></td></tr>
+        <tr><td>Services</td><td>HTTP, pairing, the Kotlin bridge, device identity, Firebase wake</td><td><code>api_client.dart</code>, <code>device_bridge.dart</code>, <code>fcm_service.dart</code></td></tr>
+        <tr><td>Android (Kotlin)</td><td>SIM sending, foreground service, WorkManager, receivers — no business logic</td><td><code>GatewayNative.kt</code>, <code>GatewayService.kt</code>, <code>SmsReceiver.kt</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-block">
+    <p><strong>Dart never touches Android APIs directly.</strong> Every platform action goes through one MethodChannel, <code>com.mono.sms_gateway/device</code>, and the Kotlin side performs only the action it is asked for — it holds no queue state and makes no decisions.</p>
+  </div>
+</section>
+
+<!-- ====================================================== screens -->
+<section class="doc-section" id="screens" data-section-title="Screen inventory">
+  <h2 class="section-title">Three screens, one job</h2>
+  <p>The class count comes from public classes named <code>*Screen</code> in <code>lib/screens/</code>. Dashboard cards, pills, and dialogs are internal widgets of <code>home_screen.dart</code>, not additional screens.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table screen-inventory-table">
+      <thead><tr><th scope="col">Screen</th><th scope="col">Route</th><th scope="col">Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>SplashScreen</code></td><td>— (auth gate)</td><td>Neutral boot view while the stored device token is restored, so a paired phone never flashes the login form on restart.</td></tr>
+        <tr><td><code>LoginScreen</code></td><td><code>/login</code></td><td>Admin e-mail and password. The device name and id are derived automatically — there is nothing else to type.</td></tr>
+        <tr><td><code>HomeScreen</code></td><td><code>/home</code></td><td>Operations dashboard: status hero, queue counters, background-service control, the rolling activity log, and a diagnostics card.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Dashboard cards on the home screen</h3>
+  <div class="table-wrap">
+    <table class="packages-table drawer-map-table">
+      <thead><tr><th scope="col">Card</th><th scope="col">What it shows and does</th></tr></thead>
+      <tbody>
+        <tr><td>Hero status</td><td>Online / Not ready / Offline pill, device name, SIM state, carrier, battery, last-sync clock, and a Retry button.</td></tr>
+        <tr><td>Queue</td><td>Pending, sent, and failed counters from the backend plus a manual <em>Check queue now</em> button.</td></tr>
+        <tr><td>Background</td><td>Foreground-service toggle, battery-optimization exemption state with a shortcut into Android settings.</td></tr>
+        <tr><td>Log</td><td>Last 100 activity entries; recipients and bodies are never printed.</td></tr>
+        <tr><td>Diagnostics</td><td>Exportable diagnostics report from the 300-entry logger ring buffer.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">App-bar menu</h3>
+  <p>The overflow menu exposes the three operator actions: <em>Re-scan inbox</em> (recovery pass for inbound SMS the broadcast receiver missed), <em>Battery settings</em> (deep-link into Android's battery-optimization screen — required on Xiaomi/Oppo/Vivo/Samsung), and <em>Sign out</em> (stops the service, forgets every stored credential, and returns to login).</p>
+
+  <h3 class="heading-2">Connection states</h3>
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col"><code>GatewayStatus</code></th><th scope="col">Meaning</th><th scope="col">Shown when</th></tr></thead>
+      <tbody>
+        <tr><td><code>notConfigured</code></td><td>No device token stored</td><td>Before first successful pairing; the auth gate shows login</td></tr>
+        <tr><td><code>notReady</code></td><td>Paired but Android permissions missing</td><td>SMS or Phone permission denied — named in the status message</td></tr>
+        <tr><td><code>offline</code></td><td>Paired but the backend is unreachable</td><td>Status/heartbeat/claim request failed</td></tr>
+        <tr><td><code>online</code></td><td>Working</td><td>Last status, heartbeat, or send pass succeeded</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================================================== requirements -->
+<section class="doc-section" id="requirements" data-section-title="Requirements">
+  <h2 class="section-title">Toolchain and device requirements</h2>
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Requirement</th><th scope="col">Value</th><th scope="col">Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Flutter SDK</td><td>Dart <code>^3.13.4</code></td><td><code>pubspec.yaml</code> environment</td></tr>
+        <tr><td>Android compile SDK</td><td><code>37</code></td><td><code>android/app/build.gradle.kts</code></td></tr>
+        <tr><td>Android target SDK</td><td><code>36</code></td><td>Pinned deliberately</td></tr>
+        <tr><td>Android min SDK</td><td><code>maxOf(flutter.minSdkVersion, 23)</code></td><td>Runtime permissions need 23+</td></tr>
+        <tr><td>Device hardware</td><td><code>android.hardware.telephony</code> required</td><td>Declared in the manifest; tablets without radios cannot install</td></tr>
+        <tr><td>SIM</td><td>Active, SMS-capable</td><td>Carrier charges apply per sent message — this is real SMS, not VoIP</td></tr>
+        <tr><td>Firebase project</td><td><code>google-services.json</code></td><td>For the FCM wake channel only; the app runs without it, on timers alone</td></tr>
+        <tr><td>Backend account</td><td>Admin with <code>sms.gateway.manage</code></td><td>The backend refuses to register a device for an account without it</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Before the first run</h3>
+  <ul class="list-item">
+    <li>Android Studio with the SDK platforms for API 36/37, or a plain Flutter toolchain.</li>
+    <li>A physical Android phone — emulators cannot send SMS over a SIM.</li>
+    <li>The backend reachable from the phone's network, and an administrator account with the SMS Gateway permission.</li>
+    <li>Your Firebase <code>google-services.json</code> dropped into <code>android/app/</code> if you want push wake-ups.</li>
+  </ul>
+</section>
+
+<!-- ================================================== installation -->
+<section class="doc-section" id="installation" data-section-title="Install and run">
+  <h2 class="section-title">Install and launch from the repository</h2>
+  <p>The app is a standard Flutter package with no code generation step and no flavors. Fetch, configure Firebase, run.</p>
+
+  <div class="code-shell code-shell--command">
+    <div class="code-head"><span>Run sequence</span><button class="copy-button" type="button" data-copy="#cmd-install">Copy</button></div>
+    <pre><code class="code-block" id="cmd-install">git clone &lt;your-repo&gt; sms_gateway
+cd sms_gateway
+flutter pub get
+# drop your google-services.json into android/app/ (optional, for FCM)
+flutter run --dart-define=GATEWAY_API_URL=https://your-store.com/api/v1</code></pre>
+  </div>
+
+  <h3 class="heading-2">What happens on first launch</h3>
+  <ol class="list-item">
+    <li><code>main()</code> initializes device identity and Firebase <em>before</em> <code>runApp</code>, because the provider installs FCM listeners and uploads the token immediately.</li>
+    <li>The auth gate finds no stored device token and shows the login screen.</li>
+    <li>The administrator signs in; the app registers the device and lands on the dashboard already online.</li>
+    <li>The heartbeat fires immediately, a first queue pass runs, the foreground service starts, and the 5-minute / 15-minute timers begin.</li>
+  </ol>
+
+  <div class="info-block">
+    <p><strong>Paired phones skip login on restart.</strong> The device token lives in <code>FlutterSecureStorage</code>; the splash screen shows only while it is being restored, then the dashboard appears directly.</p>
+  </div>
+</section>
+
+<!-- ============================================ third-party-packages -->
+<section class="doc-section" id="third-party-packages" data-section-title="Direct dependencies">
+  <h2 class="section-title">Direct dependencies, exactly as declared</h2>
+  <p>Every dependency is pinned in <code>pubspec.yaml</code>; <code>pubspec.lock</code> freezes the resolved versions. The list is intentionally short.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table dependency-table">
+      <thead><tr><th scope="col">Package</th><th scope="col">Constraint</th><th scope="col">Why it is here</th></tr></thead>
+      <tbody>
+        <tr><td><code>provider</code></td><td><code>^6.1.5+1</code></td><td>State management — one <code>GatewayProvider</code> drives everything</td></tr>
+        <tr><td><code>dio</code></td><td><code>^5.11.1</code></td><td>HTTP client with interceptors for the bearer token and redacted logging</td></tr>
+        <tr><td><code>firebase_core</code></td><td><code>^4.15.0</code></td><td>Firebase bootstrap for the wake channel</td></tr>
+        <tr><td><code>firebase_messaging</code></td><td><code>^16.7.0</code></td><td>FCM wake signal and token rotation only — never message content</td></tr>
+        <tr><td><code>flutter_secure_storage</code></td><td><code>^11.2.0</code></td><td>Device and admin tokens at rest</td></tr>
+        <tr><td><code>shared_preferences</code></td><td><code>^2.5.5</code></td><td>Non-secret fallback: the base URL for the native layer</td></tr>
+        <tr><td><code>permission_handler</code></td><td><code>^12.0.3</code></td><td>SMS, phone, and notification runtime permissions</td></tr>
+        <tr><td><code>device_info_plus</code></td><td><code>^13.2.0</code></td><td>Derives the device name/id shown in Admin → SMS Gateway</td></tr>
+        <tr><td><code>flutter_svg</code></td><td><code>^2.3.0</code></td><td>Renders the shared MONO brand artwork</td></tr>
+        <tr><td><code>logger</code> / <code>package_info_plus</code></td><td><code>^2.8.0</code> / <code>^10.2.1</code></td><td>Console output and the app version reported in heartbeats</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Dev dependencies</th><th scope="col">Constraint</th><th scope="col">Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>flutter_lints</code></td><td><code>^6.0.0</code></td><td>Recommended lint set via <code>analysis_options.yaml</code></td></tr>
+        <tr><td><code>flutter_launcher_icons</code></td><td><code>^0.14.4</code></td><td>Generates launcher icons from <code>assets/icons/app_icon.png</code>, black adaptive background</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ====================================== environment-configuration -->
+<section class="doc-section" id="environment-configuration" data-section-title="Build-time configuration">
+  <h2 class="section-title">One compile-time constant, nothing else</h2>
+  <p>There is no settings screen for the server and no <code>.env</code> file. The base URL is compiled into the binary:</p>
+
+  <pre><code class="code-block">lib/core/gateway_config.dart
+──────────────────────────────
+static const String baseUrl = String.fromEnvironment(
+  'GATEWAY_API_URL',
+  defaultValue: 'https://monomarket.site/api/v1',
+);</code></pre>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Task</th><th scope="col">Command / source</th></tr></thead>
+      <tbody>
+        <tr><td>Point a build at another environment</td><td><code>flutter build apk --dart-define=GATEWAY_API_URL=https://store.example.com/api/v1</code></td></tr>
+        <tr><td>Default environment</td><td>The compiled-in default (<code>monomarket.site</code>) is used when the define is absent</td></tr>
+        <tr><td>Native credential fallback</td><td>The same URL is mirrored into <code>SharedPreferences</code> under <code>base_url</code> — non-secret, kept for native upgrades</td></tr>
+        <tr><td>Transport security</td><td><code>android:usesCleartextTraffic="true"</code> — HTTP is allowed so a LAN backend can be tested; see the security section before shipping</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p><strong>A gateway phone is configured only by signing in.</strong> The address is compiled in rather than typed, so an operator cannot be tricked into pointing the device at a hostile server — whoever built the APK chose the endpoint.</p>
+  </div>
+</section>
+
+<!-- ==================================================== pairing -->
+<section class="doc-section" id="pairing" data-section-title="Admin sign-in and pairing">
+  <h2 class="section-title">Pairing: from admin credentials to a device token</h2>
+  <p>Paring is the only privileged moment in the device's life. It uses the administrator's account once, then immediately narrows down to a device-scoped credential.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table endpoint-table">
+      <thead><tr><th scope="col">Step</th><th scope="col">Call</th><th scope="col">What happens</th></tr></thead>
+      <tbody>
+        <tr><td>1 · Sign in</td><td><code>POST /admin/auth/login</code> with <code>email</code>, <code>password</code>, <code>deviceName</code>, <code>deviceId</code></td><td>Backend validates the credentials <em>and</em> the <code>sms.gateway.manage</code> permission; returns a Sanctum admin token.</td></tr>
+        <tr><td>2 · Register device</td><td><code>POST /admin/auth/register-device</code> with <code>name</code>, <code>deviceId</code>, <code>appVersion</code>, bearer admin token</td><td>Backend creates or refreshes an <code>SmsGatewayDevice</code> row and issues a <code>deviceToken</code>.</td></tr>
+        <tr><td>3 · Keep the narrow credential</td><td>— (local)</td><td>The app stores the device token in secure storage, mirrors it into the native encrypted store, and discards the admin session from active use (kept only for logout).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Device identity is automatic</h3>
+  <p><code>DeviceIdentity</code> derives both values from the hardware: on Android the id is <code>&lt;androidId&gt;-&lt;model&gt;</code> and the name is a de-duplicated <code>&lt;manufacturer&gt; &lt;model&gt;</code> (so stock devices read “Pixel 8”, not “Google Pixel 8”). On iOS it uses <code>identifierForVendor</code>. If identity is unavailable the app still works, reporting <code>unknown-device</code> / “SMS Gateway”.</p>
+
+  <h3 class="heading-2">Signing out</h3>
+  <p><code>signOutCleanup()</code> cancels both timers, disposes FCM listeners, stops the foreground service, deletes the device token (secure storage) and native credentials, and returns the app to <code>notConfigured</code>. The backend-side device row survives so the admin can revoke or re-issue its token from the panel.</p>
+</section>
+
+<!-- =============================================== backend-api-setup -->
+<section class="doc-section" id="backend-api-setup" data-section-title="API client and endpoints">
+  <h2 class="section-title">The device API surface</h2>
+  <p>After pairing, every call carries the device token as a bearer token, enforced by the backend's <code>AuthenticateSmsGateway</code> middleware — an admin token or customer token is rejected on these routes. Responses use the platform envelope <code>{ success, data, error }</code>; <code>GatewayResult.fromBody</code> parses exactly that shape.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table endpoint-table">
+      <thead><tr><th scope="col">Endpoint</th><th scope="col">Purpose</th><th scope="col">Payload → response highlights</th></tr></thead>
+      <tbody>
+        <tr><td><code>GET /sms-gateway/status</code></td><td>Dashboard counters</td><td>Returns <code>pending</code>, <code>sent</code>, <code>failed</code> for this device.</td></tr>
+        <tr><td><code>POST /sms-gateway/heartbeat</code></td><td>Health + identity refresh</td><td>Sends <code>appVersion</code>, <code>simNumber</code>, <code>carrier</code>, <code>simState</code>, <code>batteryLevel</code>, and the current <code>fcmToken</code> so the backend always wakes the right phone.</td></tr>
+        <tr><td><code>POST /sms-gateway/sms/claim</code></td><td>Fetch a send batch</td><td><code>limit</code> 1–25 (app asks for 10). Transactional: reclaims timed-out claims, then locks pending rows with <code>lockForUpdate</code>. Returns the claimed messages.</td></tr>
+        <tr><td><code>POST /sms-gateway/sms/{id}/report</code></td><td>Report one result</td><td><code>status: sent|failed</code> plus an optional human-readable <code>error</code>. Throttled to 60/min.</td></tr>
+        <tr><td><code>POST /sms-gateway/sms/incoming</code></td><td>Forward inbound SMS</td><td><code>messages[]</code> with <code>uid</code>, <code>from</code>, <code>body</code>, <code>receivedAt</code>, optional SIM fields. The backend drops duplicates by <code>uid</code> and reports how many it ignored.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Rate limits (backend)</th><th scope="col">Per minute</th></tr></thead>
+      <tbody>
+        <tr><td><code>sms/claim</code> and <code>sms/incoming</code></td><td>30</td></tr>
+        <tr><td><code>sms/{id}/report</code></td><td>60</td></tr>
+        <tr><td><code>status</code>, <code>heartbeat</code></td><td>Unthrottled beyond the global API limiter</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Client behavior details</h3>
+  <ul class="list-item">
+    <li><strong>Token handling:</strong> the token is read from secure storage once at startup; <code>init()</code> never re-reads over a freshly signed-in token.</li>
+    <li><strong>Error surfacing:</strong> Dio errors are translated into human messages — 401 becomes “The device token was rejected. Sign in again.”, a missing connection becomes “Could not reach the server.”</li>
+    <li><strong>Log redaction:</strong> the request interceptor logs method and path, and passes bodies through <code>AppLogger.redact</code>, which masks sensitive keys with <code>***</code> — a queued message can carry a one-time code.</li>
+    <li><strong>Failure isolation:</strong> every call returns a <code>GatewayResult</code> rather than throwing; UI state never depends on exceptions.</li>
+  </ul>
+</section>
+
+<!-- ================================================== message-flow -->
+<section class="doc-section" id="message-flow" data-section-title="Send pipeline">
+  <h2 class="section-title">The send pipeline: queue is the source of truth</h2>
+  <p>FCM pushes are wake signals only — their data never contains an SMS body or recipient. Delivery is pulled, always, from the queue:</p>
+
+  <pre><code class="code-block">Backend                    Device (MonoSMS)                Android
+────────────────────────   ─────────────────────────────   ──────────────
+Order placed / OTP due
+  └─ sms_messages row (pending)
+      └─ FCM push {type: sms_queue_available}  ──▶  wake
+                                                  ├─ foreground: DeviceBridge.runNativeSync()
+                                                  └─ background: GatewayMessagingService → WorkManager
+POST /sms-gateway/sms/claim  ◀──────────────   authenticated queue pass
+  reclaim claims older than 5 min
+  lockForUpdate pending rows (≤ limit)
+  mark processing, stamp claimed_at
+messages[{id, to, body, kind}] ──────────────▶  for each: SmsManager send
+                                                     │  SmsResultReceiver
+POST /sms-gateway/sms/{id}/report ◀──────────  sent  |  failed + error
+  status = sent / failed</code></pre>
+
+  <h3 class="heading-2">Triggers, in order of importance</h3>
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Trigger</th><th scope="col">Mechanism</th><th scope="col">Notes</th></tr></thead>
+      <tbody>
+        <tr><td>FCM push</td><td><code>sms_queue_available</code> data message</td><td>Foreground listener and a native messaging service that schedules WorkManager — valid even while the UI is backgrounded</td></tr>
+        <tr><td>Manual</td><td><em>Check queue now</em> / pull-to-refresh</td><td>Calls <code>fetchAndSend()</code> directly</td></tr>
+        <tr><td>Fallback poll</td><td>Every <strong>15 minutes</strong></td><td>Recovery net for a missed or delayed push; deliberately long</td></tr>
+        <tr><td>Backend recovery</td><td><code>sms-gateway:recover</code> on the scheduler</td><td>Reclaims timed-out claims, parks retry-exhausted messages, nudges up to 20 pending rows with a fresh push</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Queue guarantees</h3>
+  <ul class="list-item">
+    <li><strong>Single claimer:</strong> the claim transaction locks rows and stamps <code>claimed_at</code>, so two gateway devices can never send the same message.</li>
+    <li><strong>No silent loss:</strong> a claim that never reports back is returned to <code>pending</code> after 5 minutes (<code>CLAIM_TIMEOUT_MINUTES</code>) and re-offered.</li>
+    <li><strong>Bounded retries:</strong> each row carries <code>attempts</code> and <code>max_attempts</code>; a message that exhausts them is parked as <code>failed</code> with “Retry limit reached.” instead of looping forever.</li>
+    <li><strong>Honest accounting:</strong> the send result comes from Android's <code>SmsResultReceiver</code>, not from the absence of an exception; failures report the carrier's reason string.</li>
+  </ul>
+
+  <h3 class="heading-2">Timers while the app is alive</h3>
+  <p>Once paired, the provider runs a <strong>5-minute heartbeat</strong> (which also re-uploads the FCM token after rotation) and the <strong>15-minute fallback poll</strong>. Both are cancelled on sign-out. The foreground service takes over durability when the app is backgrounded or swiped away.</p>
+</section>
+
+<!-- ======================================================= inbound -->
+<section class="doc-section" id="inbound" data-section-title="Inbound SMS">
+  <h2 class="section-title">Inbound SMS: capture, forward, deduplicate</h2>
+  <p>Inbound messages (customer replies, carrier notices) flow the opposite way — from Android into the backend's <code>sms_inbound_messages</code> table.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Stage</th><th scope="col">Component</th><th scope="col">Behavior</th></tr></thead>
+      <tbody>
+        <tr><td>Capture</td><td><code>SmsReceiver.kt</code></td><td>Manifest-registered for <code>Telephony.SMS_RECEIVED</code> at priority 999 with the <code>BROADCAST_SMS</code> guard — runs even when the app is closed or the phone is locked. This is the primary path.</td></tr>
+        <tr><td>Handoff</td><td>MethodChannel event</td><td>The receiver pushes an <code>IncomingSms</code> (uid, from, body, receivedAt, SIM fields) up to Dart via <code>onIncomingSms</code>.</td></tr>
+        <tr><td>Forward</td><td><code>POST /sms-gateway/sms/incoming</code></td><td>One message per call; the uid lets the backend drop duplicates — the same message delivered twice is safe.</td></tr>
+        <tr><td>Recovery</td><td>Inbox scan</td><td>The foreground service observes the inbox; <em>Re-scan inbox</em> re-offsers anything the broadcast missed while the process was frozen.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-block">
+    <p><strong>Two capture paths, one truth.</strong> The broadcast receiver is primary; the inbox scan exists only because some OEMs freeze apps and swallow broadcasts. Both feed the same deduplicating endpoint.</p>
+  </div>
+</section>
+
+<!-- ================================================== android-setup -->
+<section class="doc-section" id="android-setup" data-section-title="Android platform layer">
+  <h2 class="section-title">Android permissions and platform components</h2>
+  <p>The Kotlin layer exists to keep the gateway alive and to dial the radio. Everything is registered in the manifest so it works without the UI.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Permission</th><th scope="col">Why</th><th scope="col">Runtime?</th></tr></thead>
+      <tbody>
+        <tr><td><code>SEND_SMS</code></td><td>Sending queued messages over the SIM</td><td>Yes — requested at startup, gate to <code>online</code></td></tr>
+        <tr><td><code>RECEIVE_SMS</code></td><td>Inbound capture</td><td>Yes</td></tr>
+        <tr><td><code>READ_SMS</code></td><td>Inbox recovery pass</td><td>Yes</td></tr>
+        <tr><td><code>READ_PHONE_STATE</code></td><td>SIM number/carrier for the admin dashboard</td><td>Yes</td></tr>
+        <tr><td><code>POST_NOTIFICATIONS</code></td><td>Foreground-service notification visibility</td><td>Yes (13+); denied only hides status</td></tr>
+        <tr><td><code>FOREGROUND_SERVICE</code> + <code>_DATA_SYNC</code></td><td>Keeps the process and inbox observer alive</td><td>No</td></tr>
+        <tr><td><code>RECEIVE_BOOT_COMPLETED</code></td><td>Re-arm after reboot or app update</td><td>No</td></tr>
+        <tr><td><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code></td><td>API access</td><td>No</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Manifest components</h3>
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Component</th><th scope="col">Registered for</th><th scope="col">Role</th></tr></thead>
+      <tbody>
+        <tr><td><code>SmsReceiver</code></td><td><code>Telephony.SMS_RECEIVED</code>, priority 999</td><td>Primary inbound capture, guarded by <code>BROADCAST_SMS</code></td></tr>
+        <tr><td><code>GatewayService</code></td><td>foregroundServiceType <code>dataSync</code></td><td>Keeps the process alive; its notification mirrors live dashboard numbers (status, counts, SIM, battery, last sync)</td></tr>
+        <tr><td><code>GatewayMessagingService</code></td><td><code>com.google.firebase.MESSAGING_EVENT</code></td><td>Replaces FlutterFire's service (<code>tools:node="remove"</code>): keeps Dart delivery and schedules the native worker</td></tr>
+        <tr><td><code>GatewaySyncWorker</code></td><td>WorkManager</td><td>Durable authenticated queue pass that survives process death — this is what runs the pipeline when the app is backgrounded</td></tr>
+        <tr><td><code>BootReceiver</code></td><td><code>BOOT_COMPLETED</code>, <code>MY_PACKAGE_REPLACED</code>, <code>QUICKBOOT_POWERON</code></td><td>Re-arms the gateway after a reboot or update</td></tr>
+        <tr><td><code>RestartReceiver</code></td><td>internal</td><td>Restarts the service when the app is swiped away</td></tr>
+        <tr><td><code>SmsResultReceiver</code></td><td>internal</td><td>Per-message delivery result feeding honest <code>sent</code>/<code>failed</code> reports</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Battery optimization</h3>
+  <p>Android may freeze the gateway on aggressive OEM skins. The dashboard reads the exemption state and offers a one-tap deep link into the battery settings screen (<code>openBatterySettings</code>). Exempting the app is expected procedure on Xiaomi, Oppo, Vivo, and Samsung.</p>
+</section>
+
+<!-- ================================================= firebase-setup -->
+<section class="doc-section" id="firebase-setup" data-section-title="FCM wake channel">
+  <h2 class="section-title">Firebase is a doorbell, not a courier</h2>
+  <p>Push payloads carry a single datum: <code>type: sms_queue_available</code>. No SMS body, no recipient, ever. If Firebase is unavailable the app still works — the fallback poll and backend recovery nudge cover the difference.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Aspect</th><th scope="col">Behavior</th></tr></thead>
+      <tbody>
+        <tr><td>Foreground</td><td><code>FcmService.listen</code> installs one <code>onMessage</code> listener that calls the native queue pass on <code>sms_queue_available</code></td></tr>
+        <tr><td>Background</td><td><code>GatewayMessagingService</code> (a FlutterFire subclass) records delivery and schedules <code>GatewaySyncWorker</code> — the authenticated pass runs natively, no Dart MethodChannel needed</td></tr>
+        <tr><td>Token rotation</td><td><code>onTokenRefresh</code> triggers an immediate heartbeat, which carries the new token to the backend</td></tr>
+        <tr><td>First upload</td><td><code>init()</code> heartbeats right after pairing, so the backend can wake the device before the first 5-minute tick</td></tr>
+        <tr><td>Failure mode</td><td>Firebase init failures are logged and swallowed; wake-ups degrade to timers, nothing crashes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Setting up your own Firebase project</h3>
+  <ol class="list-item">
+    <li>Create a Firebase project and add an Android app with package <code>com.mono.sms_gateway</code>.</li>
+    <li>Download <code>google-services.json</code> into <code>android/app/</code>.</li>
+    <li>Enable Cloud Messaging (no APNs key needed unless you also ship iOS).</li>
+    <li>Build and pair — the first heartbeat uploads the FCM token, and the admin panel shows the device as <em>Connected</em>.</li>
+  </ol>
+</section>
+
+<!-- ===================================================== build-run -->
+<section class="doc-section" id="build-run" data-section-title="Build and release">
+  <h2 class="section-title">Build commands and release notes</h2>
+
+  <div class="code-shell code-shell--command">
+    <div class="code-head"><span>Build targets</span><button class="copy-button" type="button" data-copy="#cmd-build">Copy</button></div>
+    <pre><code class="code-block" id="cmd-build"># debug run on a connected phone
+flutter run --dart-define=GATEWAY_API_URL=https://your-store.com/api/v1
+
+# release APK (the gateway ships as a sideloaded APK, not Play Store)
+flutter build apk --release --dart-define=GATEWAY_API_URL=https://your-store.com/api/v1
+
+# regenerate launcher icons after changing assets/icons/
+dart run flutter_launcher_icons</code></pre>
+  </div>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Item</th><th scope="col">State in source</th></tr></thead>
+      <tbody>
+        <tr><td>Signing</td><td>Debug signing by default — add your own keystore to <code>android/app/build.gradle.kts</code> before distributing</td></tr>
+        <tr><td>Versioning</td><td><code>1.0.0+1</code> from <code>pubspec.yaml</code>; reported to the backend in heartbeats and device registration</td></tr>
+        <tr><td>Distribution model</td><td>Direct APK install on the gateway phone; there is nothing store-specific in the source</td></tr>
+        <tr><td>iOS</td><td>No iOS runner is configured; the manifest-level features (SMS receivers, foreground service) are Android-only</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p><strong>One phone, one build.</strong> Because the API URL is compiled in, build a dedicated APK per environment (staging, production) rather than reconfiguring devices by hand.</p>
+  </div>
+</section>
+
+<!-- =================================================== admin-panel -->
+<section class="doc-section" id="admin-panel" data-section-title="Admin panel controls">
+  <h2 class="section-title">What the administrator sees on the other side</h2>
+  <p>The marketplace admin panel has a dedicated <strong>Admin → SMS Gateway</strong> page (guarded by the <code>sms.gateway.manage</code> permission) that manages the devices this app creates.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Control</th><th scope="col">Behavior</th></tr></thead>
+      <tbody>
+        <tr><td>Device list</td><td>Name, app version, SIM/carrier, battery, and a live online dot — <em>online</em> means a heartbeat within the last 3 minutes</td></tr>
+        <tr><td>One-time token</td><td>Issuing or rotating a device token shows it exactly once, with copy-to-clipboard; the stored hash is never displayed again</td></tr>
+        <tr><td>Activate / Toggle / Revoke / Delete</td><td>One device is the active sender; toggling pauses it; revoking kills its token; deleting removes the row and its queue association</td></tr>
+        <tr><td>Device log</td><td>Per-device message history: statuses, attempts, errors, timestamps</td></tr>
+        <tr><td>Nudge</td><td>Sends an immediate <code>sms_queue_available</code> push to test the wake path end-to-end</td></tr>
+        <tr><td>SMS settings</td><td><code>/admin/settings/sms</code> chooses the provider (self-hosted gateway vs Twilio), manages OTP settings, and sends a test SMS</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Scheduled hygiene on the server</h3>
+  <p>The <code>sms-gateway:recover</code> command runs on the managed scheduler. Each pass reclaims claims older than five minutes, parks retry-exhausted messages as failed, and wakes the active device for up to twenty still-pending messages. Combined with the device's own timers, no message depends on a single lucky push.</p>
+</section>
+
+<!-- ====================================================== security -->
+<section class="doc-section" id="security" data-section-title="Security and privacy">
+  <h2 class="section-title">Security and privacy posture</h2>
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Control</th><th scope="col">Implementation</th></tr></thead>
+      <tbody>
+        <tr><td>Narrow credential</td><td>The app keeps a device token, not the admin session. It works only on <code>/sms-gateway/*</code> routes and is rejected everywhere else.</td></tr>
+        <tr><td>Permission gate</td><td>The backend refuses device registration for accounts without <code>sms.gateway.manage</code>; the app surfaces a clear message on <code>PERMISSION_DENIED</code>.</td></tr>
+        <tr><td>Token at rest</td><td><code>FlutterSecureStorage</code> on the Dart side, mirrored into a native-owned encrypted store the Kotlin worker can read without Flutter.</td></tr>
+        <tr><td>Log hygiene</td><td>Recipients and bodies are never logged; request bodies pass through a redaction pass that masks sensitive keys with <code>***</code>; only the diagnostics export is meant to leave the device.</td></tr>
+        <tr><td>Push hygiene</td><td>FCM payloads contain the queue-available type only — never message content.</td></tr>
+        <tr><td>Revocation</td><td>Revoking or rotating a token in the admin panel immediately invalidates the device's bearer token; the next call gets 401 and the app asks for re-pairing.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-block is-warning">
+    <p><strong>Before production:</strong> the manifest sets <code>android:usesCleartextTraffic="true"</code> for LAN testing, and the app ships debug-signed. Point the build at an HTTPS domain, remove the cleartext flag if you do not need local HTTP, and sign with your own keystore.</p>
+  </div>
+</section>
+
+<!-- =============================================== developer-guide -->
+<section class="doc-section" id="developer-guide" data-section-title="Extension guide">
+  <h2 class="section-title">Extending the gateway safely</h2>
+  <p>The architecture has one rule that keeps it safe to extend: <strong>the backend decides, the device dials.</strong> New features should preserve that split.</p>
+
+  <div class="platform-guides" aria-label="Extension surfaces">
+    <article class="platform-guide">
+      <h3 class="heading-2">Add a device API call</h3>
+      <p>Add the method to <code>GatewayApiClient</code> returning a <code>GatewayResult</code>, and the endpoint to the backend's <code>sms-gateway</code> route group behind <code>gateway.auth</code>. Interceptors already handle the token, logging, and error mapping.</p>
+    </article>
+    <article class="platform-guide">
+      <h3 class="heading-2">Add a platform capability</h3>
+      <p>Expose it on the single <code>com.mono.sms_gateway/device</code> channel: a method in <code>GatewayNative.kt</code>, a thin wrapper in <code>DeviceBridge</code>, and nothing else. The Kotlin side must stay free of queue logic.</p>
+    </article>
+    <article class="platform-guide">
+      <h3 class="heading-2">Change the wake strategy</h3>
+      <p>Replace <code>fallbackPoll</code> or heartbeat intervals in <code>GatewayProvider</code> — they are constants by design. Any new trigger should still be a pull from the queue, never a push of content.</p>
+    </article>
+  </div>
+
+  <h3 class="heading-2">Where things live</h3>
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">To change…</th><th scope="col">Edit</th></tr></thead>
+      <tbody>
+        <tr><td>Server URL / environments</td><td><code>lib/core/gateway_config.dart</code> + the <code>--dart-define</code> on your build command</td></tr>
+        <tr><td>Status rules and timers</td><td><code>lib/providers/gateway_provider.dart</code> (<code>fallbackPoll</code>, <code>heartbeatEvery</code>, <code>refreshStatus</code>)</td></tr>
+        <tr><td>Dashboard UI</td><td><code>lib/screens/home_screen.dart</code> — cards are private widgets in that file</td></tr>
+        <tr><td>Theme</td><td><code>lib/theme/app_theme.dart</code> (Material 3, dark)</td></tr>
+        <tr><td>Background send pass</td><td><code>android/.../GatewaySync.kt</code> + <code>GatewaySyncWorker.kt</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ====================================================== support -->
+<section class="doc-section" id="support" data-section-title="Support and limitations">
+  <h2 class="section-title">Known limitations, checked against source</h2>
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Checked item</th><th scope="col">Source result</th></tr></thead>
+      <tbody>
+        <tr><td>Platforms</td><td>Android only in practice: SMS receivers, the foreground service, and WorkManager are Android constructs; no iOS runner is configured</td></tr>
+        <tr><td>Web / desktop</td><td>Not viable — <code>dart:io</code> platform channels and telephony hardware are required (<code>android.hardware.telephony</code> is mandatory)</td></tr>
+        <tr><td>Multi-SIM</td><td>SIM state is reported and forwarded with inbound messages, but sending always uses the device default SMS subscription</td></tr>
+        <tr><td>Cleartext traffic</td><td>Allowed in the manifest for LAN testing; tighten before production</td></tr>
+        <tr><td>Signing</td><td>Debug keystore until you supply a release keystore</td></tr>
+        <tr><td>Firebase optional</td><td>The app degrades to timers without <code>google-services.json</code> — pushes only improve latency</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Troubleshooting quick reference</h3>
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Symptom</th><th scope="col">First checks</th></tr></thead>
+      <tbody>
+        <tr><td>Dashboard says <em>Not ready</em></td><td>Grant the named permission (SMS / Phone) in Android settings; the status message names it</td></tr>
+        <tr><td>Dashboard says <em>Offline</em></td><td>Server reachable from the phone's network? Base URL compiled into this APK? Token revoked in the panel?</td></tr>
+        <tr><td>Messages stay pending</td><td>Is the device the active gateway? FCM token connected in the panel? Battery optimization exempt? Use <em>Nudge</em> to test the wake path</td></tr>
+        <tr><td>Service keeps dying</td><td>Exempt battery optimization (Xiaomi/Oppo/Vivo/Samsung); check that the foreground-service notification is visible</td></tr>
+        <tr><td>Inbound SMS missing</td><td>Use <em>Re-scan inbox</em>; check that no other SMS app holds the default-handler role</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Carrier SMS charges apply to every message this app sends. Keep the gateway phone charged, topped up, and exempt from battery optimization, and it will quietly drain the queue.</p>
+</section>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <p><strong>MonoSMS Gateway</strong></p>
+      <small>Flutter app documentation</small>
+    </div>
+    <p>Documentation for <code>sms_gateway</code> 1.0.0+1.</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <dialog class="lightbox" id="image-lightbox" aria-labelledby="lightbox-caption">
+    <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer"><span aria-hidden="true">×</span></button>
+    <img id="lightbox-image" src="assets/images/mono-sms-app-icon.png" alt="">
+    <div class="lightbox-bar">
+      <p id="lightbox-caption"></p>
+      <span class="lightbox-counter" id="lightbox-counter"></span>
+    </div>
+    <div class="lightbox-nav">
+      <button class="lightbox-step" type="button" data-lightbox-prev>← Previous</button>
+      <button class="lightbox-step" type="button" data-lightbox-close>Close</button>
+      <button class="lightbox-step" type="button" data-lightbox-next>Next →</button>
+    </div>
+  </dialog>
+
+  <noscript>
+    <style>.toc-drawer, .toc-toggle, .action-button { display: none !important; } .guide-shell { display: block; }</style>
+    <p class="noscript-note">JavaScript is disabled. All MonoSMS documentation sections are shown below.</p>
+  </noscript>
+</body>
+</html>
