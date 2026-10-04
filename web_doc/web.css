@@ -59,7 +59,10 @@
 /* ===== Screens gallery: 4 across, full device height ===== */
 .screenshot-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:30px 0 42px}
 .shot-button{background:#08090a}
-.shot-button img{width:100%;height:auto;aspect-ratio:1440/3120;object-fit:contain;object-position:center top;border:0;opacity:1}
+/* Viewport-sized captures (1440x900 desktop, 390x844 mobile) — render at
+   their natural aspect; the old full-page captures needed a forced ratio. */
+.shot-button img{width:100%;height:auto;object-fit:contain;object-position:center top;border:0;opacity:1}
+.shot--wide .shot-button img{height:auto}
 .shot figcaption{padding:12px 14px;font-size:10px;letter-spacing:.06em}
 @media (max-width:1400px){.screenshot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:1060px){.screenshot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -126,3 +129,8 @@
 .doc-shot-btn{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in}
 .doc-shot-btn:hover .doc-shot,.doc-shot-btn:focus-visible .doc-shot{border-color:var(--yellow)}
 .doc-figure figcaption{margin-top:8px;color:var(--muted);font:10px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+
+/* Theme gallery: two big columns so each storefront home stays readable.
+   Must sit after the auto-fit .screenshot-grid override above to win. */
+.themes-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:900px){.themes-grid{grid-template-columns:1fr}}

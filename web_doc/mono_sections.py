@@ -47,6 +47,12 @@ one database, one permission system, and one theme engine.</p>
   <div class="callout"><strong>Web installer</strong><p><code>public/install.php</code> is a self-contained wizard that creates the database, writes the environment file, creates the first administrator, and activates a theme. No Composer, Node, or shell access is required on the host.</p></div>
 </div>
 
+<h3 class="heading-2">The storefront, at a glance</h3>
+<div class="screenshot-grid">
+  <figure class="shot shot--wide"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-home-desktop.jpg" data-caption="Storefront home page, desktop viewport"><img src="assets/storefront/storefront-home-desktop.jpg" alt="Storefront home page on a desktop viewport: announcement bar, category strip, hero slider and trust badges." loading="lazy"><span>Open capture</span></button><figcaption>Home / desktop</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-home-mobile.jpg" data-caption="Storefront home page, mobile viewport"><img src="assets/storefront/storefront-home-mobile.jpg" alt="The same storefront home page on a mobile viewport." loading="lazy"><span>Open capture</span></button><figcaption>Home / mobile</figcaption></figure>
+</div>
+
 <h3 class="heading-2">Who this documentation is for</h3>
 <p>This guide covers the web product: the storefront, the vendor panel, the
 admin panel, and the backend services that support them. The two Flutter
@@ -405,11 +411,25 @@ dict(
 theme exists because its folder exists, and removing the folder removes it
 from the admin panel.</p>
 
-<div class="screenshot-grid">
-  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-home-desktop.jpg" data-caption="Fashion theme home page, desktop"><img src="assets/storefront/storefront-home-desktop.jpg" alt="Storefront home page on a desktop viewport with hero banner, category tiles and a product grid."><span>Open capture</span></button><figcaption>Fashion theme / desktop</figcaption></figure>
-  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-home-mobile.jpg" data-caption="Fashion theme home page, mobile"><img src="assets/storefront/storefront-home-mobile.jpg" alt="The same storefront home page on a mobile viewport."><span>Open capture</span></button><figcaption>Fashion theme / mobile</figcaption></figure>
-  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-mobile-search.jpg" data-caption="Storefront search overlay, mobile"><img src="assets/storefront/storefront-mobile-search.jpg" alt="Mobile search overlay open over the storefront."><span>Open capture</span></button><figcaption>Mobile search</figcaption></figure>
+<p>Every theme below was activated live and captured from its home page at a
+desktop viewport, so what you see is what each theme actually ships — hero,
+palette, typography, and storefront sections.</p>
+
+<div class="screenshot-grid themes-grid">
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/themes/theme-mono.jpg" data-caption="MONO theme — the built-in default storefront"><img src="assets/themes/theme-mono.jpg" alt="MONO theme storefront home page with a minimal black-and-white hero, category strip and featured products." loading="lazy"><span>Open capture</span></button><figcaption>MONO — built-in default</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/themes/theme-beauty.jpg" data-caption="Beauty &amp; Wellness theme storefront"><img src="assets/themes/theme-beauty.jpg" alt="Beauty and Wellness theme home page with a rose-pink palette, serif display type and a soft hero." loading="lazy"><span>Open capture</span></button><figcaption>Beauty &amp; Wellness</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/themes/theme-electronics.jpg" data-caption="Electronics theme storefront"><img src="assets/themes/theme-electronics.jpg" alt="Electronics theme home page with a blue tech palette and gadget-focused hero." loading="lazy"><span>Open capture</span></button><figcaption>Electronics</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/themes/theme-fashion.jpg" data-caption="Fashion theme storefront"><img src="assets/themes/theme-fashion.jpg" alt="Fashion theme home page with an editorial boutique layout and arch-shaped category tiles." loading="lazy"><span>Open capture</span></button><figcaption>Fashion</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/themes/theme-fullwidth.jpg" data-caption="Mono Edge theme storefront"><img src="assets/themes/theme-fullwidth.jpg" alt="Mono Edge theme home page with a full-width marketplace layout, hero slider and dense product grid." loading="lazy"><span>Open capture</span></button><figcaption>Mono Edge (fullwidth)</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/themes/theme-grocery.jpg" data-caption="Grocery theme storefront"><img src="assets/themes/theme-grocery.jpg" alt="Grocery theme home page with a fresh green palette and pantry-focused categories." loading="lazy"><span>Open capture</span></button><figcaption>Grocery</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/themes/theme-home.jpg" data-caption="Home &amp; Living theme storefront"><img src="assets/themes/theme-home.jpg" alt="Home and Living theme home page with warm amber tones and furniture categories." loading="lazy"><span>Open capture</span></button><figcaption>Home &amp; Living</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/themes/theme-petshop.jpg" data-caption="Pet Shop theme storefront"><img src="assets/themes/theme-petshop.jpg" alt="Pet Shop theme home page with an orange palette and pet supply categories." loading="lazy"><span>Open capture</span></button><figcaption>Pet Shop</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/themes/theme-sports.jpg" data-caption="Sports theme storefront"><img src="assets/themes/theme-sports.jpg" alt="Sports theme home page with a bold red palette and athletic gear hero." loading="lazy"><span>Open capture</span></button><figcaption>Sports</figcaption></figure>
 </div>
+
+<p>Switching themes is instant and reversible — the admin panel activates a
+theme by writing one setting; no rebuild, no downtime. Captures above were
+taken by activating each theme in turn on the same demo catalog.</p>
 
 <table class="data-table">
 <thead><tr><th>Slug</th><th>Name</th><th>Own tables</th></tr></thead>
@@ -482,12 +502,14 @@ dict(
 
 <h3 class="heading-2">Variations</h3>
 <p>Variable products carry <code>product_variations</code> rows. Buyers pick
-attributes on the storefront and the variation modal resolves the matching row;
-the picker is shown in the captures below.</p>
+attributes on the storefront and the variation modal resolves the matching row:
+it opens from any product card, lists one group per attribute, disables
+unavailable combinations, and enables <em>Add to bag</em> only when the chosen
+combination is in stock.</p>
 
 <div class="screenshot-grid">
-  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-variation-modal.jpg" data-caption="Variation picker opened on a variable product"><img src="assets/storefront/storefront-variation-modal.jpg" alt="Storefront product page with the variation selection modal open."><span>Open capture</span></button><figcaption>Variation picker</figcaption></figure>
-  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-variation-selected.jpg" data-caption="Variation selected, quantity stepper visible"><img src="assets/storefront/storefront-variation-selected.jpg" alt="Variation modal with the XL option selected and the quantity control visible."><span>Open capture</span></button><figcaption>Variation selected</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-variation-modal.jpg" data-caption="Variation picker opened from a product card"><img src="assets/storefront/storefront-variation-modal.jpg" alt="Variation picker modal open over the shop grid, with the size group and quantity stepper." loading="lazy"><span>Open capture</span></button><figcaption>Variation picker</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-variation-selected.jpg" data-caption="Variation selected — Add to bag enabled"><img src="assets/storefront/storefront-variation-selected.jpg" alt="Variation modal with the M size chip selected and the Add to bag button enabled." loading="lazy"><span>Open capture</span></button><figcaption>Variation selected</figcaption></figure>
 </div>
 
 <h3 class="heading-2">Shared taxonomy</h3>
@@ -563,10 +585,23 @@ totals by hand.</p></div>
 snapshot shipping details so historical invoices stay accurate after a customer
 edits their address book.</p>
 
+<figure class="doc-figure">
+  <button class="doc-shot-btn" type="button" data-lightbox="assets/storefront/storefront-shop-desktop.jpg" data-caption="Shop — category filters and product grid, desktop"><img class="doc-shot" src="assets/storefront/storefront-shop-desktop.jpg" alt="Storefront shop page with a category filter sidebar, sorting controls and a product grid." loading="lazy"></button>
+  <figcaption>Shop — filters and product grid, desktop</figcaption>
+</figure>
+
+<figure class="doc-figure">
+  <button class="doc-shot-btn" type="button" data-lightbox="assets/storefront/storefront-product-desktop.jpg" data-caption="Product detail page, desktop"><img class="doc-shot" src="assets/storefront/storefront-product-desktop.jpg" alt="Storefront product detail page with a photo gallery, price, size picker and add to bag." loading="lazy"></button>
+  <figcaption>Product detail — gallery, price, size picker</figcaption>
+</figure>
+
+<p>The same experience on a phone: the shop grid, the search overlay, and the
+navigation drawer are all first-class mobile surfaces.</p>
+
 <div class="screenshot-grid">
-  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-shop-desktop.jpg" data-caption="Category listing, desktop — Fashion theme"><img src="assets/storefront/storefront-shop-desktop.jpg" alt="Storefront category listing with a product grid, filters and sorting controls."><span>Open capture</span></button><figcaption>Category listing / desktop</figcaption></figure>
-  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-shop-mobile.jpg" data-caption="Category listing, mobile — Fashion theme"><img src="assets/storefront/storefront-shop-mobile.jpg" alt="The same category listing on a mobile viewport."><span>Open capture</span></button><figcaption>Category listing / mobile</figcaption></figure>
-  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-product-desktop.jpg" data-caption="Product detail page, desktop — Fashion theme"><img src="assets/storefront/storefront-product-desktop.jpg" alt="Storefront product detail page with gallery, price, variation picker and add to cart."><span>Open capture</span></button><figcaption>Product detail / desktop</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-shop-mobile.jpg" data-caption="Shop page on a mobile viewport"><img src="assets/storefront/storefront-shop-mobile.jpg" alt="Shop page on a mobile viewport with a product grid and category chips." loading="lazy"><span>Open capture</span></button><figcaption>Shop / mobile</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-mobile-search.jpg" data-caption="Search overlay open on mobile"><img src="assets/storefront/storefront-mobile-search.jpg" alt="Search overlay open over the storefront on a mobile viewport." loading="lazy"><span>Open capture</span></button><figcaption>Search overlay</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-mobile-menu.jpg" data-caption="Mobile navigation drawer"><img src="assets/storefront/storefront-mobile-menu.jpg" alt="Mobile navigation drawer open over the home page." loading="lazy"><span>Open capture</span></button><figcaption>Mobile menu</figcaption></figure>
 </div>
 """),
 
@@ -660,10 +695,10 @@ Google client id is served from the API so the apps and the site share one
 configuration. Password recovery is an OTP flow: request, verify, then reset.
 Addresses live in a per-customer address book.</p>
 
-<div class="screenshot-grid">
-  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-login-desktop.jpg" data-caption="Customer sign-in page"><img src="assets/storefront/storefront-login-desktop.jpg" alt="Storefront customer login page with email and password fields."><span>Open capture</span></button><figcaption>Customer sign-in</figcaption></figure>
-  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-mobile-menu.jpg" data-caption="Mobile navigation drawer"><img src="assets/storefront/storefront-mobile-menu.jpg" alt="Storefront mobile navigation drawer open over the home page."><span>Open capture</span></button><figcaption>Mobile menu</figcaption></figure>
-</div>
+<figure class="doc-figure">
+  <button class="doc-shot-btn" type="button" data-lightbox="assets/storefront/storefront-login-desktop.jpg" data-caption="Customer sign-in page"><img class="doc-shot" src="assets/storefront/storefront-login-desktop.jpg" alt="Storefront customer sign-in page with email and password fields." loading="lazy"></button>
+  <figcaption>Customer sign-in</figcaption>
+</figure>
 
 <h3 class="heading-2">Loyalty</h3>
 <p><code>LoyaltyService</code> earns points on delivered and paid orders, lets
