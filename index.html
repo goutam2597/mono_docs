@@ -1,1225 +1,597 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MONO Marketplace — Multivendor Ecommerce Suite | Flutter Apps &amp; Laravel Panels</title>
-  <meta name="description" content="Launch your own multivendor marketplace with MONO. Includes Flutter customer and vendor mobile apps, themed Laravel web storefront, super admin panel, vendor management portal, and SMS gateway.">
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
-  <link rel="stylesheet" href="assets/css/style.css">
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<title>MONO Marketplace — Multivendor eCommerce Platform | Item Details</title>
+<meta content="MONO Marketplace complete multivendor eCommerce solution: Flutter Mobile Apps, Laravel Admin Panel, Vendor Portal, Web Storefront, and Android SMS Gateway." name="description" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --primary-brand: #18284D;
+  --primary-accent: #2563eb;
+  --text-dark: #0b1329;
+  --text-body: #334155;
+  --text-muted: #64748b;
+  --border-light: #e2e8f0;
+  --bg-canvas: #f8fafc;
+  --card-bg: #ffffff;
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: var(--font-body);
+  color: var(--text-body);
+  background-color: var(--bg-canvas);
+  line-height: 1.68;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+.item-presentation-canvas {
+  max-width: 900px;
+  margin: 24px auto 48px;
+  padding: 0 16px;
+}
+.item-details-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: 0 4px 25px -4px rgba(15, 23, 42, 0.08), 0 2px 10px -2px rgba(15, 23, 42, 0.04);
+  padding: 40px 44px;
+}
+@media (max-width: 768px) {
+  .item-presentation-canvas {
+    margin: 16px auto 32px;
+    padding: 0 12px;
+  }
+  .item-details-card {
+    padding: 24px 18px;
+    border-radius: 12px;
+  }
+}
+.user-html-content {
+  font-size: 15px;
+  line-height: 1.7;
+}
+.user-html-content h1,
+.user-html-content h2,
+.user-html-content h3,
+.user-html-content h4,
+.user-html-content h5 {
+  font-family: var(--font-heading);
+  color: var(--text-dark);
+  font-weight: 700;
+  margin: 32px 0 14px;
+  line-height: 1.3;
+}
+.user-html-content h2 {
+  font-size: 24px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e2e8f0;
+  margin-top: 40px;
+}
+.user-html-content h3 {
+  font-size: 20px;
+  color: var(--primary-brand);
+}
+.user-html-content h4 {
+  font-size: 17px;
+  font-weight: 700;
+}
+.user-html-content h5 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.user-html-content p {
+  margin-bottom: 16px;
+  color: var(--text-body);
+}
+.user-html-content b,
+.user-html-content strong {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+.user-html-content ul,
+.user-html-content ol {
+  margin: 16px 0 24px 24px;
+}
+.user-html-content li {
+  margin-bottom: 10px;
+  color: #334155;
+  line-height: 1.65;
+}
+.presentation-banner-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 16px auto;
+  border-radius: 10px;
+}
+a .presentation-banner-img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+.action-top-table {
+  width: auto !important;
+  max-width: 520px !important;
+  margin: 16px auto 10px !important;
+  border-collapse: separate !important;
+  border-spacing: 14px 0 !important;
+}
+.action-top-table td {
+  padding: 0 4px !important;
+  vertical-align: middle;
+}
+.action-top-table a {
+  display: inline-block;
+}
+.action-top-table a img {
+  max-width: 240px !important;
+  max-height: 52px !important;
+  width: auto !important;
+  height: auto !important;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.action-top-table a:hover img {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+}
+.doc-banner-link {
+  display: block;
+  max-width: 300px !important;
+  margin: 8px auto 20px !important;
+  text-decoration: none;
+}
+.doc-banner-link img {
+  width: auto !important;
+  max-width: 100% !important;
+  max-height: 54px !important;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.doc-banner-link:hover img {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+}
+.demo-buttons-table {
+  width: 100% !important;
+  max-width: 700px !important;
+  margin: 14px auto 20px !important;
+  border-collapse: separate !important;
+  border-spacing: 14px 14px !important;
+}
+.demo-buttons-table td {
+  padding: 6px 6px !important;
+  text-align: center;
+  vertical-align: middle;
+  width: 50%;
+}
+.demo-buttons-table td[colspan="2"] {
+  width: 100%;
+}
+.demo-btn-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 310px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 7px 14px;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.04);
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+.demo-btn-card:hover {
+  transform: translateY(-2px);
+  border-color: #2563eb;
+  background: #f8fbff;
+  box-shadow: 0 8px 20px -3px rgba(37, 99, 235, 0.18), 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+.demo-btn-card img {
+  max-height: 40px !important;
+  width: auto !important;
+  max-width: 100% !important;
+  display: block;
+  margin: 0 auto;
+  border-radius: 0;
+}
+.credentials-showcase-box {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 24px;
+  margin: 28px 0 32px;
+}
+.creds-header-pill {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  background: var(--primary-brand);
+  padding: 5px 14px;
+  border-radius: 9999px;
+  margin-bottom: 18px;
+}
+.creds-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.demo-cred-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+}
+.card-role-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.badge-admin { background: #fee2e2; color: #b91c1c; }
+.badge-vendor { background: #dbeafe; color: #1d4ed8; }
+.badge-customer { background: #dcfce7; color: #15803d; }
+.badge-gateway { background: #f3e8ff; color: #7e22ce; }
+.cred-url {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.cred-url a {
+  color: var(--primary-accent);
+  text-decoration: none;
+}
+.cred-url a:hover {
+  text-decoration: underline;
+}
+.cred-pair {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+.cred-lbl {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.cred-val {
+  font-family: var(--font-code);
+  font-size: 12.5px;
+  font-weight: 600;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 3px 8px;
+  border-radius: 5px;
+  color: #0f172a;
+}
+.changelog-section {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 2px solid #e2e8f0;
+}
+.changelog-heading {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-brand);
+  margin-bottom: 16px;
+}
+.changelog-code-block {
+  background: #0f172a;
+  color: #f1f5f9;
+  font-family: var(--font-code);
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 24px;
+  border-radius: 12px;
+  overflow-x: auto;
+  border: 1px solid #334155;
+}
+@media (max-width: 640px) {
+  .action-top-table {
+    max-width: 100% !important;
+    border-spacing: 8px 0 !important;
+  }
+  .action-top-table a img {
+    max-width: 160px !important;
+  }
+  .doc-banner-link {
+    max-width: 260px !important;
+  }
+  .demo-buttons-table {
+    display: block;
+    border-spacing: 0 !important;
+    margin: 12px auto !important;
+  }
+  .demo-buttons-table tbody,
+  .demo-buttons-table tr,
+  .demo-buttons-table td {
+    display: block;
+    width: 100% !important;
+  }
+  .demo-buttons-table td {
+    padding: 6px 0 !important;
+  }
+  .demo-btn-card {
+    max-width: 100%;
+    padding: 8px 12px;
+  }
+  .demo-btn-card img {
+    max-height: 38px !important;
+  }
+  .creds-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
 <body>
-
-<!-- Header / Navigation -->
-<header class="site-header" id="siteHeader">
-  <div class="header-container">
-    <!-- Brand Logo -->
-    <a href="#top" class="brand-lockup" aria-label="MONO Marketplace">
-      <img src="assets/img/brand-icon.svg" alt="MONO Emblem" class="brand-symbol" width="32" height="32">
-      <img src="assets/img/logo.svg" alt="MONO" class="brand-name" width="92" height="22">
-    </a>
-
-    <!-- Nav Links (Pill Group) -->
-    <nav class="nav-menu" id="navMenu" aria-label="Primary Navigation">
-      <ul class="nav-list">
-        <li><a href="#overview" class="nav-item active">Overview</a></li>
-        <li><a href="#modules" class="nav-item">Modules</a></li>
-        <li><a href="#how-it-works" class="nav-item">How It Works</a></li>
-        <li><a href="#web-panels" class="nav-item">Web &amp; Panels</a></li>
-        <li><a href="#packages" class="nav-item">Packages</a></li>
-        <li><a href="#technology" class="nav-item">Tech Stack</a></li>
-        <li><a href="#faq" class="nav-item">FAQs</a></li>
-      </ul>
-    </nav>
-
-    <!-- Header Actions -->
-    <div class="header-actions">
-      <a href="https://monomarket.site/" target="_blank" rel="noopener" class="btn-demo-link">Storefront ↗</a>
-      <a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="btn-action-primary">Admin Demo →</a>
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</header>
-
-<main id="top">
-
-  <!-- ================= HERO SECTION (HYPERCOMMERCE STYLE) ================= -->
-  <section class="hero-section" id="overview">
-    <div class="hero-bg-pattern"></div>
-    <div class="container hero-grid">
-      
-      <!-- Hero Left: Headline, Subtitle, 2 CTA Buttons, 4 Square Tech Icons -->
-      <div class="hero-text-col reveal">
-        <h1 class="hero-headline">
-          Build, Scale &amp; Grow Your Own<br>Multivendor Marketplace
-        </h1>
-
-        <p class="hero-subline">
-          Launch a powerful online marketplace where multiple vendors can register, manage products, accept orders, and grow their business—all from one centralized platform.
-        </p>
-
-        <!-- CTA Buttons -->
-        <div class="hero-cta-group">
-          <a href="#how-it-works" class="btn-hero-primary">
-            <span>Get Free Demo</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <a href="https://monomarket.site/" target="_blank" rel="noopener" class="btn-hero-secondary">
-            <span>Web Storefront</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-          </a>
-        </div>
-
-        <!-- 6 Square Tech Icons Row -->
-        <div class="hero-tech-icons">
-          <div class="tech-icon-card" title="Flutter (iOS &amp; Android Apps)">
-            <img src="assets/img/tech/flutter.png" alt="Flutter" width="28" height="28" loading="eager">
-          </div>
-
-          <div class="tech-icon-card" title="Laravel (PHP Backend &amp; Web)">
-            <img src="assets/img/tech/laravel.png" alt="Laravel" width="28" height="28" loading="eager">
-          </div>
-
-          <div class="tech-icon-card" title="Firebase (Realtime Sync &amp; Push)">
-            <img src="assets/img/tech/firebase.png" alt="Firebase" width="28" height="28" loading="eager">
-          </div>
-
-          <div class="tech-icon-card" title="Bootstrap (Responsive UI Framework)">
-            <img src="assets/img/tech/bootstrap.png" alt="Bootstrap" width="28" height="28" loading="eager">
-          </div>
-
-          <div class="tech-icon-card card-mysql" title="MySQL 8+ (Relational Database)">
-            <img src="assets/img/tech/mysql.png" alt="MySQL Database" width="38" height="29" loading="eager">
-          </div>
-
-          <div class="tech-icon-card card-ai" title="Artificial Intelligence (Smart Catalog, Search &amp; Auto Content)">
-            <img src="assets/img/tech/ai.png" alt="AI Technology" width="32" height="32" loading="eager">
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Hero Right: Dual Tilted Mobile Mockup with Titanium Silver Bezel & Ambient Glow -->
-      <div class="hero-visual-col reveal" data-delay="1">
-        <div class="hero-glow"></div>
-        <div class="dual-phone-scene hero-float">
-          
-          <!-- Phone 1 (Back / Vendor App - Angled Left) -->
-          <div class="tilted-phone phone-back lightbox-trigger" data-src="assets/img/shots/app-vendor-overview.jpg" data-caption="Flutter Vendor App — Live Overview &amp; Settlements Screen">
-            <div class="phone-case">
-              <div class="phone-dynamic-island"></div>
-              <div class="phone-screen-wrap">
-                <img src="assets/img/shots/app-vendor-overview.jpg" alt="Vendor App Mobile Dashboard" class="phone-screen-img" loading="eager">
-              </div>
-            </div>
-          </div>
-
-          <!-- Phone 2 (Front / Customer App - Angled Right) -->
-          <div class="tilted-phone phone-front lightbox-trigger" data-src="assets/img/shots/app-customer-home.jpg" data-caption="Flutter Customer App — Live Home Feed &amp; Multivendor Deals">
-            <div class="phone-case">
-              <div class="phone-dynamic-island"></div>
-              <div class="phone-screen-wrap">
-                <img src="assets/img/shots/app-customer-home.jpg" alt="Customer App Mobile Experience" class="phone-screen-img" loading="eager">
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= STATS TICKER STRIP ================= -->
-  <section class="metrics-strip" aria-label="Platform metrics">
-    <div class="container">
-      <div class="metrics-grid reveal">
-        <div class="metric-card">
-          <div class="metric-num"><span class="counter" data-to="6">0</span></div>
-          <div class="metric-label">Complete Products in Suite</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-num"><span class="counter" data-to="8">0</span></div>
-          <div class="metric-label">Swappable Storefront Themes</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-num"><span class="counter" data-to="3">0</span></div>
-          <div class="metric-label">Languages with Full RTL (EN, BN, AR)</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-num"><span class="counter" data-to="711">0</span>+</div>
-          <div class="metric-label">Automated Unit &amp; Feature Tests</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-num">100%</div>
-          <div class="metric-label">Unencrypted Clean Source Code</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= INTRODUCTION: WHAT IS MONO ================= -->
-  <section class="section intro-section" id="introduction">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="section-tag">Marketplace Architecture</span>
-        <h2>What is MONO Marketplace?</h2>
-        <p>A unified, multi-tenant digital marketplace platform where buyers, vendors, and administrators collaborate through a shared real-time backend.</p>
-      </div>
-
-      <div class="intro-grid reveal">
-        <div class="intro-feature-box">
-          <div class="feature-icon icon-blue">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <h3>Multi-Vendor by Default</h3>
-          <p>Unlimited vendors can register, configure storefront brands, create complex products with variants, and ship orders independently under your brand umbrella.</p>
-        </div>
-
-        <div class="intro-feature-box">
-          <div class="feature-icon icon-brand">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
-          </div>
-          <h3>Automated Commission Engine</h3>
-          <p>Set platform commission percentages per category, vendor tier, or order. The engine splits cart balances, credits vendor wallets, and generates settlement logs.</p>
-        </div>
-
-        <div class="intro-feature-box">
-          <div class="feature-icon icon-emerald">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          </div>
-          <h3>Multi-Language &amp; Full RTL</h3>
-          <p>Right-to-left layout for Arabic and multi-language support (English, Arabic, Bengali) built into every screen of the storefront, panels, and mobile apps.</p>
-        </div>
-
-        <div class="intro-feature-box">
-          <div class="feature-icon icon-indigo">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-          </div>
-          <h3>Zero-Cost Android SMS Gateway</h3>
-          <p>Eliminate costly SMS provider fees by transforming any Android phone with a SIM into an automated OTP and transactional SMS dispatcher.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= MODULES: 6 APPS ECOSYSTEM WITH DIRECT CREDENTIALS ================= -->
-  <section class="section modules-section" id="modules">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="section-tag-pill">The platform</span>
-        <h2 class="section-heading-lg">One Ecosystem, Every Role Covered</h2>
-        <p class="section-subtext">A customer app, web storefront, admin panel, vendor portal, and Android SMS gateway that work together out of the box — try each live demo below.</p>
-      </div>
-
-      <div class="modules-grid-six reveal">
-        
-        <!-- 1. Customer App -->
-        <div class="app-role-card">
-          <div class="card-text-block">
-            <h3 class="role-card-title">Customer App</h3>
-            <p class="role-card-desc">An intuitive shopping experience with smart search, secure payments, and real-time order tracking.</p>
-          </div>
-
-          <div class="card-preview-window mobile-preview lightbox-trigger" data-src="assets/img/shots/app-customer-home.jpg" data-caption="Flutter Customer Mobile App — Live Storefront &amp; Deals Feed">
-            <div class="dual-phone-mockup">
-              <div class="mini-phone mini-phone-left">
-                <div class="mini-island"></div>
-                <img src="assets/img/shots/app-customer-home.jpg" alt="Customer App Home" loading="lazy">
-              </div>
-              <div class="mini-phone mini-phone-right">
-                <div class="mini-island"></div>
-                <img src="assets/img/shots/app-customer-explore.jpg" alt="Customer App Explore" loading="lazy">
-              </div>
-            </div>
-            <div class="preview-zoom-hint"><span>🔍 Click to preview</span></div>
-          </div>
-
-          <div class="card-credentials-panel">
-            <div class="cred-row">
-              <span class="cred-label">Login:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="customer@monomarket.site" class="cred-val-input" aria-label="Customer Email">
-                <button type="button" class="btn-copy-cred" title="Copy Email" data-copy="customer@monomarket.site">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-            <div class="cred-row">
-              <span class="cred-label">Pass:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="00000000" class="cred-val-input code-font" aria-label="Customer Password">
-                <button type="button" class="btn-copy-cred" title="Copy Password" data-copy="00000000">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-footer-action">
-            <a href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" target="_blank" rel="noopener" class="btn-apk-download" download="mono_customer.apk">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              <span>Download Customer APK ↓</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- 2. Customer Web -->
-        <div class="app-role-card">
-          <div class="card-text-block">
-            <h3 class="role-card-title">Customer Web</h3>
-            <p class="role-card-desc">The same storefront in any browser — browse, cart and checkout, with no app to install.</p>
-          </div>
-
-          <div class="card-preview-window web-preview lightbox-trigger" data-src="assets/img/shots/storefront-home.png" data-caption="Responsive Web Storefront — Multi-Vendor Catalog &amp; Cart">
-            <div class="browser-topbar">
-              <div class="browser-dots">
-                <span class="b-dot red"></span>
-                <span class="b-dot slate"></span>
-                <span class="b-dot green"></span>
-              </div>
-              <span class="browser-url">monomarket.site</span>
-            </div>
-            <div class="browser-body">
-              <img src="assets/img/shots/storefront-home.png" alt="Customer Web Storefront" loading="lazy">
-            </div>
-            <div class="preview-zoom-hint"><span>🔍 Click to preview</span></div>
-          </div>
-
-          <div class="card-credentials-panel">
-            <div class="cred-row">
-              <span class="cred-label">Login:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="customer@monomarket.site" class="cred-val-input" aria-label="Customer Web Email">
-                <button type="button" class="btn-copy-cred" title="Copy Email" data-copy="customer@monomarket.site">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-            <div class="cred-row">
-              <span class="cred-label">Pass:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="00000000" class="cred-val-input code-font" aria-label="Customer Web Password">
-                <button type="button" class="btn-copy-cred" title="Copy Password" data-copy="00000000">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-footer-action">
-            <a href="https://monomarket.site/" target="_blank" rel="noopener" class="btn-check-demo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-              <span>Check Demo →</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- 3. Admin Panel -->
-        <div class="app-role-card">
-          <div class="card-text-block">
-            <h3 class="role-card-title">Admin Panel</h3>
-            <p class="role-card-desc">Control your entire marketplace with advanced management tools and real-time business insights.</p>
-          </div>
-
-          <div class="card-preview-window web-preview lightbox-trigger" data-src="assets/img/shots/admin.png" data-caption="Laravel Super Admin Panel Dashboard">
-            <div class="browser-topbar">
-              <div class="browser-dots">
-                <span class="b-dot red"></span>
-                <span class="b-dot slate"></span>
-                <span class="b-dot green"></span>
-              </div>
-              <span class="browser-url">monomarket.site/admin</span>
-            </div>
-            <div class="browser-body">
-              <img src="assets/img/shots/admin.png" alt="Super Admin Panel" loading="lazy">
-            </div>
-            <div class="preview-zoom-hint"><span>🔍 Click to preview</span></div>
-          </div>
-
-          <div class="card-credentials-panel">
-            <div class="cred-row">
-              <span class="cred-label">Login:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="admin@monomarket.site" class="cred-val-input" aria-label="Admin Email">
-                <button type="button" class="btn-copy-cred" title="Copy Email" data-copy="admin@monomarket.site">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-            <div class="cred-row">
-              <span class="cred-label">Pass:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="00000000" class="cred-val-input code-font" aria-label="Admin Password">
-                <button type="button" class="btn-copy-cred" title="Copy Password" data-copy="00000000">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-footer-action">
-            <a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="btn-check-demo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-              <span>Check Demo →</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- 4. Vendor Panel -->
-        <div class="app-role-card">
-          <div class="card-text-block">
-            <h3 class="role-card-title">Vendor Panel</h3>
-            <p class="role-card-desc">Manage products, inventory, orders, and earnings from one powerful dashboard.</p>
-          </div>
-
-          <div class="card-preview-window web-preview lightbox-trigger" data-src="assets/img/shots/vendor.png" data-caption="Vendor Management Portal">
-            <div class="browser-topbar">
-              <div class="browser-dots">
-                <span class="b-dot red"></span>
-                <span class="b-dot slate"></span>
-                <span class="b-dot green"></span>
-              </div>
-              <span class="browser-url">monomarket.site/vendor</span>
-            </div>
-            <div class="browser-body">
-              <img src="assets/img/shots/vendor.png" alt="Vendor Panel Dashboard" loading="lazy">
-            </div>
-            <div class="preview-zoom-hint"><span>🔍 Click to preview</span></div>
-          </div>
-
-          <div class="card-credentials-panel">
-            <div class="cred-row">
-              <span class="cred-label">Login:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="vendor@monomarket.site" class="cred-val-input" aria-label="Vendor Email">
-                <button type="button" class="btn-copy-cred" title="Copy Email" data-copy="vendor@monomarket.site">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-            <div class="cred-row">
-              <span class="cred-label">Pass:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="00000000" class="cred-val-input code-font" aria-label="Vendor Password">
-                <button type="button" class="btn-copy-cred" title="Copy Password" data-copy="00000000">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-footer-action">
-            <a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="btn-check-demo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-              <span>Check Demo →</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- 5. Vendor App -->
-        <div class="app-role-card">
-          <div class="card-text-block">
-            <h3 class="role-card-title">Vendor App</h3>
-            <p class="role-card-desc">Run your store from your phone — the vendor panel, mirrored one-to-one on mobile.</p>
-          </div>
-
-          <div class="card-preview-window mobile-preview lightbox-trigger" data-src="assets/img/shots/app-vendor-overview.jpg" data-caption="Flutter Vendor Mobile App">
-            <div class="dual-phone-mockup">
-              <div class="mini-phone mini-phone-left">
-                <div class="mini-island"></div>
-                <img src="assets/img/shots/app-vendor-overview.jpg" alt="Vendor Mobile Overview" loading="lazy">
-              </div>
-              <div class="mini-phone mini-phone-right">
-                <div class="mini-island"></div>
-                <img src="assets/img/shots/app-vendor-products.jpg" alt="Vendor Mobile Products" loading="lazy">
-              </div>
-            </div>
-            <div class="preview-zoom-hint"><span>🔍 Click to preview</span></div>
-          </div>
-
-          <div class="card-credentials-panel">
-            <div class="cred-row">
-              <span class="cred-label">Login:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="vendor@monomarket.site" class="cred-val-input" aria-label="Vendor App Email">
-                <button type="button" class="btn-copy-cred" title="Copy Email" data-copy="vendor@monomarket.site">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-            <div class="cred-row">
-              <span class="cred-label">Pass:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="00000000" class="cred-val-input code-font" aria-label="Vendor App Password">
-                <button type="button" class="btn-copy-cred" title="Copy Password" data-copy="00000000">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-footer-action">
-            <a href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" target="_blank" rel="noopener" class="btn-apk-download" download="mono_vendor.apk">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              <span>Download Vendor APK ↓</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- 6. SMS Gateway Engine (Using same Admin Credentials) -->
-        <div class="app-role-card">
-          <div class="card-text-block">
-            <h3 class="role-card-title">SMS Gateway</h3>
-            <p class="role-card-desc">Zero-cost OTP and transactional SMS dispatcher — turns any Android SIM into an automated gateway.</p>
-          </div>
-
-          <div class="card-preview-window gateway-preview lightbox-trigger" data-src="assets/img/shots/app-gateway.jpg" data-caption="MonoSMS Android Gateway &amp; Live Service Engine">
-            <div class="gateway-phone-mockup">
-              <div class="mini-phone gateway-center-phone">
-                <div class="mini-island"></div>
-                <img src="assets/img/shots/app-gateway.jpg" alt="MonoSMS Gateway App" loading="lazy">
-              </div>
-              <div class="gateway-live-chip">
-                <span class="live-dot pulse"></span>
-                <span>SMS Dispatch Online</span>
-              </div>
-            </div>
-            <div class="preview-zoom-hint"><span>🔍 Click to preview</span></div>
-          </div>
-
-          <div class="card-credentials-panel">
-            <div class="cred-row">
-              <span class="cred-label">Login:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="admin@monomarket.site" class="cred-val-input" aria-label="SMS Gateway Admin Email">
-                <button type="button" class="btn-copy-cred" title="Copy Email" data-copy="admin@monomarket.site">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-            <div class="cred-row">
-              <span class="cred-label">Pass:</span>
-              <div class="cred-input-wrap">
-                <input type="text" readonly value="00000000" class="cred-val-input code-font" aria-label="SMS Gateway Admin Password">
-                <button type="button" class="btn-copy-cred" title="Copy Password" data-copy="00000000">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-footer-action">
-            <a href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" target="_blank" rel="noopener" class="btn-apk-download" download="mono_sms_gateway.apk">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              <span>Download Gateway APK ↓</span>
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= STICKY APP SCROLL SECTION (FROM FIRST TAP TO DELIVERED) ================= -->
-  <section class="section story-scroll-section" id="how-it-works">
-    <div class="container">
-      
-      <div class="section-head reveal">
-        <span class="section-tag">Interactive Flow Walkthrough</span>
-        <h2>From First Tap to Delivered</h2>
-        <p>Scroll down to see the real mobile app experience update step by step.</p>
-      </div>
-
-      <div class="story-wrapper">
-        
-        <!-- Left Column: Scrolling Milestone Steps -->
-        <div class="story-steps-col">
-          
-          <!-- Step 0: Discover -->
-          <div class="story-step active" data-step="0">
-            <div class="step-badge-row">
-              <span class="step-number">01</span>
-              <span class="step-phase">DISCOVER</span>
-            </div>
-            <h3 class="step-title">A storefront built for their market</h3>
-            <p class="step-desc">
-              Customers land on an engaging home feed with multi-vendor campaign banners, flash deals, featured stores, and personalized product rails drawn from vendors in their region.
-            </p>
-            <div class="step-chips">
-              <span class="chip">Market detected automatically</span>
-              <span class="chip">Multi-vendor campaign banners</span>
-              <span class="chip">VIP voucher claim</span>
-            </div>
-          </div>
-
-          <!-- Step 1: Browse -->
-          <div class="story-step" data-step="1">
-            <div class="step-badge-row">
-              <span class="step-number">02</span>
-              <span class="step-phase">BROWSE</span>
-            </div>
-            <h3 class="step-title">Filter across the whole catalog</h3>
-            <p class="step-desc">
-              Shoppers search, filter and sort across every vendor at once, with category rails, price sliders, brand filters, and live stock so nothing sold out ever reaches the cart.
-            </p>
-            <div class="step-chips">
-              <span class="chip">Sub-second search &amp; filters</span>
-              <span class="chip">Live stock per location</span>
-              <span class="chip">Category rails &amp; tags</span>
-            </div>
-          </div>
-
-          <!-- Step 2: Choose -->
-          <div class="story-step" data-step="2">
-            <div class="step-badge-row">
-              <span class="step-number">03</span>
-              <span class="step-phase">CHOOSE</span>
-            </div>
-            <h3 class="step-title">Variants, priced in their currency</h3>
-            <p class="step-desc">
-              Vendors set a price once in the base currency. Every shopper sees it converted into their own currency automatically, with color/size swatches, ratings, and verified buyer reviews.
-            </p>
-            <div class="step-chips">
-              <span class="chip">Auto FX currency conversion</span>
-              <span class="chip">Color &amp; size attributes</span>
-              <span class="chip">Verified buyer reviews</span>
-            </div>
-          </div>
-
-          <!-- Step 3: Manage / Dispatch -->
-          <div class="story-step" data-step="3">
-            <div class="step-badge-row">
-              <span class="step-number">04</span>
-              <span class="step-phase">MANAGE</span>
-            </div>
-            <h3 class="step-title">Vendor operations &amp; real-time orders</h3>
-            <p class="step-desc">
-              Vendors receive audible sound alerts when orders arrive. They accept items, print packing slips, update tracking codes, and move orders seamlessly through fulfillment.
-            </p>
-            <div class="step-chips">
-              <span class="chip">Push notifications with sound</span>
-              <span class="chip">Fulfillment status pipeline</span>
-              <span class="chip">Courier &amp; tracking ID</span>
-            </div>
-          </div>
-
-          <!-- Step 4: Settle / Payouts -->
-          <div class="story-step" data-step="4">
-            <div class="step-badge-row">
-              <span class="step-number">05</span>
-              <span class="step-phase">SETTLE</span>
-            </div>
-            <h3 class="step-title">Itemised payouts &amp; automated settlements</h3>
-            <p class="step-desc">
-              Platform commissions are calculated automatically line by line. Vendors monitor their balance in the in-app wallet, request bank withdrawals, and review settlement statements.
-            </p>
-            <div class="step-chips">
-              <span class="chip">Automated commission deduction</span>
-              <span class="chip">In-app vendor wallet</span>
-              <span class="chip">Withdrawal approval ledger</span>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Right Column: Sticky Single Smartphone Mockup -->
-        <div class="story-phone-col">
-          <div class="sticky-phone-stage">
-            
-            <!-- Sleek Smartphone Device Mockup -->
-            <div class="single-phone-mockup">
-              <!-- Speaker & Dynamic Island -->
-              <div class="mockup-island">
-                <span class="camera-lens"></span>
-              </div>
-              
-              <!-- Screen Viewport with smooth cross-fading screenshots -->
-              <div class="mockup-viewport" id="mockupViewport">
-                <img src="assets/img/shots/app-customer-home.jpg" alt="Discover Feed" class="mockup-screen active" data-step="0">
-                <img src="assets/img/shots/app-customer-explore.jpg" alt="Catalog Search" class="mockup-screen" data-step="1">
-                <img src="assets/img/shots/app-customer-product.jpg" alt="Product Variants" class="mockup-screen" data-step="2">
-                <img src="assets/img/shots/app-vendor-overview.jpg" alt="Vendor Orders" class="mockup-screen" data-step="3">
-                <img src="assets/img/shots/app-vendor-settlements.jpg" alt="Settlement Ledger" class="mockup-screen" data-step="4">
-              </div>
-
-              <!-- Reflection highlight -->
-              <div class="mockup-reflection"></div>
-            </div>
-
-            <!-- Scroll Step Indicators -->
-            <div class="story-indicators" id="storyIndicators">
-              <button class="indicator-dot active" data-step="0" aria-label="Step 1: Discover">
-                <span class="dot-fill"></span>
-                <span class="dot-label">01 Discover</span>
-              </button>
-              <button class="indicator-dot" data-step="1" aria-label="Step 2: Browse">
-                <span class="dot-fill"></span>
-                <span class="dot-label">02 Browse</span>
-              </button>
-              <button class="indicator-dot" data-step="2" aria-label="Step 3: Choose">
-                <span class="dot-fill"></span>
-                <span class="dot-label">03 Choose</span>
-              </button>
-              <button class="indicator-dot" data-step="3" aria-label="Step 4: Manage">
-                <span class="dot-fill"></span>
-                <span class="dot-label">04 Manage</span>
-              </button>
-              <button class="indicator-dot" data-step="4" aria-label="Step 5: Settle">
-                <span class="dot-fill"></span>
-                <span class="dot-label">05 Settle</span>
-              </button>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= WEB PLATFORMS & PANELS SECTION (DESKTOP SCREENSHOTS) ================= -->
-  <section class="section web-panels-section" id="web-panels">
-    <div class="container">
-      
-      <div class="section-head reveal">
-        <span class="section-tag">Management Consoles &amp; Storefront</span>
-        <h2>Built to Scale Your Marketplace Operations</h2>
-        <p>Full desktop control centers for super admins, independent merchants, and customers.</p>
-      </div>
-
-      <!-- Tab Navigation for Panels -->
-      <div class="panels-tab-bar reveal">
-        <button class="panel-tab-btn active" data-target="admin-panel-showcase">
-          <span class="tab-indicator-dot"></span>
-          <span>Super Admin Console</span>
-        </button>
-        <button class="panel-tab-btn" data-target="vendor-panel-showcase">
-          <span class="tab-indicator-dot"></span>
-          <span>Vendor Store Portal</span>
-        </button>
-        <button class="panel-tab-btn" data-target="storefront-showcase">
-          <span class="tab-indicator-dot"></span>
-          <span>Web Storefront</span>
-        </button>
-      </div>
-
-      <!-- Tab 1: Super Admin Panel -->
-      <div class="panel-showcase-card active" id="admin-panel-showcase">
-        <div class="panel-header-bar">
-          <div class="panel-info-side">
-            <span class="role-pill-lg badge-admin">SUPER ADMIN CONTROL</span>
-            <h3>Marketplace Administration &amp; Financial Governance</h3>
-            <p>Comprehensive overview of platform gross merchandise value, commission balances, vendor approvals, settlement requests, customer disputes, and automated routing.</p>
-          </div>
-          <div class="panel-actions-side">
-            <div class="credential-box">
-              <span class="cred-label">Demo Login:</span>
-              <code>admin@monomarket.site</code> / <code>00000000</code>
-            </div>
-            <a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="btn-action-primary">
-              <span>Open Admin Console ↗</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Realistic Desktop Browser Frame -->
-        <div class="browser-frame-wrap lightbox-trigger" data-src="assets/img/shots/admin.png" data-caption="Super Admin Panel — Live System Screenshot (1919x946)">
-          <div class="browser-titlebar">
-            <div class="window-dots">
-              <span class="dot dot-close"></span>
-              <span class="dot dot-minimize"></span>
-              <span class="dot dot-expand"></span>
-            </div>
-            <div class="address-pill">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span>monomarket.site/admin — Super Admin Dashboard</span>
-            </div>
-            <span class="zoom-badge">Click to enlarge ⤢</span>
-          </div>
-          <div class="browser-content-area">
-            <img src="assets/img/shots/admin.png" alt="Super Admin Panel Dashboard" class="full-panel-img" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 2: Vendor Panel -->
-      <div class="panel-showcase-card" id="vendor-panel-showcase">
-        <div class="panel-header-bar">
-          <div class="panel-info-side">
-            <span class="role-pill-lg badge-vendor">MERCHANT WORKSPACE</span>
-            <h3>Vendor Store Management Cockpit</h3>
-            <p>Self-service workspace engineered for vendors: product inventory, bundle promotions, live order notifications, shipment status updates, and transparent commission payout reports.</p>
-          </div>
-          <div class="panel-actions-side">
-            <div class="credential-box">
-              <span class="cred-label">Demo Login:</span>
-              <code>vendor@monomarket.site</code> / <code>00000000</code>
-            </div>
-            <a href="https://monomarket.site/vendor/login" target="_blank" rel="noopener" class="btn-action-primary">
-              <span>Open Vendor Portal ↗</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Realistic Desktop Browser Frame -->
-        <div class="browser-frame-wrap lightbox-trigger" data-src="assets/img/shots/vendor.png" data-caption="Vendor Panel — Live System Screenshot (1918x947)">
-          <div class="browser-titlebar">
-            <div class="window-dots">
-              <span class="dot dot-close"></span>
-              <span class="dot dot-minimize"></span>
-              <span class="dot dot-expand"></span>
-            </div>
-            <div class="address-pill">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span>monomarket.site/vendor — Vendor Dashboard</span>
-            </div>
-            <span class="zoom-badge">Click to enlarge ⤢</span>
-          </div>
-          <div class="browser-content-area">
-            <img src="assets/img/shots/vendor.png" alt="Vendor Dashboard Overview" class="full-panel-img" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 3: Storefront Web -->
-      <div class="panel-showcase-card" id="storefront-showcase">
-        <div class="panel-header-bar">
-          <div class="panel-info-side">
-            <span class="role-pill-lg badge-web">CUSTOMER WEB STOREFRONT</span>
-            <h3>Responsive Web Storefront with 8 Dynamic Themes</h3>
-            <p>Speed-optimized web shopping experience with swappable themes, multi-vendor cart splitting, instant currency switching, voucher discounts, and customer account portal.</p>
-          </div>
-          <div class="panel-actions-side">
-            <div class="credential-box">
-              <span class="cred-label">Customer Login:</span>
-              <code>customer@monomarket.site</code> / <code>00000000</code>
-            </div>
-            <a href="https://monomarket.site/" target="_blank" rel="noopener" class="btn-action-primary">
-              <span>Launch Live Storefront ↗</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Realistic Desktop Browser Frame -->
-        <div class="browser-frame-wrap lightbox-trigger" data-src="assets/img/shots/storefront-home.png" data-caption="Storefront Web — Live Screenshot (2880x1800)">
-          <div class="browser-titlebar">
-            <div class="window-dots">
-              <span class="dot dot-close"></span>
-              <span class="dot dot-minimize"></span>
-              <span class="dot dot-expand"></span>
-            </div>
-            <div class="address-pill">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span>monomarket.site — Storefront Home</span>
-            </div>
-            <span class="zoom-badge">Click to enlarge ⤢</span>
-          </div>
-          <div class="browser-content-area">
-            <img src="assets/img/shots/storefront-home.png" alt="Storefront Home View" class="full-panel-img" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= PACKAGES & LICENSES ================= -->
-  <section class="section packages-section" id="packages">
-    <div class="container">
-      
-      <div class="section-head reveal">
-        <span class="section-tag">Pricing &amp; Included Source</span>
-        <h2>Everything Included in the Package</h2>
-        <p>One-time purchase with 100% complete source code, lifetime free updates, and zero recurring fees.</p>
-      </div>
-
-      <!-- Included Items Grid -->
-      <div class="package-items-grid reveal">
-        
-        <div class="pkg-item-card">
-          <div class="pkg-icon">📱</div>
-          <h4>Flutter Customer App</h4>
-          <p>Complete, unencrypted source code for Android and iOS with clean bloc architecture.</p>
-        </div>
-
-        <div class="pkg-item-card">
-          <div class="pkg-icon">🛍️</div>
-          <h4>Web Storefront</h4>
-          <p>Full source with 8 themes, dynamic multi-currency, and fast server-side rendering.</p>
-        </div>
-
-        <div class="pkg-item-card">
-          <div class="pkg-icon">🛡️</div>
-          <h4>Laravel Super Admin</h4>
-          <p>Full backend source powering vendor approvals, commission splits, and payouts.</p>
-        </div>
-
-        <div class="pkg-item-card">
-          <div class="pkg-icon">🏪</div>
-          <h4>Laravel Vendor Portal</h4>
-          <p>Full source for merchant workspace, catalog management, and fulfillment tools.</p>
-        </div>
-
-        <div class="pkg-item-card">
-          <div class="pkg-icon">📦</div>
-          <h4>Flutter Vendor App</h4>
-          <p>Native Flutter mobile app for vendors to manage orders and stock on the move.</p>
-        </div>
-
-        <div class="pkg-item-card">
-          <div class="pkg-icon">⚡</div>
-          <h4>Android SMS Gateway</h4>
-          <p>Zero-cost automated SMS OTP and transactional notification dispatcher app.</p>
-        </div>
-
-        <div class="pkg-item-card">
-          <div class="pkg-icon">🔌</div>
-          <h4>REST API &amp; Postman</h4>
-          <p>Sanctum-secured RESTful endpoints with comprehensive Postman test collection.</p>
-        </div>
-
-        <div class="pkg-item-card">
-          <div class="pkg-icon">♾️</div>
-          <h4>Free Lifetime Updates</h4>
-          <p>Every future release, security patch, and framework update at no extra charge.</p>
-        </div>
-
-      </div>
-
-      <!-- License Comparison Cards -->
-      <div class="license-cards-row reveal" data-delay="1">
-        
-        <!-- Regular License -->
-        <div class="license-box">
-          <div class="license-badge">STANDARD</div>
-          <h3 class="license-name">Regular License</h3>
-          <p class="license-summary">Ideal for a single marketplace brand where end users are not charged for accessing the platform.</p>
-          
-          <div class="license-features-list">
-            <div class="feature-line"><span class="check-icon">✓</span> <span>Flutter Customer App (Android &amp; iOS)</span></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <span>Themed Web Storefront (8 Themes)</span></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <span>Laravel Super Admin &amp; Vendor Panels</span></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <span>Flutter Vendor Mobile App</span></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <span>Android SMS Gateway App &amp; Engine</span></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <span>Single Domain / Single Brand Installation</span></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <span>6 Months Dedicated Technical Support</span></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <span>Free Lifetime Product Updates</span></div>
-          </div>
-
-          <a href="https://monomarket.site/" target="_blank" rel="noopener" class="btn-license-outline">Get Regular License →</a>
-        </div>
-
-        <!-- Extended License -->
-        <div class="license-box featured-license">
-          <div class="popular-ribbon">RECOMMENDED · BEST VALUE</div>
-          <div class="license-badge badge-brand">EXTENDED &amp; SAAS</div>
-          <h3 class="license-name">Extended License</h3>
-          <p class="license-summary">For commercial multi-tenant marketplaces, SaaS models, or projects where end users pay recurring subscription fees.</p>
-          
-          <div class="license-features-list">
-            <div class="feature-line"><span class="check-icon">✓</span> <b>Everything included in Regular License</b></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <b>Commercial End-User Monetization Rights</b></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <b>Complete REST API Source &amp; Postman Collection</b></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <b>Multi-Market &amp; Multi-Currency Engine</b></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <b>WhatsApp Cloud API Automated Notification Bot</b></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <b>12 Months Priority Support with Direct Developer Access</b></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <b>Free Server Installation &amp; Setup Assistance</b></div>
-            <div class="feature-line"><span class="check-icon">✓</span> <b>Lifetime Free Upgrades &amp; Enhancements</b></div>
-          </div>
-
-          <a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="btn-license-brand">Get Extended License →</a>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= TECHNOLOGY STACK ================= -->
-  <section class="section tech-section" id="technology">
-    <div class="container">
-      
-      <div class="section-head reveal">
-        <span class="section-tag">Modern &amp; Reliable Foundation</span>
-        <h2>Built with Industry-Standard Technologies</h2>
-        <p>No obscure frameworks or proprietary lock-in. Clean, standardized code that any developer can easily customize.</p>
-      </div>
-
-      <div class="tech-grid reveal">
-        
-        <div class="tech-stack-card">
-          <div class="tech-card-icon">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF2D20" stroke-width="2"><path d="M3 5.5v10l6 3.5V13l6-3.5v-1L9 5 3 5.5zM9 13l-6 3.5M15 8.5l6 3.5v6l-6 3.5-6-3.5M15 8.5 21 5l-4-2-5.5 2.5"/></svg>
-          </div>
-          <h4>Laravel 12 (PHP 8.3+)</h4>
-          <p>Clean MVC structure, Eloquent ORM, queued jobs, robust security guards, and enterprise performance.</p>
-        </div>
-
-        <div class="tech-stack-card">
-          <div class="tech-card-icon">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="#02569B"><path d="M14.5 1 4 11.5l3.2 3.2L20.9 1zM20.9 11 12.6 2.8l-3.1 3.1 6.6 6.6-6.6 6.6 3.1 3.1L20.9 15l-3.2-3.2z"/></svg>
-          </div>
-          <h4>Flutter 3 (Dart)</h4>
-          <p>Single codebase compiling to native ARM machine code for silky smooth 60fps Android and iOS performance.</p>
-        </div>
-
-        <div class="tech-stack-card">
-          <div class="tech-card-icon">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#00758F" stroke-width="2"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6.5c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V5.5M4.5 12v6.5c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V12"/></svg>
-          </div>
-          <h4>MySQL 8.4</h4>
-          <p>ACID-compliant relational database with foreign key constraints, indexes, and optimized query plans.</p>
-        </div>
-
-        <div class="tech-stack-card">
-          <div class="tech-card-icon">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="#0288D1"><path d="M5 19 8 3l3.5 6.2L5 19zM9.5 19l8.5-5.5L14 3l-2.7 8.6L9.5 19zM19.5 21l-5-2.2 6.8-6.8.7 7.5-2.5 1.5z"/></svg>
-          </div>
-          <h4>Firebase Cloud Messaging</h4>
-          <p>Reliable real-time push notification delivery for order status changes, vouchers, and buyer messages.</p>
-        </div>
-
-        <div class="tech-stack-card">
-          <div class="tech-card-icon">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
-          </div>
-          <h4>WhatsApp Cloud API</h4>
-          <p>Official Meta API integration for sending interactive order receipts, delivery dispatch notices, and OTPs.</p>
-        </div>
-
-        <div class="tech-stack-card">
-          <div class="tech-card-icon">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          </div>
-          <h4>711 Automated Tests</h4>
-          <p>Comprehensive test suite covering authentication, split cart calculation, coupon limits, and payouts.</p>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= FAQS ACCORDION ================= -->
-  <section class="section faq-section" id="faq">
-    <div class="container">
-      
-      <div class="section-head reveal">
-        <span class="section-tag">Got Questions?</span>
-        <h2>Frequently Asked Questions</h2>
-        <p>Everything you need to know about MONO Marketplace licensing, setup, and capabilities.</p>
-      </div>
-
-      <div class="faq-accordion-list reveal" data-delay="1">
-        
-        <!-- FAQ 1 -->
-        <details class="faq-accordion-item" open>
-          <summary class="faq-question">
-            <span>Is the full source code included?</span>
-            <span class="faq-chevron">▾</span>
-          </summary>
-          <div class="faq-body">
-            Yes, you receive 100% complete, unencrypted source code for the Laravel backend, web storefront, customer Flutter mobile app, vendor Flutter mobile app, and the Android SMS Gateway APK. There are no obfuscated files or hidden locks.
-          </div>
-        </details>
-
-        <!-- FAQ 2 -->
-        <details class="faq-accordion-item">
-          <summary class="faq-question">
-            <span>Is this a one-time payment or a monthly subscription?</span>
-            <span class="faq-chevron">▾</span>
-          </summary>
-          <div class="faq-body">
-            This is strictly a one-time payment. Once purchased, you own the code and can run your marketplace indefinitely with zero monthly fees, zero per-transaction commissions to us, and free lifetime product updates.
-          </div>
-        </details>
-
-        <!-- FAQ 3 -->
-        <details class="faq-accordion-item">
-          <summary class="faq-question">
-            <span>Can I customize the branding and publish the apps under my own name?</span>
-            <span class="faq-chevron">▾</span>
-          </summary>
-          <div class="faq-body">
-            Yes, MONO is 100% white-label ready. You can replace the logos, color palette, app icons, splash screens, domain names, package identifiers, and publish the applications directly to your Google Play Console and Apple App Store developer accounts.
-          </div>
-        </details>
-
-        <!-- FAQ 4 -->
-        <details class="faq-accordion-item">
-          <summary class="faq-question">
-            <span>What are the server and hosting requirements?</span>
-            <span class="faq-chevron">▾</span>
-          </summary>
-          <div class="faq-body">
-            Any standard Linux server running PHP 8.2 or 8.3 with the MySQL 8+ database and standard PHP extensions (BCMath, Ctype, cURL, DOM, Fileinfo, JSON, Mbstring, OpenSSL, PCRE, PDO, Tokenizer, XML). It works out of the box on cPanel, Hostinger, DigitalOcean, AWS, or local Laragon.
-          </div>
-        </details>
-
-        <!-- FAQ 5 -->
-        <details class="faq-accordion-item">
-          <summary class="faq-question">
-            <span>How do multi-vendor commissions and vendor payouts work?</span>
-            <span class="faq-chevron">▾</span>
-          </summary>
-          <div class="faq-body">
-            When a customer checks out, the platform commission (either percentage or flat fee) is automatically deducted, and the net proceeds are credited to the vendor's internal wallet balance. Vendors can submit a payout withdrawal request to their bank account, which administrators review and approve in the admin console.
-          </div>
-        </details>
-
-        <!-- FAQ 6 -->
-        <details class="faq-accordion-item">
-          <summary class="faq-question">
-            <span>How does the Android SMS gateway app work?</span>
-            <span class="faq-chevron">▾</span>
-          </summary>
-          <div class="faq-body">
-            Instead of spending thousands on per-SMS provider costs like Twilio, you install the included Android SMS Gateway APK onto any spare phone with a local SIM card and an unlimited SMS package. The Laravel backend routes OTPs and order dispatches through the gateway device automatically with full delivery status reports.
-          </div>
-        </details>
-
-        <!-- FAQ 7 -->
-        <details class="faq-accordion-item">
-          <summary class="faq-question">
-            <span>Are multiple languages and RTL (Arabic) supported?</span>
-            <span class="faq-chevron">▾</span>
-          </summary>
-          <div class="faq-body">
-            Yes, full right-to-left (RTL) mirroring is native across the customer storefront, admin panel, vendor panel, and Flutter mobile apps. English, Arabic, and Bengali ship configured out of the box, with built-in translation dictionaries allowing you to add any additional language in minutes.
-          </div>
-        </details>
-
-        <!-- FAQ 8 -->
-        <details class="faq-accordion-item">
-          <summary class="faq-question">
-            <span>Do you offer installation and deployment assistance?</span>
-            <span class="faq-chevron">▾</span>
-          </summary>
-          <div class="faq-body">
-            Yes. Every package includes a comprehensive step-by-step setup guide with full screenshot walkthroughs for cPanel, VPS, Firebase FCM, and Flutter compilation. The Extended License also includes free hands-on installation assistance directly from our engineering team.
-          </div>
-        </details>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= FINAL CALL TO ACTION ================= -->
-  <section class="section cta-banner-section">
-    <div class="container">
-      <div class="cta-banner-box reveal">
-        <div class="cta-banner-content">
-          <span class="badge-pill-brand">LIVE TESTED &amp; PRODUCTION READY</span>
-          <h2>Ready to Launch Your Multivendor Marketplace?</h2>
-          <p>
-            Experience all six products running live right now. Clean, human-crafted design, complete source code, and zero ongoing subscription fees.
-          </p>
-          <div class="cta-btn-row">
-            <a href="https://monomarket.site/" target="_blank" rel="noopener" class="btn-hero-primary">
-              <span>Launch Storefront Live ↗</span>
-            </a>
-            <a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="btn-hero-secondary">
-              <span>Super Admin Demo ↗</span>
-            </a>
-            <a href="#top" class="btn-hero-outline">Back to Top ↑</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- ================= FOOTER ================= -->
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top-row">
-      
-      <div class="footer-brand-col">
-        <div class="brand-lockup">
-          <img src="assets/img/brand-icon.svg" alt="MONO Emblem" class="brand-symbol" width="30" height="30">
-          <img src="assets/img/logo.svg" alt="MONO" class="brand-name" width="84" height="20">
-        </div>
-        <p class="footer-tagline">
-          The all-in-one multi-vendor ecommerce ecosystem. Native Flutter mobile apps, themed web storefront, and enterprise Laravel control panels.
-        </p>
-      </div>
-
-      <div class="footer-links-col">
-        <h5>Marketplace Suite</h5>
-        <ul>
-          <li><a href="https://monomarket.site/" target="_blank" rel="noopener">Customer Web Storefront</a></li>
-          <li><a href="https://monomarket.site/admin" target="_blank" rel="noopener">Super Admin Panel</a></li>
-          <li><a href="https://monomarket.site/vendor/login" target="_blank" rel="noopener">Vendor Management Portal</a></li>
-          <li><a href="#how-it-works">Flutter Customer App</a></li>
-          <li><a href="#how-it-works">Flutter Vendor App</a></li>
-          <li><a href="#modules">Android SMS Gateway</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-links-col">
-        <h5>Architecture</h5>
-        <ul>
-          <li><a href="#technology">Laravel 12 (PHP 8.3+)</a></li>
-          <li><a href="#technology">Flutter 3 (iOS &amp; Android)</a></li>
-          <li><a href="#technology">MySQL 8.4 Database</a></li>
-          <li><a href="#technology">Firebase FCM Push</a></li>
-          <li><a href="#technology">WhatsApp Cloud API</a></li>
-          <li><a href="#technology">711 Automated Tests</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-links-col">
-        <h5>Production Live Status</h5>
-        <div class="system-status-pill">
-          <span class="status-live-dot"></span>
-          <span>monomarket.site Live &amp; Operational</span>
-        </div>
-        <p class="status-note">
-          Production multi-vendor platform with live MySQL database, Flutter mobile APIs, and admin consoles.
-        </p>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom-row">
-      <div class="copyright-text">
-        © 2026 MONO Marketplace. Human-crafted design matching HyperCommerce standards.
-      </div>
-      <div class="footer-sub-links">
-        <a href="#overview">Overview</a>
-        <span>·</span>
-        <a href="#modules">Modules</a>
-        <span>·</span>
-        <a href="#how-it-works">Flow</a>
-        <span>·</span>
-        <a href="#packages">Pricing</a>
-        <span>·</span>
-        <a href="#faq">FAQs</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- Lightbox Modal for Fullscreen Screenshot Zoom -->
-<div class="lightbox-modal" id="lightboxModal" aria-hidden="true" role="dialog" aria-label="Fullscreen screenshot view">
-  <div class="lightbox-container">
-    <button class="lightbox-close-btn" id="lightboxClose" aria-label="Close enlarged screenshot">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
-    <img src="" alt="Enlarged Screenshot" class="lightbox-display-img" id="lightboxImg">
-    <div class="lightbox-caption-text" id="lightboxCaption"></div>
-  </div>
+<main class="item-presentation-canvas">
+<div class="item-details-card">
+<div class="user-html-content">
+<div class="user-html user-html__with-lazy-load">
+<h3 id="item-description__mono-multivendor-ecommerce-marketplace-flutter-apps-amp-laravel">MONO Marketplace – Multivendor eCommerce Marketplace – Flutter Apps &amp; Laravel Admin Panel</h3>
+<h5 id="item-description__mono-complete-multivendor-ecommerce-solution-flutter-mobile-apps">MONO Marketplace – Complete Multivendor eCommerce Solution: Flutter Mobile Apps, Laravel Admin Panel</h5>
+<h4 id="item-description__launch-your-own-global-or-nationwide-marketplace-build-a-powerful-multi-vendor">Launch Your Own Global or Nationwide Marketplace! Build a Powerful Multi Vendor eCommerce Business Today!</h4>
+<p>Stop building and start selling! MONO Marketplace is a comprehensive, integrated system designed for modern multi-vendor marketplaces, covering <b>Electronics</b>, <b>Fashion</b>, <b>Beauty</b>, <b>Home &amp; Living</b>, <b>Sports</b>, <b>Books</b>, and <b>general eCommerce</b>.</p>
+<p>Vendors independently manage their stores, products, inventory, and orders, while the marketplace owner centrally controls commissions, shipping, and marketplace operations—similar to Amazon, Flipkart, Daraz, Noon, or AliExpress.</p>
+<p>Your purchase includes a complete marketplace ecosystem with six interconnected components (including Android SMS Gateway):</p>
+<ul>
+<li>Customer Flutter App</li>
+<li>Customer website</li>
+<li>Laravel Admin Panel</li>
+<li>Vendor Panel</li>
+<li>Vendor App</li>
+</ul>
+<table class="action-top-table" style="width: auto; max-width: 520px; margin: 16px auto 10px; border-collapse: separate; border-spacing: 14px 0;">
+<tbody>
+<tr>
+<td style="padding: 0 4px; vertical-align: middle;">
+<a href="https://monomarket.site/" rel="nofollow" style="display: inline-block;">
+<img alt="MONO Marketplace - Multivendor eCommerce Marketplace" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/EXPLORE-DEMO.png" style="max-width: 240px; max-height: 52px; width: auto; height: auto; display: block; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(15,23,42,0.12);" title="MONO Marketplace - Multivendor eCommerce Marketplace" />
+</a>
+</td>
+<td style="padding: 0 4px; vertical-align: middle;">
+<a href="https://monomarket.site/" rel="nofollow" style="display: inline-block;">
+<img alt="Pre-sale Queries" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/PRESALE-QUERY.png" style="max-width: 240px; max-height: 52px; width: auto; height: auto; display: block; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(15,23,42,0.12);" title="Pre-sale Queries" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+<a class="doc-banner-link" href="https://monomarket.site/" rel="nofollow" style="display: block; max-width: 300px; margin: 8px auto 20px; text-decoration: none;">
+<img alt="MONO Marketplace - Documentation" loading="lazy" src="assets/img/presentation/Documentation.png" style="width: auto; max-width: 100%; max-height: 54px; display: block; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(15,23,42,0.12);" title="MONO Marketplace - Documentation" />
+</a>
+<table class="demo-buttons-table" style="width: 100%; max-width: 700px; margin: 14px auto 20px; border-collapse: separate; border-spacing: 14px 14px;">
+<tbody>
+<tr>
+<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
+<a class="demo-btn-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
+<img alt="Customer Android app" loading="lazy" src="assets/img/presentation/Customer-App-Android.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Customer Android app" />
+</a>
+</td>
+<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
+<a class="demo-btn-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
+<img alt="Customer iOS app" loading="lazy" src="assets/img/presentation/Customer-App-i-OS.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Customer iOS app" />
+</a>
+</td>
+</tr>
+<tr>
+<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
+<a class="demo-btn-card" href="https://monomarket.site/admin" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
+<img alt="Admin Panel" loading="lazy" src="assets/img/presentation/admin-panel.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Admin Panel" />
+</a>
+</td>
+<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
+<a class="demo-btn-card" href="https://monomarket.site/vendor" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
+<img alt="Vendor Panel" loading="lazy" src="assets/img/presentation/Seller-panel.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Vendor Panel" />
+</a>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 100%;">
+<a class="demo-btn-card" href="https://monomarket.site/" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
+<img alt="Customer Website" loading="lazy" src="assets/img/presentation/Customer-website.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Customer Website" />
+</a>
+</td>
+</tr>
+<tr>
+<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
+<a class="demo-btn-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
+<img alt="Vendor App Android" loading="lazy" src="assets/img/presentation/Seller-app-ios-2.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Vendor App Android" />
+</a>
+</td>
+<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
+<a class="demo-btn-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
+<img alt="Vendor App iOS" loading="lazy" src="assets/img/presentation/Seller-App-android-2.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Vendor App iOS" />
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This is your foundation for building and scaling a successful multi-vendor marketplace across multiple countries with support for different currencies, languages, and shipping configurations.</p>
+<p><img alt="MONO Marketplace - Complete Multivendor eCommerce Solution" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/1-app-intro.png" title="MONO Marketplace - Complete Multivendor eCommerce Solution" /></p>
+<p><img alt="Payment Gateways" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/paymentgateway.png" title="Payment Gateways" /></p>
+<p><img alt="Build a Marketplace" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/3-make-a-clone-like.png" title="Build a Marketplace" /></p>
+<div class="credentials-showcase-box" style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 24px; margin: 28px 0 32px;">
+<div class="creds-header-pill" style="display: inline-block; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #ffffff; background: #18284D; padding: 5px 14px; border-radius: 9999px; margin-bottom: 18px;">Live Demo Credentials</div>
+<div class="creds-cards-grid">
+<div class="demo-cred-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; box-shadow: 0 2px 6px rgba(15,23,42,0.03);">
+<div class="card-role-badge badge-admin" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; background: #fee2e2; color: #b91c1c;">Super Admin Panel</div>
+<div class="cred-url" style="font-size: 13px; font-weight: 600; margin-bottom: 10px;"><a href="https://monomarket.site/admin" rel="noopener" target="_blank" style="color: #2563eb; text-decoration: none;">monomarket.site/admin ↗</a></div>
+<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
+<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Login:</span>
+<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">admin@monomarket.site</code>
 </div>
-
-<script src="assets/js/main.js"></script>
+<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
+<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Pass:</span>
+<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">00000000</code>
+</div>
+</div>
+<div class="demo-cred-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; box-shadow: 0 2px 6px rgba(15,23,42,0.03);">
+<div class="card-role-badge badge-vendor" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; background: #dbeafe; color: #1d4ed8;">Vendor Portal &amp; App</div>
+<div class="cred-url" style="font-size: 13px; font-weight: 600; margin-bottom: 10px;"><a href="https://monomarket.site/vendor" rel="noopener" target="_blank" style="color: #2563eb; text-decoration: none;">monomarket.site/vendor ↗</a></div>
+<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
+<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Login:</span>
+<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">vendor@monomarket.site</code>
+</div>
+<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
+<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Pass:</span>
+<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">00000000</code>
+</div>
+</div>
+<div class="demo-cred-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; box-shadow: 0 2px 6px rgba(15,23,42,0.03);">
+<div class="card-role-badge badge-customer" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; background: #dcfce7; color: #15803d;">Customer Web &amp; App</div>
+<div class="cred-url" style="font-size: 13px; font-weight: 600; margin-bottom: 10px;"><a href="https://monomarket.site/" rel="noopener" target="_blank" style="color: #2563eb; text-decoration: none;">monomarket.site ↗</a></div>
+<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
+<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Login:</span>
+<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">customer@monomarket.site</code>
+</div>
+<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
+<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Pass:</span>
+<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">00000000</code>
+</div>
+</div>
+<div class="demo-cred-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; box-shadow: 0 2px 6px rgba(15,23,42,0.03);">
+<div class="card-role-badge badge-gateway" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; background: #f3e8ff; color: #7e22ce;">Android SMS Gateway</div>
+<div class="cred-url" style="font-size: 13px; font-weight: 600; margin-bottom: 10px;"><span style="color: #334155;">Android APK App</span></div>
+<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
+<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Login:</span>
+<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">admin@monomarket.site</code>
+</div>
+<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
+<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Pass:</span>
+<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">00000000</code>
+</div>
+</div>
+</div>
+</div>
+<p><img alt="Everything you need to launch a ecommerce marketplace" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/2-Everything-you-need.png" title="Everything you need to launch a ecommerce marketplace" /></p>
+<p><a href="https://monomarket.site/" rel="noopener" target="_blank"><img alt="Customer web" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/customer-Web.png" title="Customer web" /></a></p>
+<p><a download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank"><img alt="Customer App" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/3-customer-app-copy.png" title="Customer App" /></a></p>
+<p><a href="https://monomarket.site/admin" rel="noopener" target="_blank"><img alt="Admin Panel" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/5-Admin-Panel.png" title="Admin Panel" /></a></p>
+<p><a href="https://monomarket.site/vendor" rel="noopener" target="_blank"><img alt="Vendor Panel" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/6-Seller-Panel.png" title="Vendor Panel" /></a></p>
+<p><a download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank"><img alt="Vendor App" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/seller-app-3.png" title="Vendor App" /></a></p>
+<p><img alt="Compatible with Any Type of Business" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/5-Compatible-Business.png" title="Compatible with Any Type of Business" /></p>
+<p><img alt="Features of MONO Marketplace" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/hypercommerce-features-1.png" title="Features of MONO Marketplace" /></p>
+<p><img alt="Multiple Themes for App &amp; Web" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/Copy-of-Untitled-2.gif" title="Multiple Themes for App &amp; Web" /></p>
+<p><a href="https://monomarket.site/" rel="nofollow"><img alt="Need Installation Service?" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/Frame-2147223718.png" title="Need Installation Service?" /></a></p>
+<p><img alt="Customer App Features in Detail" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/Customer-App-Description-Hypercommerce.png" title="Customer App Features in Detail" /></p>
+<p><img alt="Customer web Features in Detail" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/Customer-Web-Description-Hypercommerce.png" title="Customer web Features in Detail" /></p>
+<p><img alt="Vendor App" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/hypercommerce-seller.png" title="Vendor App" /></p>
+<p><img alt="Vendor Panel" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/10-Seller-panel-description.png" title="Vendor Panel" /></p>
+<p><img alt="Admin Panel features in Details" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/9-Admin-panel.png" title="Admin Panel features in Details" /></p>
+<h2 id="item-description__mono-key-features">MONO Marketplace: Key Features</h2>
+<ul>
+<li>
+<strong>Platform Owner &amp; Admin Panel Highlights</strong>
+<ul>
+<li><strong>Multi-Country Marketplace Management:</strong> Easily launch and manage marketplaces across multiple countries with dedicated currencies, languages, tax settings, and localized shopping experiences.</li>
+<li><strong>Category-Based Commission System:</strong> Configure different commission rates for each product category and effortlessly manage vendor earnings and payout records.</li>
+<li><strong>Warehouse &amp; Fulfillment Management:</strong> Manage warehouses, fulfillment centers, and vendor inventory locations to streamline order processing and shipping operations.</li>
+<li><strong>Comprehensive Data &amp; Reporting:</strong> Access detailed insights into marketplace performance, including sales trends, top vendors, popular products, customer growth, and revenue reports.</li>
+</ul>
+</li>
+<li>
+<strong>Customer App Highlights</strong>
+<ul>
+<li><strong>Global Shopping Experience:</strong> Customers can browse products, discover brands, and shop seamlessly from vendors operating across multiple cities and countries.</li>
+<li><strong>Dedicated Vendor Storefronts:</strong> Each vendor gets a branded storefront where customers can explore products, collections, ratings, and business information.</li>
+<li><strong>Smart Product Discovery:</strong> Advanced search, filters, categories, and recommendations help customers quickly find exactly what they need.</li>
+<li><strong>Wishlist &amp; Save for Later:</strong> Allow customers to save favorite products, organize collections, and conveniently reorder items anytime.</li>
+<li><strong>Secure Checkout &amp; Multiple Payment Gateways:</strong> Provide a seamless checkout experience with support for multiple payment methods and trusted payment gateways.</li>
+</ul>
+</li>
+<li>
+<strong>Vendor/Vendor Panel Highlights</strong>
+<ul>
+<li><strong>Independent Store Management:</strong> Vendors can customize stores, upload banners, manage business information, and establish their own brand presence.</li>
+<li><strong>Powerful Catalog Management:</strong> Easily manage products, variants, attributes, specifications, media galleries, and SEO settings through an intuitive dashboard.</li>
+<li><strong>Inventory &amp; Warehouse Control:</strong> Track stock levels, manage inventory across one or multiple warehouses, and maintain accurate product availability.</li>
+<li><strong>Order Processing &amp; Fulfillment:</strong> Accept orders, update statuses, generate invoices, and efficiently manage shipping operations.</li>
+<li><strong>Sales Insights &amp; Performance Reports:</strong> Monitor sales, earnings, best-selling products, customer activity, and overall store performance through detailed reports.</li>
+</ul>
+</li>
+<li>
+<strong>Marketplace Highlights</strong>
+<ul>
+<li><strong>Multi-Vendor Marketplace Architecture:</strong> Empower multiple vendors to operate independent businesses while maintaining complete control over marketplace operations.</li>
+<li><strong>Shipping Profiles &amp; Shipping Zones:</strong> Configure shipping methods, delivery estimates, shipping costs, and supported regions for local and international deliveries.</li>
+<li><strong>Multi-Currency &amp; Multi-Language Support:</strong> Deliver localized shopping experiences with support for multiple currencies and languages tailored to each market.</li>
+<li><strong>Product Reviews &amp; Ratings:</strong> Build customer trust by enabling verified reviews, ratings, and vendor feedback.</li>
+<li><strong>Coupons &amp; Promotional Campaigns:</strong> Boost sales with discount campaigns, coupons, featured products, and seasonal promotions.</li>
+</ul>
+</li>
+<li>
+<strong>Server Requirements</strong>
+<ul>
+<li><strong>PHP Version:</strong> PHP 8.4+ (compatible with newer PHP versions).</li>
+<li><strong>Flutter SDK:</strong> Flutter SDK 3.x.x (compatible with newer stable Flutter releases).</li>
+<li><strong>Database:</strong> MySQL 8.0+ (or compatible newer versions).</li>
+</ul>
+</li>
+</ul>
+<h4 id="item-description__your-all-in-one-solution-for-marketplace-success">Your All-in-One Solution for Marketplace Success.</h4>
+<p>From vendor onboarding and warehouse management to global shipping and multi-country operations, MONO Marketplace provides everything needed to launch and scale a modern eCommerce marketplace. We’ve simplified the complexities of marketplace management so you can focus on growing your business. Sell electronics, fashion, beauty products, home essentials, and countless other categories through a powerful, feature-rich ecosystem.</p>
+<h4 id="item-description__additional-service-costs">Additional Service Costs</h4>
+<p>Some third-party services used by MONO Marketplace require separate subscriptions or usage-based payments and are <strong>not included with the purchase</strong>.</p>
+<ul>
+<li><strong>Payment Gateways:</strong> Charges imposed by payment providers such as Stripe, Razorpay, and other supported payment processors.</li>
+<li><strong>SMS Notification Providers:</strong> Costs associated with sending SMS messages through services like Twilio, MSG91, Vonage, or similar providers.</li>
+<li><strong>Email Services:</strong> Transactional email delivery services such as SMTP providers, SendGrid, Mailgun, Amazon SES, and similar platforms may require separate subscriptions.</li>
+<li><strong>Maps &amp; Location Services:</strong> Usage charges for Google Maps Platform, Mapbox, or other mapping and geolocation APIs.</li>
+<li><strong>App Store Developer Accounts:</strong> Publishing mobile apps requires active developer accounts such as the Google Play Developer Account and Apple Developer Program, which involve separate registration or annual fees.</li>
+</ul>
+<p><strong>Note:</strong> Any fees, subscriptions, or usage charges imposed by third-party platforms or service providers are not included in the purchase price of MONO Marketplace and are the sole responsibility of the buyer.</p>
+<h4 id="item-description__invest-in-the-future-of-online-commerce-purchase-mono-marketplace-today-all-the">Invest in the future of online commerce. Purchase MONO Marketplace today! All the best!</h4>
+<div class="changelog-section">
+<h3 class="changelog-heading">CHANGELOG – Version 1.0.0 Released</h3>
+<pre class="changelog-code-block">====================
+Initial Release — Launch of MONO Marketplace
+====================
+=&gt; Complete Multivendor eCommerce Marketplace Suite (Laravel 12 + Flutter 3)
+=&gt; Flutter Customer Mobile App (iOS &amp; Android) with real-time catalog &amp; live tracking
+=&gt; Flutter Vendor Mobile App (iOS &amp; Android) with audible order notification engine
+=&gt; High-Performance Web Storefront with sub-second catalog search &amp; filter system
+=&gt; Super Admin Management Console with multi-tenant vendor moderation &amp; approval
+=&gt; Vendor Self-Service Management Portal for products, inventory &amp; payout ledger
+=&gt; Integrated Android SMS Gateway transforming any Android SIM into an automated OTP dispatcher
+=&gt; Automated Category &amp; Tier Commission Engine with instant split payments
+=&gt; In-App Vendor Wallet with settlement statements &amp; bank withdrawal requests
+=&gt; Multi-Currency engine with automatic FX rate conversion &amp; multi-language RTL support
+=&gt; 10+ Global Payment Gateways (Stripe, PayPal, Razorpay, Cash on Delivery &amp; more)
+=&gt; Comprehensive RESTful API with Postman collection and Sanctum token security</pre>
+</div>
+</div>
+</div>
+</div>
+</main>
 </body>
 </html>
