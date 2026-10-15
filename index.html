@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mono Marketplace — Multi-Vendor Ecommerce Suite | Web, Panels &amp; Flutter Apps</title>
+<meta name="description" content="Mono Marketplace is a complete multi-vendor ecommerce suite: themed Laravel storefront, admin & vendor panels, and native Flutter apps for customers, vendors and SMS gateway.">
+<link rel="icon" href="assets/img/favicon.ico">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-mark">
+    <svg viewBox="0 0 48 48" width="56" height="56" aria-hidden="true">
+      <rect x="3" y="3" width="42" height="42" rx="12" fill="none" stroke="url(#lg-mark)" stroke-width="3"/>
+      <path d="M14 33V17l10 9 10-9v16" fill="none" stroke="url(#lg-mark)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <defs>
+        <linearGradient id="lg-mark" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#0EA5E9"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top" aria-label="Mono home">
+      <svg viewBox="0 0 48 48" width="30" height="30" aria-hidden="true">
+        <rect x="3" y="3" width="42" height="42" rx="12" fill="none" stroke="url(#lg-mark)" stroke-width="3.5"/>
+        <path d="M14 33V17l10 9 10-9v16" fill="none" stroke="url(#lg-mark)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Mono<em>Market</em></span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Sections">
+      <a href="#overview" class="active">Overview</a>
+      <a href="#storefront">Storefront</a>
+      <a href="#admin">Admin</a>
+      <a href="#apps">Apps</a>
+      <a href="#modules">Modules</a>
+      <a href="#faq">FAQs</a>
+    </nav>
+    <a class="btn btn-sm btn-primary nav-cta" href="#cta">Buy Now</a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="overview">
+  <div class="grid-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <h1 class="reveal">Build, scale &amp; grow your own multivendor marketplace</h1>
+      <p class="sub reveal" data-delay="1">
+        Launch a powerful online marketplace where multiple vendors sell under one roof —
+        a themed Laravel storefront, admin &amp; vendor panels, and native Flutter apps for
+        customers, vendors and even your SMS gateway.
+      </p>
+      <div class="hero-cta reveal" data-delay="2">
+        <a class="btn btn-primary" href="#storefront">Get Free Demo →</a>
+        <a class="btn btn-outline-accent" href="#cta">Buy Now →</a>
+      </div>
+      <div class="tech-chips reveal" data-delay="3">
+        <span class="tc" title="Flutter 3">
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#42A5F5" d="M14.5 1 4 11.5l3.2 3.2L20.9 1zM20.9 11 12.6 2.8l-3.1 3.1 6.6 6.6-6.6 6.6 3.1 3.1L20.9 15l-3.2-3.2z" transform="translate(1.6 0) scale(0.88)"/></svg>
+        </span>
+        <span class="tc" title="Laravel 12">
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="#FF2D20" stroke-width="1.7" stroke-linejoin="round" d="M3 5.5v10l6 3.5V13l6-3.5v-1L9 5 3 5.5zM9 13l-6 3.5M15 8.5l6 3.5v6l-6 3.5-6-3.5M15 8.5 21 5l-4-2-5.5 2.5"/></svg>
+        </span>
+        <span class="tc" title="Firebase FCM">
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#FFA000" d="M5 19 8 3l3.5 6.2L5 19zM9.5 19l8.5-5.5L14 3l-2.7 8.6L9.5 19zM19.5 21l-5-2.2 6.8-6.8.7 7.5-2.5 1.5z"/><path fill="#F57C00" d="M5 19l7-8.4L14 3 8.2 13.6 5 19z" opacity=".8"/></svg>
+        </span>
+        <span class="tc" title="MySQL 8.4">
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7.5" ry="3" fill="none" stroke="#00758F" stroke-width="1.7"/><path fill="none" stroke="#00758F" stroke-width="1.7" d="M4.5 5.5v6.5c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V5.5M4.5 12v6.5c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V12"/></svg>
+        </span>
+      </div>
+    </div>
+    <div class="hero-stage reveal" data-delay="2">
+      <figure class="phone phone-c1 float-slow" role="img" aria-label="Mono customer app, real screenshot">
+        <span class="notch"></span>
+        <img src="assets/img/shots/app-customer.jpg" alt="Mono customer app home">
+      </figure>
+      <figure class="phone phone-c2 float-slower" role="img" aria-label="Mono vendor app, real screenshot">
+        <span class="notch"></span>
+        <img src="assets/img/shots/app-vendor.jpg" alt="Mono vendor app overview">
+      </figure>
+      <div class="stage-glow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLATFORM SPLIT ================= -->
+<section class="section platform" id="platform">
+  <div class="split">
+    <figure class="shot big reveal">
+      <div class="shot-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="url">your-domain.com — storefront</span>
+      </div>
+      <img src="assets/img/shots/storefront-products.png" alt="Storefront featured product grid" loading="lazy">
+    </figure>
+    <div class="split-copy reveal" data-delay="1">
+      <span class="sec-tag">The platform</span>
+      <h2>Built to sell, from day one.</h2>
+      <p>Reusable sections, banners, product rails, categories, promo blocks and custom widgets — every page of the storefront is assembled from the admin panel without touching code: theme colours, typography, spacing and mobile layouts included.</p>
+      <p>Vendors get their own panel and Flutter app, you keep full control over products, orders, payments, inventory and promotions from the admin — and everything talks to the same REST API.</p>
+      <a class="btn btn-dark" href="#storefront">Get More Details →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STOREFRONT ================= -->
+<section class="section" id="storefront">
+  <div class="sec-head center reveal">
+    <span class="sec-tag">Storefront</span>
+    <h2>Your marketplace, beautifully themed.</h2>
+    <p class="sec-sub">A Laravel storefront with 8 swappable themes, per-vendor shops, coupons, wallet and localized everything — captured live from the product.</p>
+  </div>
+  <figure class="shot big reveal" data-delay="1">
+    <div class="shot-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="url">your-domain.com — storefront home</span>
+    </div>
+    <img src="assets/img/shots/storefront-home.png" alt="Storefront home with hero slider" loading="lazy">
+  </figure>
+  <figure class="shot big reveal" data-delay="2">
+    <div class="shot-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="url">your-domain.com — featured products</span>
+    </div>
+    <img src="assets/img/shots/storefront-products.png" alt="Storefront featured product grid" loading="lazy">
+  </figure>
+</section>
+
+<!-- ================= ADMIN ================= -->
+<section class="section alt" id="admin">
+  <div class="sec-head center reveal">
+    <span class="sec-tag">Admin panel</span>
+    <h2>The whole marketplace, one dashboard away.</h2>
+    <p class="sec-sub">A guard-protected admin with live revenue, order pipeline, vendor management and every setting from email to WhatsApp.</p>
+  </div>
+  <div class="split-split">
+    <figure class="shot big reveal">
+      <div class="shot-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="url">your-domain.com/admin — dashboard</span>
+      </div>
+      <img src="assets/img/shots/admin-dashboard.png" alt="Admin panel dashboard with revenue and order status" loading="lazy">
+    </figure>
+    <div class="split-aside reveal" data-delay="1">
+      <figure class="phone lg" role="img" aria-label="Vendor app overview">
+        <span class="notch"></span>
+        <img src="assets/img/shots/app-vendor.jpg" alt="Vendor app overview with earnings and order pipeline">
+        <figcaption>The same data in the vendor app — live on a real device.</figcaption>
+      </figure>
+      <a class="btn btn-dark" href="#apps">Explore the vendor app →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= APPS ================= -->
+<section class="section" id="apps">
+  <div class="sec-head center reveal">
+    <span class="sec-tag">Live demo</span>
+    <h2>One ecosystem, every role covered.</h2>
+    <p class="sec-sub">A customer app, the web storefront, the admin panel and the vendor app all work together out of the box — real screenshots, no mockups.</p>
+  </div>
+  <div class="apps-grid">
+    <article class="app-card reveal">
+      <h3>Customer App</h3>
+      <p>An intuitive shopping experience with smart search, secure payments, wallet, coupons and real-time order tracking.</p>
+      <div class="shot-frame"><img src="assets/img/shots/app-customer.jpg" alt="Customer app home feed" loading="lazy"></div>
+      <div class="tags"><span>Email/SMS OTP</span><span>Wallet</span><span>Order tracking</span></div>
+    </article>
+    <article class="app-card reveal" data-delay="1">
+      <h3>Vendor App</h3>
+      <p>Run the shop from your pocket: earnings, orders, stock alerts, fulfilment pipeline — plus a terminal-style AI console for product content.</p>
+      <div class="shot-frame"><img src="assets/img/shots/app-vendor.jpg" alt="Vendor app overview" loading="lazy"></div>
+      <div class="tags"><span>Order pipeline</span><span>AI console</span><span>Stock</span></div>
+    </article>
+    <article class="app-card reveal" data-delay="2">
+      <h3>SMS Gateway App</h3>
+      <p>Turn any Android phone into your sender: the backend queues OTPs and order updates, the app keeps a heartbeat and reports delivery back.</p>
+      <div class="shot-frame"><img src="assets/img/shots/app-gateway.jpg" alt="SMS gateway app status screen" loading="lazy"></div>
+      <div class="tags"><span>Heartbeat</span><span>Delivery reports</span><span>OTP</span></div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= MODULES ================= -->
+<section class="section" id="modules">
+  <div class="sec-head center reveal">
+    <span class="sec-tag">Modules</span>
+    <h2>Powerful tools, built in.</h2>
+    <p class="sec-sub">Essential features for sellers, admins and customers — built in from day one, ready to scale as you grow.</p>
+  </div>
+  <div class="mod-grid reveal">
+    <div class="mod"><div class="mic"><span class="mic-glyph">⇄</span></div><h4>Multi-Vendor &amp; Single-Vendor Support</h4></div>
+    <div class="mod"><div class="mic"><span class="mic-glyph">🌐</span></div><h4>3 Languages with Full RTL</h4></div>
+    <div class="mod"><div class="mic"><span class="mic-glyph">✦</span></div><h4>AI Content &amp; Translation Engine</h4></div>
+    <div class="mod"><div class="mic"><span class="mic-glyph">↺</span></div><h4>Refunds to Wallet &amp; Coupons</h4></div>
+    <div class="mod"><div class="mic"><span class="mic-glyph">◉</span></div><h4>WhatsApp Cloud API Inbox</h4></div>
+    <div class="mod"><div class="mic"><span class="mic-glyph">✆</span></div><h4>SMS OTP &amp; Android Gateway</h4></div>
+    <div class="mod"><div class="mic"><span class="mic-glyph">◐</span></div><h4>Dark Mode Everywhere</h4></div>
+    <div class="mod"><div class="mic"><span class="mic-glyph">⬡</span></div><h4>One-Click Installer &amp; 711 Tests</h4></div>
+    <div class="mod"><div class="mic"><span class="mic-glyph">⬑</span></div><h4>Push Notifications &amp; Newsletter</h4></div>
+    <div class="mod"><div class="mic"><span class="mic-glyph">▦</span></div><h4>Home Page Builder</h4></div>
+  </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section class="stats reveal" aria-label="Suite statistics">
+  <div><b class="count" data-to="6">0</b><i>products in the suite</i></div>
+  <div><b class="count" data-to="3">0</b><i>languages · full RTL</i></div>
+  <div><b class="count" data-to="8">0</b><i>storefront themes</i></div>
+  <div><b class="count" data-to="711">0</b><i>automated tests green</i></div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta-band" id="cta">
+  <div class="cta-inner reveal">
+    <h2>Ready to run?</h2>
+    <p>Six products, one marketplace — deployed on your domain in minutes with the guided installer.</p>
+    <div class="hero-cta center">
+      <a class="btn btn-primary big" href="#top">Buy Now →</a>
+      <a class="btn btn-ghost-invert big" href="#overview">Back to top ↑</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="section faq" id="faq">
+  <div class="sec-head center reveal">
+    <span class="sec-tag">FAQs</span>
+    <h2>Questions, answered.</h2>
+  </div>
+  <div class="faq-list reveal" data-delay="1">
+    <details>
+      <summary>What's included in the suite?</summary>
+      <p>The Laravel storefront with 8 themes, the admin panel, the vendor panel, and three Flutter apps — customer, vendor and SMS gateway — plus the REST API and the guided installer.</p>
+    </details>
+    <details>
+      <summary>What are the server requirements?</summary>
+      <p>Any host running PHP 8.3 with the pdo_mysql extension and MySQL 8 — the same stack Laragon, cPanel or a plain VPS provides. The Flutter apps build with Flutter 3.</p>
+    </details>
+    <details>
+      <summary>Do you help with installation?</summary>
+      <p>The guided installer walks you through database, admin account and store setup step by step, and verifies the build manifest before you go live.</p>
+    </details>
+    <details>
+      <summary>Which payment gateways are supported?</summary>
+      <p>Cash on delivery plus card gateways through the payment module, with refunds back to the gateway, the customer wallet, or an auto-generated one-shot coupon.</p>
+    </details>
+    <details>
+      <summary>How do notifications work?</summary>
+      <p>Email (SMTP), SMS via Twilio or your own Android phone through the gateway app, WhatsApp via the official Cloud API, and push notifications through Firebase FCM.</p>
+    </details>
+    <details>
+      <summary>Is the code localized?</summary>
+      <p>English, Bengali and Arabic ship in the box with full RTL mirroring across the storefront, panels and apps — and the AI engine translates product content between them.</p>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="foot-grid">
+    <div class="foot-brand-col">
+      <div class="brand foot-brand">
+        <svg viewBox="0 0 48 48" width="30" height="30" aria-hidden="true">
+          <rect x="3" y="3" width="42" height="42" rx="12" fill="none" stroke="url(#lg-mark)" stroke-width="3.5"/>
+          <path d="M14 33V17l10 9 10-9v16" fill="none" stroke="url(#lg-mark)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Mono<em>Market</em></span>
+      </div>
+      <p class="foot-about">Mono Marketplace — storefront web, admin &amp; vendor panels, and customer, vendor &amp; SMS gateway apps, all speaking one REST API.</p>
+    </div>
+    <div class="foot-col">
+      <h5>Products</h5>
+      <a href="#storefront">Web storefront</a>
+      <a href="#admin">Admin panel</a>
+      <a href="#apps">Customer app</a>
+      <a href="#apps">Vendor app</a>
+      <a href="#apps">SMS gateway app</a>
+    </div>
+    <div class="foot-col">
+      <h5>Built with</h5>
+      <a href="#stack">Laravel 12</a>
+      <a href="#stack">Flutter 3</a>
+      <a href="#stack">MySQL 8.4</a>
+      <a href="#stack">Firebase FCM</a>
+      <a href="#stack">WhatsApp Cloud API</a>
+    </div>
+    <div class="foot-col">
+      <h5>Screenshots</h5>
+      <p class="foot-note">All screenshots on this page are captured live from the running product — storefront, panels and apps on a real device.</p>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>Copyright © 2026 Mono. All product names are demo content.</span>
+    <div class="foot-social">
+      <span class="fsoc">in</span>
+      <span class="fsoc">𝕏</span>
+      <span class="fsoc">▶</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
