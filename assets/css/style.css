@@ -917,7 +917,7 @@ button {
 }
 
 .b-dot.red { background: #f87171; }
-.b-dot.yellow { background: #fbbf24; }
+.b-dot.slate { background: #94a3b8; }
 .b-dot.green { background: #34d399; }
 
 .browser-url {
@@ -1611,7 +1611,7 @@ button {
 }
 
 .dot-close { background: #ef4444; }
-.dot-minimize { background: #f59e0b; }
+.dot-minimize { background: #94a3b8; }
 .dot-expand { background: #10b981; }
 
 .address-pill {
