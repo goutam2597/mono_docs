@@ -255,7 +255,7 @@
   document.addEventListener("click", function (e) {
     var copyBtn = e.target.closest(".btn-copy-cred");
     if (!copyBtn) return;
-    
+
     var text = copyBtn.getAttribute("data-copy") || "";
     if (!text) {
       var wrap = copyBtn.closest(".cred-input-wrap");
