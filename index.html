@@ -293,62 +293,341 @@ a .presentation-banner-img:hover {
 }
 .changelog-section {
   margin-top: 40px;
-  padding-top: 28px;
+  padding-top: 24px;
   border-top: 2px solid #e2e8f0;
 }
 .changelog-heading {
   font-family: var(--font-heading);
   font-size: 20px;
   font-weight: 700;
-  color: var(--primary-brand);
-  margin-bottom: 16px;
+  color: var(--text-dark);
+  margin-bottom: 14px;
 }
 .changelog-code-block {
-  background: #0f172a;
-  color: #f1f5f9;
-  font-family: var(--font-code);
-  font-size: 13px;
-  line-height: 1.7;
-  padding: 24px;
+  background: #f8fafc;
+  color: var(--text-body);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.8;
+  padding: 20px 24px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.changelog-code-block b {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+.demo-top-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 22px auto 28px;
+  max-width: 680px;
+}
+.demo-top-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+.demo-top-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #101e38;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 13px 26px;
   border-radius: 12px;
-  overflow-x: auto;
-  border: 1px solid #334155;
+  box-shadow: 0 4px 14px rgba(16, 30, 56, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+}
+.demo-top-pill:hover {
+  background: #1b3358 !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(16, 30, 56, 0.38) !important;
+}
+.demo-cards-wrapper {
+  max-width: 740px;
+  margin: 22px auto 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.demo-cards-row {
+  display: flex;
+  gap: 14px;
+  width: 100%;
+}
+.demo-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #ffffff;
+  border: 1.5px solid #dbe2ea;
+  border-radius: 18px;
+  padding: 14px 20px;
+  text-decoration: none !important;
+  color: #0f172a !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+}
+.demo-card:hover {
+  border-color: #2563eb !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12) !important;
+}
+.demo-card-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #edf4fc;
+  color: #1e3a8a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.demo-card-content {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+.demo-card-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.25;
+  margin-bottom: 3px;
+}
+.demo-card-action {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #2563eb;
+  line-height: 1.2;
+}
+.demo-card:hover .demo-card-action {
+  color: #1d4ed8 !important;
+  text-decoration: underline;
+}
+.demo-card-platform {
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.demo-card:hover .demo-card-platform {
+  color: #64748b;
 }
 @media (max-width: 640px) {
-  .action-top-table {
-    max-width: 100% !important;
-    border-spacing: 8px 0 !important;
-  }
-  .action-top-table a img {
-    max-width: 160px !important;
-  }
-  .doc-banner-link {
-    max-width: 260px !important;
-  }
-  .demo-buttons-table {
-    display: block;
-    border-spacing: 0 !important;
-    margin: 12px auto !important;
-  }
-  .demo-buttons-table tbody,
-  .demo-buttons-table tr,
-  .demo-buttons-table td {
-    display: block;
+  .demo-top-pill {
     width: 100% !important;
+    max-width: 320px !important;
+    padding: 11px 18px !important;
+    font-size: 12.5px !important;
   }
-  .demo-buttons-table td {
-    padding: 6px 0 !important;
+  .demo-cards-row {
+    flex-direction: column !important;
   }
-  .demo-btn-card {
-    max-width: 100%;
-    padding: 8px 12px;
-  }
-  .demo-btn-card img {
-    max-height: 38px !important;
+  .demo-card {
+    width: 100% !important;
+    max-width: 100% !important;
   }
   .creds-cards-grid {
     grid-template-columns: 1fr;
   }
+}
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 16px;
+  margin: 22px 0 28px;
+}
+.ecosystem-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.ecosystem-card:hover {
+  border-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.08);
+}
+.ecosystem-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.ecosystem-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ecosystem-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.25;
+}
+.ecosystem-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 5px;
+  margin-top: 3px;
+}
+.ecosystem-list {
+  margin: 0;
+  padding: 0 0 0 16px;
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.6;
+}
+.ecosystem-list li {
+  margin-bottom: 5px;
+}
+.tech-pills-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 22px;
+}
+.tech-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 9999px;
+}
+.cred-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.cred-url-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.cred-url-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+.cred-field-group {
+  margin-bottom: 10px;
+}
+.cred-field-group:last-child {
+  margin-bottom: 0;
+}
+.cred-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+.cred-field-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.cred-input {
+  width: 100%;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 8px 64px 8px 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  cursor: pointer;
+  user-select: all !important;
+  -webkit-user-select: all !important;
+  -moz-user-select: all !important;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  outline: none;
+}
+.cred-input:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+.cred-input:focus {
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+.cred-copy-badge {
+  position: absolute;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  pointer-events: none;
+  transition: all 0.15s ease;
+}
+.cred-input:hover ~ .cred-copy-badge,
+.cred-input:focus ~ .cred-copy-badge {
+  color: #2563eb;
+  border-color: #2563eb;
+  background: #eff6ff;
 }
 </style>
 </head>
@@ -362,152 +641,385 @@ a .presentation-banner-img:hover {
 <h4 id="item-description__launch-your-own-global-or-nationwide-marketplace-build-a-powerful-multi-vendor">Launch Your Own Global or Nationwide Marketplace! Build a Powerful Multi Vendor eCommerce Business Today!</h4>
 <p>Stop building and start selling! MONO Marketplace is a comprehensive, integrated system designed for modern multi-vendor marketplaces, covering <b>Electronics</b>, <b>Fashion</b>, <b>Beauty</b>, <b>Home &amp; Living</b>, <b>Sports</b>, <b>Books</b>, and <b>general eCommerce</b>.</p>
 <p>Vendors independently manage their stores, products, inventory, and orders, while the marketplace owner centrally controls commissions, shipping, and marketplace operations—similar to Amazon, Flipkart, Daraz, Noon, or AliExpress.</p>
-<p>Your purchase includes a complete marketplace ecosystem with six interconnected components (including Android SMS Gateway):</p>
-<ul>
-<li>Customer Flutter App</li>
-<li>Customer website</li>
-<li>Laravel Admin Panel</li>
-<li>Vendor Panel</li>
-<li>Vendor App</li>
+<p>Your purchase includes a complete, production-grade marketplace ecosystem featuring six tightly integrated applications designed for high performance, real-time sync, and rapid scalability:</p>
+<div class="tech-pills-bar">
+<span class="tech-pill">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="13"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+<span>Laravel 13 &amp; PHP 8.3</span>
+</span>
+<span class="tech-pill">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><rect height="20" rx="3" ry="3" width="14" x="5" y="2"></rect><line x1="12" x2="12.01" y1="18" y2="18"></line></svg>
+<span>Flutter 3.x Cross-Platform</span>
+</span>
+<span class="tech-pill">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+<span>Ably Real-Time WebSockets</span>
+</span>
+<span class="tech-pill">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+<span>Firebase Cloud Messaging</span>
+</span>
+<span class="tech-pill">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+<span>Multi-Country &amp; Multi-Currency</span>
+</span>
+<span class="tech-pill">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+<span>Android SIM SMS Gateway</span>
+</span>
+</div>
+<div class="ecosystem-grid">
+<div class="ecosystem-card">
+<div class="ecosystem-card-header">
+<div class="ecosystem-icon-wrap" style="background: #eff6ff; color: #2563eb;">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M2 9h20l-2 11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2L2 9z"></path><path d="M8 9V6a4 4 0 0 1 8 0v3"></path></svg>
+</div>
+<div>
+<div class="ecosystem-card-title">Customer Mobile App</div>
+<span class="ecosystem-badge" style="background: #dbeafe; color: #1d4ed8;">Flutter iOS &amp; Android</span>
+</div>
+</div>
+<ul class="ecosystem-list">
+<li><strong>47+ Interactive Screens:</strong> 4 dynamic theme layouts (Standard, Marketplace, Aurora, Nova) with instant dark/light mode.</li>
+<li><strong>Real-Time Live Chat:</strong> Tokenized Ably WebSocket customer-to-vendor messaging with image/file sharing and delivery status.</li>
+<li><strong>Rich Shopping Experience:</strong> Staggered product grids, video reels player, multi-attribute variants, and verified customer reviews.</li>
+<li><strong>Global Ready:</strong> Multi-currency converter, localized tax, guest checkout, and full Arabic RTL + Google auto-translation.</li>
+<li><strong>Automated FCM Alerts:</strong> Instant push notifications for order progress, flash sales, and delivery dispatch.</li>
 </ul>
-<table class="action-top-table" style="width: auto; max-width: 520px; margin: 16px auto 10px; border-collapse: separate; border-spacing: 14px 0;">
-<tbody>
-<tr>
-<td style="padding: 0 4px; vertical-align: middle;">
-<a href="https://monomarket.site/" rel="nofollow" style="display: inline-block;">
-<img alt="MONO Marketplace - Multivendor eCommerce Marketplace" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/EXPLORE-DEMO.png" style="max-width: 240px; max-height: 52px; width: auto; height: auto; display: block; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(15,23,42,0.12);" title="MONO Marketplace - Multivendor eCommerce Marketplace" />
+</div>
+<div class="ecosystem-card">
+<div class="ecosystem-card-header">
+<div class="ecosystem-icon-wrap" style="background: #f0fdf4; color: #16a34a;">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><rect height="14" rx="2" ry="2" width="20" x="2" y="3"></rect><line x1="2" x2="22" y1="8" y2="8"></line><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="9" x2="9.01" y1="6" y2="6"></line></svg>
+</div>
+<div>
+<div class="ecosystem-card-title">Customer Storefront Website</div>
+<span class="ecosystem-badge" style="background: #dcfce7; color: #15803d;">Responsive Web / Blade</span>
+</div>
+</div>
+<ul class="ecosystem-list">
+<li><strong>High-Speed Marketplace:</strong> SEO-optimized web storefront engineered for lightning-fast catalog search and conversion.</li>
+<li><strong>Frictionless Checkout:</strong> Multi-step secure checkout supporting guest shoppers, saved addresses, and wallet balance.</li>
+<li><strong>Conversion Drivers:</strong> Dynamic discount coupons, flash deals countdowns, product wishlist, and social share links.</li>
+<li><strong>Multi-Gateway Payments:</strong> Integrated Stripe, PayPal, Razorpay, Cash on Delivery, Bank Transfer, and digital wallet.</li>
+<li><strong>Responsive Design:</strong> Flawless mobile-first experience across phones, tablets, laptops, and ultra-wide displays.</li>
+</ul>
+</div>
+<div class="ecosystem-card">
+<div class="ecosystem-card-header">
+<div class="ecosystem-icon-wrap" style="background: #fef2f2; color: #dc2626;">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" x2="20" y1="8" y2="14"></line><line x1="23" x2="17" y1="11" y2="11"></line></svg>
+</div>
+<div>
+<div class="ecosystem-card-title">Laravel Super Admin Panel</div>
+<span class="ecosystem-badge" style="background: #fee2e2; color: #b91c1c;">Laravel 13 &amp; PHP 8.3</span>
+</div>
+</div>
+<ul class="ecosystem-list">
+<li><strong>Multi-Country Control:</strong> Launch localized regional marketplaces with dedicated tax rules, currencies, and shipping zones.</li>
+<li><strong>Flexible Monetization:</strong> Configure category-wise, percentage, or flat platform commission fees across all vendors.</li>
+<li><strong>Vendor Governance:</strong> Multi-step vendor registration, KYC document verification, store status approvals, and suspensions.</li>
+<li><strong>Financial Operations:</strong> Automated commission calculations, vendor payout requests, transaction logs, and DomPDF invoices.</li>
+<li><strong>System Customizer:</strong> Central control over banners, homepage builder sections, theme presets, and push notifications.</li>
+</ul>
+</div>
+<div class="ecosystem-card">
+<div class="ecosystem-card-header">
+<div class="ecosystem-icon-wrap" style="background: #faf5ff; color: #9333ea;">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M3 9l1-5h16l1 5"></path><path d="M21 9v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9"></path><path d="M3 9c0 2 1.5 3 3 3s3-1 3-3c0 2 1.5 3 3 3s3-1 3-3c0 2 1.5 3 3 3s3-1 3-3"></path><line x1="10" x2="10" y1="22" y2="15"></line><line x1="14" x2="14" y1="22" y2="15"></line></svg>
+</div>
+<div>
+<div class="ecosystem-card-title">Vendor Web Portal</div>
+<span class="ecosystem-badge" style="background: #f3e8ff; color: #7e22ce;">Seller Web Portal</span>
+</div>
+</div>
+<ul class="ecosystem-list">
+<li><strong>Independent Store Workspace:</strong> Comprehensive web workspace for vendors to manage branding, banners, and policies.</li>
+<li><strong>Catalog &amp; Variant Matrix:</strong> Unlimited products, multi-tier pricing, SKU tracking, low stock alerts, and bulk CSV uploads.</li>
+<li><strong>Order Lifecycle Pipeline:</strong> Dedicated pipeline for order verification, packing slips, dispatch handover, and tracking updates.</li>
+<li><strong>Settlement &amp; Wallet:</strong> Transparent earnings dashboard, commission breakdown per item, and one-click withdrawal requests.</li>
+<li><strong>Store Promotions:</strong> Create store-specific discount coupons, flash offers, and bundle deals.</li>
+</ul>
+</div>
+<div class="ecosystem-card">
+<div class="ecosystem-card-header">
+<div class="ecosystem-icon-wrap" style="background: #ecfdf5; color: #059669;">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M12 18h.01"></path><rect height="20" rx="3" ry="3" width="14" x="5" y="2"></rect></svg>
+</div>
+<div>
+<div class="ecosystem-card-title">Vendor Mobile App</div>
+<span class="ecosystem-badge" style="background: #d1fae5; color: #047857;">Flutter iOS &amp; Android</span>
+</div>
+</div>
+<ul class="ecosystem-list">
+<li><strong>27+ Purpose-Built Screens:</strong> Complete mobile business suite for store owners to manage operations anywhere.</li>
+<li><strong>Visual Analytics:</strong> Live sales, top products, and revenue trajectories visualized with interactive FL_Chart dashboards.</li>
+<li><strong>Mobile Catalog Management:</strong> Add and edit items with camera image uploads, variants, and rich-text Quill editor.</li>
+<li><strong>Instant Order Notifications:</strong> Foreground and background push alerts the instant a customer places an order.</li>
+<li><strong>Live Customer Inquiry:</strong> Direct in-app Ably messaging to answer buyer questions, negotiate, and boost conversions.</li>
+</ul>
+</div>
+<div class="ecosystem-card">
+<div class="ecosystem-card-header">
+<div class="ecosystem-icon-wrap" style="background: #fffbeb; color: #d97706;">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01"></path><path d="M12 10h.01"></path><path d="M16 10h.01"></path></svg>
+</div>
+<div>
+<div class="ecosystem-card-title">Android SMS Gateway</div>
+<span class="ecosystem-badge" style="background: #fef3c7; color: #b45309;">Standalone Android App</span>
+</div>
+</div>
+<ul class="ecosystem-list">
+<li><strong>Zero-Cost SMS System:</strong> Transform any Android smartphone with a local SIM card into a high-speed automated SMS gateway.</li>
+<li><strong>Automated Notifications:</strong> Dispatch instant OTP verification codes, order confirmations, and status updates via native SIM SMS.</li>
+<li><strong>Save Hundreds in Fees:</strong> Completely bypass expensive third-party SMS providers with zero recurring monthly subscription costs.</li>
+<li><strong>Hybrid Fallback:</strong> Full built-in support for Twilio/SMS services if cloud provider redundancy is desired.</li>
+<li><strong>Background Reliability:</strong> Robust persistent background worker maintaining continuous connection with Laravel backend.</li>
+</ul>
+</div>
+</div>
+<div class="demo-top-actions">
+<div class="demo-top-row">
+<a class="demo-top-pill" href="https://monomarket.site/" rel="nofollow">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" viewBox="0 0 24 24" width="18"><circle cx="11" cy="11" r="7.5"></circle><line x1="21" x2="16.5" y1="21" y2="16.5"></line></svg>
+<span>EXPLORE DEMO</span>
 </a>
-</td>
-<td style="padding: 0 4px; vertical-align: middle;">
-<a href="https://monomarket.site/" rel="nofollow" style="display: inline-block;">
-<img alt="Pre-sale Queries" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/PRESALE-QUERY.png" style="max-width: 240px; max-height: 52px; width: auto; height: auto; display: block; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(15,23,42,0.12);" title="Pre-sale Queries" />
+<a class="demo-top-pill" href="https://monomarket.site/" rel="nofollow">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" viewBox="0 0 24 24" width="18"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+<span>PRESALE QUERY</span>
 </a>
-</td>
-</tr>
-</tbody>
-</table>
-<a class="doc-banner-link" href="https://monomarket.site/" rel="nofollow" style="display: block; max-width: 300px; margin: 8px auto 20px; text-decoration: none;">
-<img alt="MONO Marketplace - Documentation" loading="lazy" src="assets/img/presentation/Documentation.png" style="width: auto; max-width: 100%; max-height: 54px; display: block; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(15,23,42,0.12);" title="MONO Marketplace - Documentation" />
+</div>
+<div>
+<a class="demo-top-pill" href="https://monomarket.site/" rel="nofollow">
+<svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+<span>DETAILED DOCUMENTATION</span>
 </a>
-<table class="demo-buttons-table" style="width: 100%; max-width: 700px; margin: 14px auto 20px; border-collapse: separate; border-spacing: 14px 14px;">
-<tbody>
-<tr>
-<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
-<a class="demo-btn-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
-<img alt="Customer Android app" loading="lazy" src="assets/img/presentation/Customer-App-Android.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Customer Android app" />
+</div>
+</div>
+<div class="demo-cards-wrapper">
+<div class="demo-cards-row">
+<a class="demo-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank">
+<div class="demo-card-icon-box">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M2 9h20l-2 11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2L2 9z"></path><path d="M8 9V6a4 4 0 0 1 8 0v3"></path></svg>
+</div>
+<div class="demo-card-content">
+<div class="demo-card-title">Customer App Android</div>
+<div class="demo-card-action">View demo &rarr;</div>
+</div>
+<div class="demo-card-platform">
+<svg fill="currentColor" height="22" viewBox="0 0 24 24" width="22"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.551 0 .9993.4482.9993.9993.0001.5511-.4483.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8 12 8s-3.5902.4116-5.1368 1.1506L4.841 5.6477a.416.416 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"></path></svg>
+</div>
 </a>
-</td>
-<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
-<a class="demo-btn-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
-<img alt="Customer iOS app" loading="lazy" src="assets/img/presentation/Customer-App-i-OS.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Customer iOS app" />
+<a class="demo-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank">
+<div class="demo-card-icon-box">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M2 9h20l-2 11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2L2 9z"></path><path d="M8 9V6a4 4 0 0 1 8 0v3"></path></svg>
+</div>
+<div class="demo-card-content">
+<div class="demo-card-title">Customer App iOS</div>
+<div class="demo-card-action">View demo &rarr;</div>
+</div>
+<div class="demo-card-platform">
+<svg fill="currentColor" height="22" viewBox="0 0 24 24" width="22"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.7c.64-.78 1.08-1.86.96-2.95-1 .04-2.16.65-2.84 1.44-.57.65-1.07 1.73-.94 2.8 1.11.09 2.21-.57 2.82-1.29z"></path></svg>
+</div>
 </a>
-</td>
-</tr>
-<tr>
-<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
-<a class="demo-btn-card" href="https://monomarket.site/admin" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
-<img alt="Admin Panel" loading="lazy" src="assets/img/presentation/admin-panel.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Admin Panel" />
+</div>
+<div class="demo-cards-row">
+<a class="demo-card" href="https://monomarket.site/admin" rel="noopener" target="_blank">
+<div class="demo-card-icon-box">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" x2="20" y1="8" y2="14"></line><line x1="23" x2="17" y1="11" y2="11"></line></svg>
+</div>
+<div class="demo-card-content">
+<div class="demo-card-title">Admin Panel</div>
+<div class="demo-card-action">View demo &rarr;</div>
+</div>
 </a>
-</td>
-<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
-<a class="demo-btn-card" href="https://monomarket.site/vendor" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
-<img alt="Vendor Panel" loading="lazy" src="assets/img/presentation/Seller-panel.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Vendor Panel" />
+<a class="demo-card" href="https://monomarket.site/vendor" rel="noopener" target="_blank">
+<div class="demo-card-icon-box">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M3 9l1-5h16l1 5"></path><path d="M21 9v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9"></path><path d="M3 9c0 2 1.5 3 3 3s3-1 3-3c0 2 1.5 3 3 3s3-1 3-3c0 2 1.5 3 3 3s3-1 3-3"></path><line x1="10" x2="10" y1="22" y2="15"></line><line x1="14" x2="14" y1="22" y2="15"></line></svg>
+</div>
+<div class="demo-card-content">
+<div class="demo-card-title">Vendor Panel</div>
+<div class="demo-card-action">View demo &rarr;</div>
+</div>
 </a>
-</td>
-</tr>
-<tr>
-<td colspan="2" style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 100%;">
-<a class="demo-btn-card" href="https://monomarket.site/" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
-<img alt="Customer Website" loading="lazy" src="assets/img/presentation/Customer-website.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Customer Website" />
+</div>
+<div class="demo-cards-row" style="justify-content: center;">
+<a class="demo-card" href="https://monomarket.site/" rel="noopener" style="flex: 0 1 350px; max-width: 350px;" target="_blank">
+<div class="demo-card-icon-box">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><rect height="14" rx="2" ry="2" width="20" x="2" y="3"></rect><line x1="2" x2="22" y1="8" y2="8"></line><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="9" x2="9.01" y1="6" y2="6"></line></svg>
+</div>
+<div class="demo-card-content">
+<div class="demo-card-title">Customer Website</div>
+<div class="demo-card-action">View demo &rarr;</div>
+</div>
+<div class="demo-card-platform">
+<svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24" width="20"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+</div>
 </a>
-</td>
-</tr>
-<tr>
-<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
-<a class="demo-btn-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
-<img alt="Vendor App Android" loading="lazy" src="assets/img/presentation/Seller-app-ios-2.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Vendor App Android" />
+</div>
+<div class="demo-cards-row">
+<a class="demo-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank">
+<div class="demo-card-icon-box">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M3 9l1-5h16l1 5"></path><path d="M21 9v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9"></path><path d="M3 9c0 2 1.5 3 3 3s3-1 3-3c0 2 1.5 3 3 3s3-1 3-3c0 2 1.5 3 3 3s3-1 3-3"></path><line x1="10" x2="10" y1="22" y2="15"></line><line x1="14" x2="14" y1="22" y2="15"></line></svg>
+</div>
+<div class="demo-card-content">
+<div class="demo-card-title">Vendor App Android</div>
+<div class="demo-card-action">View demo &rarr;</div>
+</div>
+<div class="demo-card-platform">
+<svg fill="currentColor" height="22" viewBox="0 0 24 24" width="22"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.551 0 .9993.4482.9993.9993.0001.5511-.4483.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8 12 8s-3.5902.4116-5.1368 1.1506L4.841 5.6477a.416.416 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"></path></svg>
+</div>
 </a>
-</td>
-<td style="padding: 6px 6px; text-align: center; vertical-align: middle; width: 50%;">
-<a class="demo-btn-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank" style="display: flex; align-items: center; justify-content: center; max-width: 310px; width: 100%; margin: 0 auto; padding: 7px 14px; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 5px rgba(15,23,42,0.05); text-decoration: none; box-sizing: border-box;">
-<img alt="Vendor App iOS" loading="lazy" src="assets/img/presentation/Seller-App-android-2.png" style="max-height: 40px; width: auto; max-width: 100%; display: block; margin: 0 auto;" title="Vendor App iOS" />
+<a class="demo-card" download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank">
+<div class="demo-card-icon-box">
+<svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M3 9l1-5h16l1 5"></path><path d="M21 9v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9"></path><path d="M3 9c0 2 1.5 3 3 3s3-1 3-3c0 2 1.5 3 3 3s3-1 3-3c0 2 1.5 3 3 3s3-1 3-3"></path><line x1="10" x2="10" y1="22" y2="15"></line><line x1="14" x2="14" y1="22" y2="15"></line></svg>
+</div>
+<div class="demo-card-content">
+<div class="demo-card-title">Vendor App iOS</div>
+<div class="demo-card-action">View demo &rarr;</div>
+</div>
+<div class="demo-card-platform">
+<svg fill="currentColor" height="22" viewBox="0 0 24 24" width="22"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.7c.64-.78 1.08-1.86.96-2.95-1 .04-2.16.65-2.84 1.44-.57.65-1.07 1.73-.94 2.8 1.11.09 2.21-.57 2.82-1.29z"></path></svg>
+</div>
 </a>
-</td>
-</tr>
-</tbody>
-</table>
+</div>
+</div>
 <p>This is your foundation for building and scaling a successful multi-vendor marketplace across multiple countries with support for different currencies, languages, and shipping configurations.</p>
-<p><img alt="MONO Marketplace - Complete Multivendor eCommerce Solution" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/1-app-intro.png" title="MONO Marketplace - Complete Multivendor eCommerce Solution" /></p>
-<p><img alt="Payment Gateways" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/paymentgateway.png" title="Payment Gateways" /></p>
-<p><img alt="Build a Marketplace" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/3-make-a-clone-like.png" title="Build a Marketplace" /></p>
-<div class="credentials-showcase-box" style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 24px; margin: 28px 0 32px;">
+<p><img alt="MONO Marketplace - Complete Multivendor eCommerce Solution" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/02873f92dac7f2c8bd20f6dd9bdf616d/mono-app-intro.png" title="MONO Marketplace - Complete Multivendor eCommerce Solution" /></p>
+<p><img alt="Payment Gateways" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/e8571966e351400151a226267052f142/payment-gateways.png" title="Payment Gateways" /></p>
+<div class="credentials-showcase-box" style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 16px; padding: 24px; margin: 28px 0 32px;">
 <div class="creds-header-pill" style="display: inline-block; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #ffffff; background: #18284D; padding: 5px 14px; border-radius: 9999px; margin-bottom: 18px;">Live Demo Credentials</div>
 <div class="creds-cards-grid">
-<div class="demo-cred-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; box-shadow: 0 2px 6px rgba(15,23,42,0.03);">
-<div class="card-role-badge badge-admin" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; background: #fee2e2; color: #b91c1c;">Super Admin Panel</div>
-<div class="cred-url" style="font-size: 13px; font-weight: 600; margin-bottom: 10px;"><a href="https://monomarket.site/admin" rel="noopener" target="_blank" style="color: #2563eb; text-decoration: none;">monomarket.site/admin ↗</a></div>
-<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
-<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Login:</span>
-<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">admin@monomarket.site</code>
+<div class="demo-cred-card">
+<div class="cred-card-header">
+<span class="card-role-badge badge-admin" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; background: #fee2e2; color: #b91c1c;">Super Admin Panel</span>
+<a class="cred-url-link" href="https://monomarket.site/admin" rel="noopener" target="_blank">
+<span>monomarket.site/admin</span>
+<svg fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24" width="12"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>
+</a>
 </div>
-<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
-<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Pass:</span>
-<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">00000000</code>
-</div>
-</div>
-<div class="demo-cred-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; box-shadow: 0 2px 6px rgba(15,23,42,0.03);">
-<div class="card-role-badge badge-vendor" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; background: #dbeafe; color: #1d4ed8;">Vendor Portal &amp; App</div>
-<div class="cred-url" style="font-size: 13px; font-weight: 600; margin-bottom: 10px;"><a href="https://monomarket.site/vendor" rel="noopener" target="_blank" style="color: #2563eb; text-decoration: none;">monomarket.site/vendor ↗</a></div>
-<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
-<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Login:</span>
-<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">vendor@monomarket.site</code>
-</div>
-<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
-<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Pass:</span>
-<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">00000000</code>
+<div class="cred-field-group">
+<label class="cred-label">Login</label>
+<div class="cred-field-wrap">
+<input class="cred-input" readonly title="Click to copy" type="text" value="admin@monomarket.site" />
+<span class="cred-copy-badge">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy</span>
+</span>
 </div>
 </div>
-<div class="demo-cred-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; box-shadow: 0 2px 6px rgba(15,23,42,0.03);">
-<div class="card-role-badge badge-customer" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; background: #dcfce7; color: #15803d;">Customer Web &amp; App</div>
-<div class="cred-url" style="font-size: 13px; font-weight: 600; margin-bottom: 10px;"><a href="https://monomarket.site/" rel="noopener" target="_blank" style="color: #2563eb; text-decoration: none;">monomarket.site ↗</a></div>
-<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
-<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Login:</span>
-<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">customer@monomarket.site</code>
-</div>
-<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
-<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Pass:</span>
-<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">00000000</code>
-</div>
-</div>
-<div class="demo-cred-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; box-shadow: 0 2px 6px rgba(15,23,42,0.03);">
-<div class="card-role-badge badge-gateway" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; background: #f3e8ff; color: #7e22ce;">Android SMS Gateway</div>
-<div class="cred-url" style="font-size: 13px; font-weight: 600; margin-bottom: 10px;"><span style="color: #334155;">Android APK App</span></div>
-<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
-<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Login:</span>
-<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">admin@monomarket.site</code>
-</div>
-<div class="cred-pair" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px;">
-<span class="cred-lbl" style="color: #64748b; font-weight: 500;">Pass:</span>
-<code class="cred-val" style="font-size: 12.5px; font-weight: 600; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 5px; color: #0f172a;">00000000</code>
+<div class="cred-field-group">
+<label class="cred-label">Password</label>
+<div class="cred-field-wrap">
+<input class="cred-input" readonly title="Click to copy" type="text" value="00000000" />
+<span class="cred-copy-badge">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy</span>
+</span>
 </div>
 </div>
 </div>
+<div class="demo-cred-card">
+<div class="cred-card-header">
+<span class="card-role-badge badge-vendor" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; background: #dbeafe; color: #1d4ed8;">Vendor Portal &amp; App</span>
+<a class="cred-url-link" href="https://monomarket.site/vendor" rel="noopener" target="_blank">
+<span>monomarket.site/vendor</span>
+<svg fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24" width="12"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>
+</a>
 </div>
-<p><img alt="Everything you need to launch a ecommerce marketplace" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/2-Everything-you-need.png" title="Everything you need to launch a ecommerce marketplace" /></p>
-<p><a href="https://monomarket.site/" rel="noopener" target="_blank"><img alt="Customer web" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/customer-Web.png" title="Customer web" /></a></p>
-<p><a download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank"><img alt="Customer App" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/3-customer-app-copy.png" title="Customer App" /></a></p>
-<p><a href="https://monomarket.site/admin" rel="noopener" target="_blank"><img alt="Admin Panel" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/5-Admin-Panel.png" title="Admin Panel" /></a></p>
-<p><a href="https://monomarket.site/vendor" rel="noopener" target="_blank"><img alt="Vendor Panel" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/6-Seller-Panel.png" title="Vendor Panel" /></a></p>
-<p><a download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank"><img alt="Vendor App" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/seller-app-3.png" title="Vendor App" /></a></p>
-<p><img alt="Compatible with Any Type of Business" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/5-Compatible-Business.png" title="Compatible with Any Type of Business" /></p>
-<p><img alt="Features of MONO Marketplace" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/hypercommerce-features-1.png" title="Features of MONO Marketplace" /></p>
-<p><img alt="Multiple Themes for App &amp; Web" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/Copy-of-Untitled-2.gif" title="Multiple Themes for App &amp; Web" /></p>
-<p><a href="https://monomarket.site/" rel="nofollow"><img alt="Need Installation Service?" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/Frame-2147223718.png" title="Need Installation Service?" /></a></p>
-<p><img alt="Customer App Features in Detail" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/Customer-App-Description-Hypercommerce.png" title="Customer App Features in Detail" /></p>
-<p><img alt="Customer web Features in Detail" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/Customer-Web-Description-Hypercommerce.png" title="Customer web Features in Detail" /></p>
-<p><img alt="Vendor App" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/hypercommerce-seller.png" title="Vendor App" /></p>
-<p><img alt="Vendor Panel" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/10-Seller-panel-description.png" title="Vendor Panel" /></p>
-<p><img alt="Admin Panel features in Details" class="presentation-banner-img" loading="lazy" src="assets/img/presentation/9-Admin-panel.png" title="Admin Panel features in Details" /></p>
+<div class="cred-field-group">
+<label class="cred-label">Login</label>
+<div class="cred-field-wrap">
+<input class="cred-input" readonly title="Click to copy" type="text" value="vendor@monomarket.site" />
+<span class="cred-copy-badge">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy</span>
+</span>
+</div>
+</div>
+<div class="cred-field-group">
+<label class="cred-label">Password</label>
+<div class="cred-field-wrap">
+<input class="cred-input" readonly title="Click to copy" type="text" value="00000000" />
+<span class="cred-copy-badge">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy</span>
+</span>
+</div>
+</div>
+</div>
+<div class="demo-cred-card">
+<div class="cred-card-header">
+<span class="card-role-badge badge-customer" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; background: #dcfce7; color: #15803d;">Customer Web &amp; App</span>
+<a class="cred-url-link" href="https://monomarket.site/" rel="noopener" target="_blank">
+<span>monomarket.site</span>
+<svg fill="none" height="12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24" width="12"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>
+</a>
+</div>
+<div class="cred-field-group">
+<label class="cred-label">Login</label>
+<div class="cred-field-wrap">
+<input class="cred-input" readonly title="Click to copy" type="text" value="customer@monomarket.site" />
+<span class="cred-copy-badge">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy</span>
+</span>
+</div>
+</div>
+<div class="cred-field-group">
+<label class="cred-label">Password</label>
+<div class="cred-field-wrap">
+<input class="cred-input" readonly title="Click to copy" type="text" value="00000000" />
+<span class="cred-copy-badge">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy</span>
+</span>
+</div>
+</div>
+</div>
+<div class="demo-cred-card">
+<div class="cred-card-header">
+<span class="card-role-badge badge-gateway" style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; background: #f3e8ff; color: #7e22ce;">Android SMS Gateway</span>
+<span style="font-size: 13px; font-weight: 600; color: #334155;">Android APK App</span>
+</div>
+<div class="cred-field-group">
+<label class="cred-label">Login</label>
+<div class="cred-field-wrap">
+<input class="cred-input" readonly title="Click to copy" type="text" value="admin@monomarket.site" />
+<span class="cred-copy-badge">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy</span>
+</span>
+</div>
+</div>
+<div class="cred-field-group">
+<label class="cred-label">Password</label>
+<div class="cred-field-wrap">
+<input class="cred-input" readonly title="Click to copy" type="text" value="00000000" />
+<span class="cred-copy-badge">
+<svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+<span>Copy</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><img alt="Everything you need to launch a ecommerce marketplace" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/ccd460d8b8343a13b4aa2424effb393b/everything-you-need.png" title="Everything you need to launch a ecommerce marketplace" /></p>
+<p><a href="https://monomarket.site/" rel="noopener" target="_blank"><img alt="Customer web" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/cde6c960de1fd802fe4ae8656288e693/customer-web-showcase.png" title="Customer web" /></a></p>
+<p><a download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank"><img alt="Customer App" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/04a4cc9d0388878ab0ceb6b997cdbe19/customer-app-showcase.png" title="Customer App" /></a></p>
+<p><a href="https://monomarket.site/admin" rel="noopener" target="_blank"><img alt="Admin Panel" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/11c84c8e1164e691cf15463544b306b0/admin-panel-showcase.png" title="Admin Panel" /></a></p>
+<p><a href="https://monomarket.site/vendor" rel="noopener" target="_blank"><img alt="Vendor Panel" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/b25812d90864d71b12e9deedf724bdb0/vendor-panel-showcase.png" title="Vendor Panel" /></a></p>
+<p><a download="mono_app.apk" href="https://fileserver.clotcode.tech/f/3bb975f5ce7bae903f39c47fa87ef3de/mono_customer.apk" rel="noopener" target="_blank"><img alt="Vendor App" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/e3319e12ae1b6f301e212dcf6263adbb/vendor-app-showcase.png" title="Vendor App" /></a></p>
+<p><img alt="Compatible with Any Type of Business" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/6d7dcd54c8f1a4b43c643a353dc9d704/compatible-business.png" title="Compatible with Any Type of Business" /></p>
+<p><img alt="Features of MONO Marketplace" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/b252d1a1ef63253674aeff4bd1fce3eb/mono-features.png" title="Features of MONO Marketplace" /></p>
+<p><img alt="Multiple Themes for App &amp; Web" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/73442f8fbc67f5d5b85853d82628b009/multiple-themes.gif" title="Multiple Themes for App &amp; Web" /></p>
+<p><a href="https://monomarket.site/" rel="nofollow"><img alt="Need Installation Service?" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/cb1bed1c4212787e626fb33acabee6ba/installation-service.png" title="Need Installation Service?" /></a></p>
+<p><img alt="Customer App Features in Detail" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/8fd1abfccfb8f42d60d69d8f6f29b86a/mono-customer-app-description.png" title="Customer App Features in Detail" /></p>
+<p><img alt="Customer web Features in Detail" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/449fa5a75ab6d6a367e001b1580b38bd/mono-customer-web-description.png" title="Customer web Features in Detail" /></p>
+<p><img alt="Vendor App" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/e66366fa5a34c90a9596f87d8f103267/mono-vendor-app-description.png" title="Vendor App" /></p>
+<p><img alt="Vendor Panel" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/cb504656f9af18b55d78c67dca137493/vendor-panel-description.png" title="Vendor Panel" /></p>
+<p><img alt="Admin Panel features in Details" class="presentation-banner-img" loading="lazy" src="https://fileserver.clotcode.tech/f/712e08acb88df76310323ad47ccc09b2/admin-panel-description.png" title="Admin Panel features in Details" /></p>
 <h2 id="item-description__mono-key-features">MONO Marketplace: Key Features</h2>
 <ul>
 <li>
@@ -572,22 +1084,20 @@ a .presentation-banner-img:hover {
 <p><strong>Note:</strong> Any fees, subscriptions, or usage charges imposed by third-party platforms or service providers are not included in the purchase price of MONO Marketplace and are the sole responsibility of the buyer.</p>
 <h4 id="item-description__invest-in-the-future-of-online-commerce-purchase-mono-marketplace-today-all-the">Invest in the future of online commerce. Purchase MONO Marketplace today! All the best!</h4>
 <div class="changelog-section">
-<h3 class="changelog-heading">CHANGELOG – Version 1.0.0 Released</h3>
-<pre class="changelog-code-block">====================
-Initial Release — Launch of MONO Marketplace
-====================
-=&gt; Complete Multivendor eCommerce Marketplace Suite (Laravel 12 + Flutter 3)
-=&gt; Flutter Customer Mobile App (iOS &amp; Android) with real-time catalog &amp; live tracking
-=&gt; Flutter Vendor Mobile App (iOS &amp; Android) with audible order notification engine
-=&gt; High-Performance Web Storefront with sub-second catalog search &amp; filter system
-=&gt; Super Admin Management Console with multi-tenant vendor moderation &amp; approval
-=&gt; Vendor Self-Service Management Portal for products, inventory &amp; payout ledger
-=&gt; Integrated Android SMS Gateway transforming any Android SIM into an automated OTP dispatcher
-=&gt; Automated Category &amp; Tier Commission Engine with instant split payments
-=&gt; In-App Vendor Wallet with settlement statements &amp; bank withdrawal requests
-=&gt; Multi-Currency engine with automatic FX rate conversion &amp; multi-language RTL support
-=&gt; 10+ Global Payment Gateways (Stripe, PayPal, Razorpay, Cash on Delivery &amp; more)
-=&gt; Comprehensive RESTful API with Postman collection and Sanctum token security</pre>
+<h3 class="changelog-heading">CHANGELOG</h3>
+<pre class="changelog-code-block"><b>Version 1.0.0 – Initial Release</b>
+- Complete Multivendor eCommerce Marketplace Suite (Laravel + Flutter 3)
+- Flutter Customer Mobile App (iOS &amp; Android) with real-time catalog &amp; live tracking
+- Flutter Vendor Mobile App (iOS &amp; Android) with audible order notification engine
+- High-Performance Web Storefront with sub-second catalog search &amp; filter system
+- Super Admin Management Console with multi-tenant vendor moderation &amp; approval
+- Vendor Self-Service Management Portal for products, inventory &amp; payout ledger
+- Integrated Android SMS Gateway transforming any Android SIM into an automated OTP dispatcher
+- Automated Category &amp; Tier Commission Engine with instant split payments
+- In-App Vendor Wallet with settlement statements &amp; bank withdrawal requests
+- Multi-Currency engine with automatic FX rate conversion &amp; multi-language RTL support
+- 10+ Global Payment Gateways (Stripe, PayPal, Razorpay, Cash on Delivery &amp; more)
+- Comprehensive RESTful API with Postman collection and Sanctum token security</pre>
 </div>
 </div>
 </div>
