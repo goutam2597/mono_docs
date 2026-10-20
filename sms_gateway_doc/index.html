@@ -3,79 +3,251 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="MonoSMS gateway app documentation: architecture, device pairing, the queue-driven send pipeline, inbound SMS, Android services, and build configuration.">
-  <meta name="theme-color" content="#080c11">
-  <title>MonoSMS Gateway — App Documentation</title>
+  <meta name="description" content="MonoSMS Gateway documentation: dashboard-style operations guide, full installation walkthrough, Material 3 theme customization, Android services, and backend API integration.">
+  <meta name="theme-color" content="#18284D">
+  <title>MonoSMS Gateway — Admin Documentation Dashboard</title>
   <link rel="icon" type="image/png" href="assets/images/mono-sms-app-icon.png">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261019_all3_in_row">
   <script src="script.js" defer></script>
 </head>
-<body>
-  <a class="skip-link" href="#main-content">Skip to documentation</a>
-  <div class="site-grid" aria-hidden="true"></div>
+<body class="dashboard-body">
 
-  <header class="site-header">
-    <a class="brand" href="#top" aria-label="MonoSMS gateway documentation home">
-      <span class="brand-mark"><img src="assets/images/mono-sms-app-icon.png" alt=""></span>
-      <span class="brand-copy">
-        <strong>MONO SMS GATEWAY</strong>
-        <small>Flutter app</small>
-      </span>
-    </a>
-    <div class="header-actions">
-      <span class="build-chip"><i aria-hidden="true"></i> sms_gateway 1.0.0+1</span>
-      <button class="toc-toggle" id="toc-toggle" type="button" aria-label="Open contents" aria-controls="toc-drawer" aria-expanded="false">
-        <span class="menu-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span>Contents</span>
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop" aria-hidden="true"></div>
+
+  <!-- FIXED FULL-HEIGHT SIDEBAR (Exact Backend Admin Panel Layout) -->
+  <aside id="admin-sidebar" class="admin-sidebar" aria-label="MonoSMS Documentation Navigation">
+    <div class="sidebar-header">
+      <a href="#introduction" class="sidebar-brand">
+        <span class="brand-logo-frame">
+          <img src="assets/images/mono-sms-app-icon.png" alt="Mono Logo" class="brand-logo-img">
+        </span>
+        <div class="brand-meta">
+          <strong class="brand-name">MONO SMS</strong>
+          <span class="brand-tag">DOCS DASHBOARD</span>
+        </div>
+      </a>
+      <button type="button" id="sidebar-toggle-btn" class="sidebar-toggle-btn" aria-label="Toggle Sidebar Navigation">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 17l4-5-4-5M4 17l4-5-4-5"/></svg>
       </button>
     </div>
-  </header>
 
-  <main id="main-content">
-    <div class="drawer-scrim" data-drawer-scrim hidden></div>
+    <!-- Quick Search Filter in Sidebar -->
+    <div class="sidebar-search-box">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="sidebar-search-input" placeholder="Search documentation..." autocomplete="off" aria-label="Search documentation topics">
+      <kbd class="search-kbd">/</kbd>
+    </div>
 
-    <div class="guide-shell">
-      <aside class="toc-drawer" id="toc-drawer" aria-label="On this page" data-toc-drawer>
-        <div class="toc-header">
-          <div>
-            <span class="toc-kicker">On this page</span>
-            <strong>SMS gateway app</strong>
-          </div>
-          <button class="icon-button toc-close" type="button" data-drawer-close aria-label="Close contents"><span aria-hidden="true">×</span></button>
+    <!-- Grouped Sidebar Navigation -->
+    <nav class="sidebar-nav-scroll" id="sidebar-nav" aria-label="Documentation Topics">
+<div class="sidebar-group-label">OVERVIEW</div>
+<div class="sidebar-group-items">
+<a href="#introduction" class="sidebar-nav-link" data-nav-id="introduction">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
+  <span class="sidebar-link-text">Product Overview</span>
+  
+</a>
+</div>
+<div class="sidebar-group-label">ARCHITECTURE</div>
+<div class="sidebar-group-items">
+<a href="#folder-structure" class="sidebar-nav-link" data-nav-id="folder-structure">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+  <span class="sidebar-link-text">Project Structure</span>
+  
+</a>
+<a href="#screens" class="sidebar-nav-link" data-nav-id="screens">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6zm0 4h16M8 8h.01M11 8h.01"/></svg>
+  <span class="sidebar-link-text">Screen Inventory</span>
+  
+</a>
+<a href="#requirements" class="sidebar-nav-link" data-nav-id="requirements">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2 4-4"/></svg>
+  <span class="sidebar-link-text">System Requirements</span>
+  
+</a>
+</div>
+<div class="sidebar-group-label">SETUP & DEPLOYMENT</div>
+<div class="sidebar-group-items">
+<a href="#installation" class="sidebar-nav-link" data-nav-id="installation">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l6-6-6-6m8 14h8"/></svg>
+  <span class="sidebar-link-text">Full Installation Guide</span>
+  <span class="sidebar-item-badge">Required</span>
+</a>
+<a href="#third-party-packages" class="sidebar-nav-link" data-nav-id="third-party-packages">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+  <span class="sidebar-link-text">Direct Dependencies</span>
+  
+</a>
+<a href="#environment-configuration" class="sidebar-nav-link" data-nav-id="environment-configuration">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></svg>
+  <span class="sidebar-link-text">Build Configuration</span>
+  
+</a>
+<a href="#theme-customization" class="sidebar-nav-link" data-nav-id="theme-customization">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0 0 18c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16a5 5 0 0 0 5-5c0-4.42-4.03-8-9-8Z"/></svg>
+  <span class="sidebar-link-text">Theme & Brand Customization</span>
+  <span class="sidebar-item-badge">New</span>
+</a>
+<a href="#build-run" class="sidebar-nav-link" data-nav-id="build-run">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3m0 0l5-5c1.5-1.5 3.5-2 5-2 0 1.5-.5 3.5-2 5l-5 5z"/></svg>
+  <span class="sidebar-link-text">Build & Release APK</span>
+  
+</a>
+</div>
+<div class="sidebar-group-label">INTEGRATION & PIPELINE</div>
+<div class="sidebar-group-items">
+<a href="#pairing" class="sidebar-nav-link" data-nav-id="pairing">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 2l-2 2m-1.5 1.5L16 7m-1.5 1.5L13 10m-1.5 1.5l-3.5 3.5a5 5 0 1 1-2.83-2.83l3.5-3.5"/></svg>
+  <span class="sidebar-link-text">Admin Sign-In & Pairing</span>
+  
+</a>
+<a href="#backend-api-setup" class="sidebar-nav-link" data-nav-id="backend-api-setup">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  <span class="sidebar-link-text">API Client & Endpoints</span>
+  
+</a>
+<a href="#message-flow" class="sidebar-nav-link" data-nav-id="message-flow">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+  <span class="sidebar-link-text">Send Pipeline Queue</span>
+  
+</a>
+<a href="#inbound" class="sidebar-nav-link" data-nav-id="inbound">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <span class="sidebar-link-text">Inbound SMS & Forwarding</span>
+  
+</a>
+<a href="#android-setup" class="sidebar-nav-link" data-nav-id="android-setup">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm5 18h.01"/></svg>
+  <span class="sidebar-link-text">Android Platform Layer</span>
+  
+</a>
+<a href="#firebase-setup" class="sidebar-nav-link" data-nav-id="firebase-setup">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9m-4.27 13a2 2 0 0 1-3.46 0"/></svg>
+  <span class="sidebar-link-text">FCM Wake Channel</span>
+  
+</a>
+</div>
+<div class="sidebar-group-label">OPERATIONS & SECURITY</div>
+<div class="sidebar-group-items">
+<a href="#admin-panel" class="sidebar-nav-link" data-nav-id="admin-panel">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.4 1.5l1.8-1.5-1.8-3.1-2.3.5c-.5-.4-1.1-.7-1.7-.9l-.4-2.3h-3.6l-.4 2.3c-.6.2-1.2.5-1.7.9l-2.3-.5-1.8 3.1 1.8 1.5c-.1.3-.1.7-.1 1s0 .7.1 1l-1.8 1.5 1.8 3.1 2.3-.5c.5.4 1.1.7 1.7.9l.4 2.3h3.6l.4-2.3c.6-.2 1.2-.5 1.7-.9l2.3.5 1.8-3.1-1.8-1.5c.1-.3.1-.7.1-1s0-.7-.1-1z"/></svg>
+  <span class="sidebar-link-text">Admin Panel Controls</span>
+  
+</a>
+<a href="#security" class="sidebar-nav-link" data-nav-id="security">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+  <span class="sidebar-link-text">Security & Privacy</span>
+  
+</a>
+<a href="#developer-guide" class="sidebar-nav-link" data-nav-id="developer-guide">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-12a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm12 3a9 9 0 0 1-9 9"/></svg>
+  <span class="sidebar-link-text">Extension Guide</span>
+  
+</a>
+<a href="#support" class="sidebar-nav-link" data-nav-id="support">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zm0-7v.01M12 11a2 2 0 1 0-2-2"/></svg>
+  <span class="sidebar-link-text">Troubleshooting & Support</span>
+  
+</a>
+</div>
+    </nav>
+
+    <!-- Sidebar System Footer -->
+    <div class="sidebar-footer">
+      <div class="system-status-indicator">
+        <span class="live-dot" aria-hidden="true"></span>
+        <div class="system-status-text">
+          <strong>sms_gateway 1.0.0+1</strong>
+          <small>Target SDK 36 · Android 37</small>
         </div>
-        <nav class="toc-group" aria-label="MonoSMS gateway guide contents">
-          <span class="toc-label">Overview</span>
-          <a href="#introduction">Product overview</a>
-          <span class="toc-label">Architecture</span>
-          <a href="#folder-structure">Project structure</a>
-          <a href="#screens">Screen inventory</a>
-          <a href="#requirements">Requirements</a>
-          <span class="toc-label">Setup</span>
-          <a href="#installation">Install &amp; run</a>
-          <a href="#third-party-packages">Direct dependencies</a>
-          <a href="#environment-configuration">Build-time configuration</a>
-          <a href="#build-run">Build &amp; release</a>
-          <span class="toc-label">Integration</span>
-          <a href="#pairing">Admin sign-in &amp; pairing</a>
-          <a href="#backend-api-setup">API client &amp; endpoints</a>
-          <a href="#message-flow">Send pipeline</a>
-          <a href="#inbound">Inbound SMS</a>
-          <a href="#android-setup">Android platform layer</a>
-          <a href="#firebase-setup">FCM wake channel</a>
-          <span class="toc-label">Operations</span>
-          <a href="#admin-panel">Admin panel controls</a>
-          <a href="#security">Security &amp; privacy</a>
-          <a href="#developer-guide">Extension guide</a>
-          <a href="#support">Support &amp; limitations</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN DASHBOARD CONTENT AREA -->
+  <div id="admin-main" class="admin-main">
+    
+    <!-- TOP STICKY DASHBOARD NAVBAR -->
+    <header class="top-navbar">
+      <div class="top-navbar-left">
+        <button type="button" id="mobile-toggle-btn" class="mobile-menu-btn" aria-label="Open sidebar menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <nav class="breadcrumb-trail" aria-label="Breadcrumb">
+          <span class="crumb-root">Documentation</span>
+          <span class="crumb-divider">/</span>
+          <span class="crumb-section">SMS Gateway</span>
+          <span class="crumb-divider">/</span>
+          <span class="crumb-active" id="active-breadcrumb-label">Product Overview</span>
         </nav>
-        <div class="toc-meta"><span>DOC / SG-1.0.0</span><span>Flutter app</span></div>
-      </aside>
+      </div>
+    </header>
 
-      <div class="doc-stage">
-        <section class="doc-panel" id="sms-guide" aria-label="MonoSMS gateway documentation">
+    <!-- DASHBOARD STAGE -->
+    <main class="dashboard-stage" id="main-content">
 
-<!-- ================================================== introduction -->
-<section class="doc-section doc-section--intro" id="introduction" data-section-title="Product overview">
+      <!-- Executive Overview Banner -->
+      <section class="executive-banner" aria-label="Executive Overview">
+        <div class="banner-body">
+          <div class="banner-badge-row">
+            <span class="banner-kicker">MONO SMS OPERATIONAL CONSOLE</span>
+            <span class="banner-tag">Self-Hosted Cellular Gateway</span>
+          </div>
+          <h1 class="banner-title">MonoSMS Gateway Operations &amp; Engineering Dashboard</h1>
+          <p class="banner-desc">Turn any physical Android smartphone with an active cellular SIM into the MONO Marketplace SMS dispatch server. Drain pending orders and authentication OTPs with transactional queue safety, real-time FCM wakeups, and resilient background recovery.</p>
+          <div class="banner-actions">
+            <a href="#installation" class="banner-btn banner-btn-solid">Follow Full Installation Walkthrough &rarr;</a>
+            <a href="#theme-customization" class="banner-btn banner-btn-glass">Theme &amp; Brand Customizer &rarr;</a>
+            <a href="#backend-api-setup" class="banner-btn banner-btn-glass">API Endpoints Matrix &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4-Column KPI Metrics Summary Grid -->
+      <section class="kpi-grid" aria-label="System Metrics">
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-code">APP / 01</span>
+            <span class="kpi-pill kpi-pill-blue">3 Screens</span>
+          </div>
+          <strong class="kpi-metric">Splash · Login · Home</strong>
+          <p class="kpi-label">Compact Flutter architecture with automatic Auth Gate state switching.</p>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-code">APP / 02</span>
+            <span class="kpi-pill kpi-pill-green">SDK 36 / 37</span>
+          </div>
+          <strong class="kpi-metric">com.mono.sms_gateway</strong>
+          <p class="kpi-label">Android foreground data-sync service and WorkManager queue durability.</p>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-code">APP / 03</span>
+            <span class="kpi-pill kpi-pill-navy">Telephony SIM</span>
+          </div>
+          <strong class="kpi-metric">100% On-Device SIM</strong>
+          <p class="kpi-label">Direct cellular carrier delivery without costly third-party VoIP charges.</p>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-card-header">
+            <span class="kpi-code">APP / 04</span>
+            <span class="kpi-pill kpi-pill-amber">Auth Handshake</span>
+          </div>
+          <strong class="kpi-metric">Sanctum Token Gate</strong>
+          <p class="kpi-label">Hardware-isolated device bearer token stored in encrypted keystore storage.</p>
+        </div>
+      </section>
+
+      <!-- ALL 19 DOCUMENTATION SECTIONS (Wrapped in Elevated Dashboard Cards) -->
+      <div class="dashboard-cards-container">
+<!-- Section: introduction -->
+<section class="doc-section dashboard-card dashboard-card--hero" id="introduction" data-section-title="Product overview">
+
   <div class="ov" id="top" aria-labelledby="ov-title">
     <div class="ov-bar">
       <p class="ov-kicker"><span>SMS gateway documentation</span><span>Pair · Send · Operate</span></p>
@@ -90,8 +262,9 @@
       <div class="ov-side">
         <p class="ov-lede">A complete operations guide for the <code>sms_gateway</code> Flutter project: the device-side companion that turns one Android phone into the MONO Marketplace SMS sender — pairing through an administrator account, claiming the backend's queued messages, sending them over the phone's own SIM, and forwarding inbound replies.</p>
         <div class="ov-actions">
-          <button class="action-button action-button--primary" type="button" data-scroll-to="installation">Run the app <span aria-hidden="true">↘</span></button>
-          <button class="action-button" type="button" data-scroll-to="message-flow">Send pipeline <span aria-hidden="true">→</span></button>
+          <a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="action-button action-button--primary">Live Admin Panel <span aria-hidden="true">&nearr;</span></a>
+          <a href="https://monomarket.site/vendor" target="_blank" rel="noopener" class="action-button">Live Vendor Panel <span aria-hidden="true">&nearr;</span></a>
+          <button class="action-button" type="button" data-scroll-to="installation">Run the app <span aria-hidden="true">↘</span></button>
         </div>
       </div>
     </div>
@@ -141,7 +314,7 @@
   <h3 class="heading-2">How it fits the marketplace</h3>
   <p>The marketplace backend owns two SMS providers: a hosted Twilio provider and this self-hosted gateway provider. When the gateway is the active provider, every outgoing message — order and OTP notifications, admin test sends — is written to the <code>sms_messages</code> queue instead of an HTTP call to a third party. This app is the worker that drains that queue.</p>
 
-  <div class="platform-guides" aria-label="MonoSMS functional areas">
+  <div class="platform-guides platform-guides--3col" aria-label="MonoSMS functional areas">
     <article class="platform-guide">
       <h3 class="heading-2">Pairing</h3>
       <p>An administrator signs in with panel credentials. The backend verifies the <code>sms.gateway.manage</code> permission, then the app exchanges the admin token for a long-lived device token. Nothing on the phone is user-configurable.</p>
@@ -155,10 +328,12 @@
       <p>Layered recovery: manifest-registered receivers, a data-sync foreground service, WorkManager queue passes, a 15-minute fallback poll, and a scheduled backend recovery command. Missed pushes never lose messages.</p>
     </article>
   </div>
+
 </section>
 
-<!-- =============================================== folder-structure -->
-<section class="doc-section" id="folder-structure" data-section-title="Project structure">
+<!-- Section: folder-structure -->
+<section class="doc-section dashboard-card" id="folder-structure" data-section-title="Project structure">
+
   <h2 class="section-title">A deliberately small source tree</h2>
   <p>The app is around 2,800 lines of Dart plus a focused Kotlin layer. <code>lib/</code> is organized by technical layer; there are no feature folders because there is one feature.</p>
 
@@ -220,10 +395,12 @@
   <div class="info-block">
     <p><strong>Dart never touches Android APIs directly.</strong> Every platform action goes through one MethodChannel, <code>com.mono.sms_gateway/device</code>, and the Kotlin side performs only the action it is asked for — it holds no queue state and makes no decisions.</p>
   </div>
+
 </section>
 
-<!-- ====================================================== screens -->
-<section class="doc-section" id="screens" data-section-title="Screen inventory">
+<!-- Section: screens -->
+<section class="doc-section dashboard-card" id="screens" data-section-title="Screen inventory">
+
   <h2 class="section-title">Three screens, one job</h2>
   <p>The class count comes from public classes named <code>*Screen</code> in <code>lib/screens/</code>. Dashboard cards, pills, and dialogs are internal widgets of <code>home_screen.dart</code>, not additional screens.</p>
 
@@ -267,10 +444,12 @@
       </tbody>
     </table>
   </div>
+
 </section>
 
-<!-- ================================================== requirements -->
-<section class="doc-section" id="requirements" data-section-title="Requirements">
+<!-- Section: requirements -->
+<section class="doc-section dashboard-card" id="requirements" data-section-title="Requirements">
+
   <h2 class="section-title">Toolchain and device requirements</h2>
   <div class="table-wrap">
     <table class="packages-table">
@@ -295,37 +474,212 @@
     <li>The backend reachable from the phone's network, and an administrator account with the SMS Gateway permission.</li>
     <li>Your Firebase <code>google-services.json</code> dropped into <code>android/app/</code> if you want push wake-ups.</li>
   </ul>
+
 </section>
 
-<!-- ================================================== installation -->
-<section class="doc-section" id="installation" data-section-title="Install and run">
-  <h2 class="section-title">Install and launch from the repository</h2>
-  <p>The app is a standard Flutter package with no code generation step and no flavors. Fetch, configure Firebase, run.</p>
+<!-- Section: installation -->
+<section class="doc-section dashboard-card" id="installation" data-section-title="Full installation guide">
 
-  <div class="code-shell code-shell--command">
-    <div class="code-head"><span>Run sequence</span><button class="copy-button" type="button" data-copy="#cmd-install">Copy</button></div>
-    <pre><code class="code-block" id="cmd-install">git clone &lt;your-repo&gt; sms_gateway
-cd sms_gateway
-flutter pub get
-# drop your google-services.json into android/app/ (optional, for FCM)
-flutter run --dart-define=GATEWAY_API_URL=https://your-store.com/api/v1</code></pre>
+  <h2 class="section-title">Complete Installation &amp; Deployment Guide</h2>
+  <p class="section-lede">Follow this step-by-step operational guide to prepare an Android phone, compile the Flutter application with your backend endpoint, configure critical battery exemptions, and register the device as the active cellular SMS gateway for the MONO Marketplace.</p>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead>
+        <tr><th scope="col">Requirement</th><th scope="col">Specification</th><th scope="col">Why it is needed</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Flutter SDK</td><td><code>Flutter 3.47+ / Dart ^3.13.0</code></td><td>Compiles the cross-platform Dart application and native Android artifacts.</td></tr>
+        <tr><td>Android SDK</td><td><code>Compile SDK 37 / Target SDK 36</code></td><td>Required for Android telephony runtime permissions and background services.</td></tr>
+        <tr><td>Physical Device</td><td>Android phone (OS 8.0+ / API 23+)</td><td>Emulators and iOS devices do not have cellular telephony radio hardware to send SMS.</td></tr>
+        <tr><td>SIM Card</td><td>Active SIM with SMS plan</td><td>Real carrier SMS delivery. Ensure sufficient SMS balance or carrier package.</td></tr>
+        <tr><td>Marketplace Admin</td><td>Admin with <code>sms.gateway.manage</code></td><td>Required during initial one-time pairing to issue a scoped device bearer token.</td></tr>
+        <tr><td>FCM Project</td><td><code>google-services.json</code> (Optional)</td><td>Provides instant real-time wake signals; app still operates via polling without it.</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <h3 class="heading-2">What happens on first launch</h3>
-  <ol class="list-item">
-    <li><code>main()</code> initializes device identity and Firebase <em>before</em> <code>runApp</code>, because the provider installs FCM listeners and uploads the token immediately.</li>
-    <li>The auth gate finds no stored device token and shows the login screen.</li>
-    <li>The administrator signs in; the app registers the device and lands on the dashboard already online.</li>
-    <li>The heartbeat fires immediately, a first queue pass runs, the foreground service starts, and the 5-minute / 15-minute timers begin.</li>
+  <ol class="walkthrough">
+    <li>
+      <h3>Physical Phone Preparation &amp; Cellular SIM Verification</h3>
+      <p>Insert your active SIM card into the Android phone. Before running any software, verify that the device is operating properly on the mobile network:</p>
+      <ul class="list-item">
+        <li>Disable Airplane mode and check that cellular signal bars are active with your carrier name displayed.</li>
+        <li>Open the phone's native <strong>Messages</strong> app and manually send a standard SMS to another number to confirm outbound delivery and active SMS balance.</li>
+        <li><strong>Dual-SIM Devices:</strong> If the phone has two SIM slots, go to <em>Settings &rarr; Network &amp; Internet &rarr; SIMs</em> and set your desired sending SIM as the <strong>Default SIM for SMS</strong>. Android's <code>SmsManager</code> will dispatch messages over this primary subscription.</li>
+      </ul>
+    </li>
+
+    <li>
+      <h3>Enable Developer Options &amp; USB Debugging</h3>
+      <p>To install and debug the application from your development workstation, enable developer access on the phone:</p>
+      <ul class="list-item">
+        <li>Open Android <strong>Settings &rarr; About Phone</strong>.</li>
+        <li>Locate <strong>Build Number</strong> and tap it repeatedly <strong>7 times</strong> until you see the prompt: <em>"You are now a developer!"</em></li>
+        <li>Go back to <strong>Settings &rarr; System &rarr; Developer Options</strong> (or <em>Additional Settings</em> on Xiaomi/Oppo).</li>
+        <li>Enable <strong>USB Debugging</strong>. On Xiaomi (MIUI/HyperOS) devices, also enable <strong>Install via USB</strong> and <strong>USB debugging (Security settings)</strong>.</li>
+        <li>Connect the phone to your computer with a USB cable. On the phone screen, check <em>"Always allow from this computer"</em> and tap <strong>Allow</strong>.</li>
+        <li>Verify device detection in your workstation terminal:</li>
+      </ul>
+      <div class="code-shell code-shell--command">
+        <div class="code-head"><span>Terminal / ADB check</span><button class="copy-button" type="button" data-copy="#cmd-adb-check">Copy</button></div>
+        <pre><code class="code-block" id="cmd-adb-check">adb devices
+# Output should list your device attached:
+# List of devices attached
+# 84B01248000183    device</code></pre>
+      </div>
+    </li>
+
+    <li>
+      <h3>Disable Android Battery Optimization (Doze Mode Whitelist)</h3>
+      <p><strong>CRITICAL REQUIREMENT:</strong> Android aggressive power management will freeze background workers and kill foreground services if battery optimization is active. You must exempt MonoSMS from battery restrictions so it can continuously monitor incoming SMS and wake up for queue passes.</p>
+      <div class="platform-guides">
+        <article class="platform-guide">
+          <h3>Xiaomi / Redmi / POCO (MIUI &amp; HyperOS)</h3>
+          <p>1. Open <strong>Settings &rarr; Apps &rarr; Manage Apps &rarr; MonoSMS</strong>.<br>
+          2. Tap <strong>Autostart</strong> &rarr; Toggle <strong>ON</strong>.<br>
+          3. Tap <strong>Battery Saver</strong> &rarr; Select <strong>No restrictions</strong>.<br>
+          4. Open Recent Apps &rarr; Long press MonoSMS card &rarr; Tap the <strong>Lock</strong> icon.</p>
+        </article>
+        <article class="platform-guide">
+          <h3>Samsung Galaxy (One UI)</h3>
+          <p>1. Open <strong>Settings &rarr; Apps &rarr; MonoSMS &rarr; Battery</strong>.<br>
+          2. Change selection from <em>Optimized</em> to <strong>Unrestricted</strong>.<br>
+          3. Go to <strong>Settings &rarr; Battery &amp; device care &rarr; Battery &rarr; Background usage limits</strong> &rarr; Add MonoSMS to <strong>Never sleeping apps</strong>.</p>
+        </article>
+        <article class="platform-guide">
+          <h3>Oppo / Realme / OnePlus (ColorOS / OxygenOS)</h3>
+          <p>1. Open <strong>App Info &rarr; Battery Usage</strong>.<br>
+          2. Enable <strong>Allow background activity</strong> and <strong>Allow auto-launch</strong>.<br>
+          3. Pin the app in the recent tasks overview.</p>
+        </article>
+        <article class="platform-guide">
+          <h3>In-App Shortcut</h3>
+          <p>The MonoSMS dashboard provides a direct deep link into the system battery optimization screen via the <strong>Battery settings</strong> menu item in the top overflow menu.</p>
+        </article>
+      </div>
+    </li>
+
+    <li>
+      <h3>Clone Repository &amp; Configure Backend Endpoint</h3>
+      <p>Clone or navigate to the <code>sms_gateway</code> project directory and install dependencies:</p>
+      <div class="code-shell code-shell--command">
+        <div class="code-head"><span>Workspace setup</span><button class="copy-button" type="button" data-copy="#cmd-pub-get">Copy</button></div>
+        <pre><code class="code-block" id="cmd-pub-get">cd /path/to/mono/sms_gateway
+flutter pub get</code></pre>
+      </div>
+      <p>Specify the target marketplace API endpoint using the compiled constant <code>GATEWAY_API_URL</code>:</p>
+      <ul class="list-item">
+        <li><strong>Via Build Flag:</strong> Pass <code>--dart-define=GATEWAY_API_URL=https://your-domain.com/api/v1</code> at runtime or compilation.</li>
+        <li><strong>Via Source File:</strong> Alternatively, edit <code>lib/core/gateway_config.dart</code> directly to change the fallback default URL:</li>
+      </ul>
+      <div class="code-shell">
+        <div class="code-head"><span>lib/core/gateway_config.dart</span><button class="copy-button" type="button" data-copy="#code-config-url">Copy</button></div>
+        <pre><code class="code-block" id="code-config-url">class GatewayApiConfig {
+  static const String baseUrl = String.fromEnvironment(
+    'GATEWAY_API_URL',
+    defaultValue: 'https://your-domain.com/api/v1', // <-- Set your backend URL here
+  );
+}</code></pre>
+      </div>
+      <div class="info-block">
+        <p><strong>Local Network / LAN Testing:</strong> When deploying or testing against your backend server (e.g. <code>https://example.com/api/v1</code>), the Android Manifest already includes <code>android:usesCleartextTraffic="true"</code>, allowing unencrypted HTTP connections over Wi-Fi without SSL handshakes.</p>
+      </div>
+    </li>
+
+    <li>
+      <h3>Set Up Firebase Cloud Messaging (FCM) Wake Channel (Optional but Recommended)</h3>
+      <p>FCM provides instantaneous wake signals to the phone whenever the marketplace puts a new SMS into the queue. The payload carries only a wake trigger (<code>type: sms_queue_available</code>); the message content and recipient are pulled securely from the database queue.</p>
+      <ol class="list-item">
+        <li>Go to <a href="https://console.firebase.google.com" target="_blank" rel="noopener">Firebase Console</a> and open or create your project.</li>
+        <li>Add an Android App with package name <code>com.mono.sms_gateway</code>.</li>
+        <li>Download <code>google-services.json</code> and place it inside <code>sms_gateway/android/app/google-services.json</code>.</li>
+        <li>In your marketplace backend admin settings (<em>Admin &rarr; Settings &rarr; SMS Settings</em>), ensure your Firebase Server Key / Credentials are configured.</li>
+      </ol>
+      <div class="callout">
+        <p><strong>Works Without Firebase:</strong> If you do not configure Firebase, MonoSMS automatically runs its built-in <strong>15-minute fallback poll</strong> and the server-side scheduled recovery worker (<code>sms-gateway:recover</code>), so SMS processing continues without push notifications.</p>
+      </div>
+    </li>
+
+    <li>
+      <h3>Build and Install the Application</h3>
+      <p>Deploy MonoSMS directly onto the connected Android device:</p>
+      <div class="code-shell code-shell--command">
+        <div class="code-head"><span>Development debug run</span><button class="copy-button" type="button" data-copy="#cmd-dev-run">Copy</button></div>
+        <pre><code class="code-block" id="cmd-dev-run"># Run directly on the attached phone
+flutter run --dart-define=GATEWAY_API_URL=https://your-domain.com/api/v1</code></pre>
+      </div>
+      <p>To compile a standalone Release APK for production deployment:</p>
+      <div class="code-shell code-shell--command">
+        <div class="code-head"><span>Release APK build</span><button class="copy-button" type="button" data-copy="#cmd-release-apk">Copy</button></div>
+        <pre><code class="code-block" id="cmd-release-apk"># Build standalone release APK
+flutter build apk --release --dart-define=GATEWAY_API_URL=https://your-domain.com/api/v1
+
+# Install the built APK onto the phone via ADB
+adb install -r build/app/outputs/flutter-apk/app-release.apk</code></pre>
+      </div>
+      <p>You can also copy the resulting <code>app-release.apk</code> to phone storage via USB cable or download it from your server browser, then tap to install.</p>
+    </li>
+
+    <li>
+      <h3>Grant Android Telephony &amp; Notification Permissions</h3>
+      <p>When the app opens for the first time, Android will prompt for necessary telephony and service permissions:</p>
+      <div class="table-wrap">
+        <table class="packages-table">
+          <thead>
+            <tr><th scope="col">Permission Dialog</th><th scope="col">Setting</th><th scope="col">Operational Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><em>Send and view SMS messages?</em></td><td><strong>Allow</strong></td><td>Enables <code>SmsManager</code> to transmit outgoing queue messages over the cellular SIM.</td></tr>
+            <tr><td><em>Make and manage phone calls?</em></td><td><strong>Allow</strong></td><td>Enables <code>READ_PHONE_STATE</code> to monitor carrier name, SIM status, and signal strength.</td></tr>
+            <tr><td><em>Send notifications?</em> (Android 13+)</td><td><strong>Allow</strong></td><td>Keeps the ongoing foreground service notification visible in the status bar.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>If any permission was accidentally dismissed, open <strong>Settings &rarr; Apps &rarr; MonoSMS &rarr; Permissions</strong> and ensure both <strong>SMS</strong> and <strong>Phone</strong> are set to <em>Allowed</em>.</p>
+    </li>
+
+    <li>
+      <h3>Admin Sign-In &amp; Device Pairing Handshake</h3>
+      <p>Upon launch, the application's Auth Gate detects that no device token is stored and displays the <strong>Sign In</strong> screen:</p>
+      <ul class="list-item">
+        <li>Enter your marketplace <strong>Admin Email</strong> and <strong>Password</strong> (the user must have the <code>sms.gateway.manage</code> permission).</li>
+        <li>The hardware identity (Manufacturer and Model, e.g. <em>Samsung Galaxy S22</em>) is automatically derived from the device.</li>
+        <li>Tap <strong>Sign In &amp; Register Device</strong>.</li>
+      </ul>
+      <p><strong>What Happens Behind the Scenes:</strong></p>
+      <div class="code-shell">
+        <div class="code-head"><span>Pairing authentication sequence</span><button class="copy-button" type="button" data-copy="#code-pair-seq">Copy</button></div>
+        <pre><code class="code-block" id="code-pair-seq">1. Phone &rarr; POST /admin/auth/login (email, password, deviceName, deviceId)
+2. Backend validates admin credentials & sms.gateway.manage permission
+3. Phone &rarr; POST /admin/auth/register-device (bearer admin token)
+4. Backend creates SmsGatewayDevice record and issues a scoped deviceToken
+5. Phone stores deviceToken in encrypted hardware storage (FlutterSecureStorage)
+6. Phone discards admin password and session from active memory
+7. Dashboard status immediately updates to ONLINE with green pulse indicator</code></pre>
+      </div>
+    </li>
+
+    <li>
+      <h3>Verify in Admin Panel &amp; Send a Live Test SMS</h3>
+      <p>Confirm that the phone is actively connected and test delivery through your carrier SIM:</p>
+      <ol class="list-item">
+        <li>In your web browser, navigate to the Marketplace Admin Panel &rarr; <strong>Admin &rarr; SMS Gateway</strong>.</li>
+        <li>Verify that your phone appears in the devices list with its correct device name, carrier, battery percentage, and a live green <strong>Connected</strong> indicator.</li>
+        <li>Ensure the device status toggle is set to <strong>Active</strong>.</li>
+        <li>Navigate to <strong>Admin &rarr; Settings &rarr; SMS Settings</strong>.</li>
+        <li>Under <em>SMS Provider</em>, select <strong>Self-Hosted Gateway</strong> and save.</li>
+        <li>Locate the <strong>Send Test SMS</strong> card, enter your personal mobile phone number, type a message (e.g. <em>"Hello from Mono SMS Gateway!"</em>), and click <strong>Send Test SMS</strong>.</li>
+        <li>Within seconds, watch the phone: the ongoing foreground service will receive the wake signal, claim the message, send it through the SIM card, and report <code>sent</code> back to the server.</li>
+      </ol>
+    </li>
   </ol>
 
-  <div class="info-block">
-    <p><strong>Paired phones skip login on restart.</strong> The device token lives in <code>FlutterSecureStorage</code>; the splash screen shows only while it is being restored, then the dashboard appears directly.</p>
-  </div>
 </section>
 
-<!-- ============================================ third-party-packages -->
-<section class="doc-section" id="third-party-packages" data-section-title="Direct dependencies">
+<!-- Section: third-party-packages -->
+<section class="doc-section dashboard-card" id="third-party-packages" data-section-title="Direct dependencies">
+
   <h2 class="section-title">Direct dependencies, exactly as declared</h2>
   <p>Every dependency is pinned in <code>pubspec.yaml</code>; <code>pubspec.lock</code> freezes the resolved versions. The list is intentionally short.</p>
 
@@ -356,10 +710,12 @@ flutter run --dart-define=GATEWAY_API_URL=https://your-store.com/api/v1</code></
       </tbody>
     </table>
   </div>
+
 </section>
 
-<!-- ====================================== environment-configuration -->
-<section class="doc-section" id="environment-configuration" data-section-title="Build-time configuration">
+<!-- Section: environment-configuration -->
+<section class="doc-section dashboard-card" id="environment-configuration" data-section-title="Build-time configuration">
+
   <h2 class="section-title">One compile-time constant, nothing else</h2>
   <p>There is no settings screen for the server and no <code>.env</code> file. The base URL is compiled into the binary:</p>
 
@@ -385,10 +741,229 @@ static const String baseUrl = String.fromEnvironment(
   <div class="callout">
     <p><strong>A gateway phone is configured only by signing in.</strong> The address is compiled in rather than typed, so an operator cannot be tricked into pointing the device at a hostile server — whoever built the APK chose the endpoint.</p>
   </div>
+
 </section>
 
-<!-- ==================================================== pairing -->
-<section class="doc-section" id="pairing" data-section-title="Admin sign-in and pairing">
+<!-- Section: theme-customization -->
+<section class="doc-section dashboard-card" id="theme-customization" data-section-title="Theme &amp; brand customization">
+
+  <h2 class="section-title">Theme &amp; Brand Customization Guide</h2>
+  <p class="section-lede">The MonoSMS gateway interface is built on Flutter's Material 3 styling engine. All colors, surfaces, borders, and component themes are centralized in <code>lib/theme/app_theme.dart</code>. Use this guide to rebrand the app, customize the color palette, switch between light and dark themes, update the launcher icon, and change application branding.</p>
+
+  <h3 class="heading-2">Theme Architecture Overview</h3>
+  <p>The styling system separates color tokens from widget styling. <code>AppColors</code> defines the raw color constants, and <code>buildAppTheme()</code> maps them into Flutter's <code>ThemeData</code>:</p>
+
+  <div class="code-shell">
+    <div class="code-head"><span>lib/theme/app_theme.dart &mdash; Core palette</span><button class="copy-button" type="button" data-copy="#code-app-colors">Copy</button></div>
+    <pre><code class="code-block" id="code-app-colors">class AppColors {
+  static const primary = Color(0xFF111111);     // Primary brand accent & button fills
+  static const accent = Color(0xFF059669);      // Connection state & active switches (Emerald)
+  static const background = Color(0xFFF7F7F8);  // Scaffold background
+  static const surface = Color(0xFFFFFFFF);     // Card backgrounds, dialogs, inputs
+  static const surfaceAlt = Color(0xFFF4F4F5);  // Subtle secondary containers
+  static const border = Color(0xFFE4E4E7);      // Card borders, input outlines, dividers
+  static const textDark = Color(0xFF18181B);    // Headings, primary text
+  static const textMedium = Color(0xFF52525B);  // Body text, secondary labels
+  static const textLight = Color(0xFFA1A1AA);   // Placeholder hints, faint timestamps
+  static const danger = Color(0xFFDC2626);      // Errors, disconnects, failures
+  static const warning = Color(0xFFB45309);     // Retry notices, battery warnings
+}</code></pre>
+  </div>
+
+  <div class="color-grid" aria-label="Default App Color Swatches">
+    <div class="color-chip" style="--swatch: #111111;">
+      <i></i><span><strong>Primary</strong><code>#111111</code></span>
+    </div>
+    <div class="color-chip" style="--swatch: #059669;">
+      <i></i><span><strong>Accent / Live</strong><code>#059669</code></span>
+    </div>
+    <div class="color-chip" style="--swatch: #F7F7F8;">
+      <i></i><span><strong>Background</strong><code>#F7F7F8</code></span>
+    </div>
+    <div class="color-chip" style="--swatch: #FFFFFF;">
+      <i></i><span><strong>Surface</strong><code>#FFFFFF</code></span>
+    </div>
+    <div class="color-chip" style="--swatch: #E4E4E7;">
+      <i></i><span><strong>Border</strong><code>#E4E4E7</code></span>
+    </div>
+    <div class="color-chip" style="--swatch: #18181B;">
+      <i></i><span><strong>Text Dark</strong><code>#18181B</code></span>
+    </div>
+    <div class="color-chip" style="--swatch: #DC2626;">
+      <i></i><span><strong>Danger</strong><code>#DC2626</code></span>
+    </div>
+    <div class="color-chip" style="--swatch: #B45309;">
+      <i></i><span><strong>Warning</strong><code>#B45309</code></span>
+    </div>
+  </div>
+
+  <h3 class="heading-2">Ready-to-Use Theme Presets</h3>
+  <p>To switch themes, replace the constants in <code>AppColors</code> in <code>lib/theme/app_theme.dart</code> with any of the curated presets below:</p>
+
+  <div class="platform-guides">
+    <article class="platform-guide">
+      <h3>Preset 1: Mono Marketplace Navy Theme</h3>
+      <p>Matches the official MONO Marketplace enterprise brand colors (Deep Navy <code>#18284D</code> with Emerald <code>#059669</code> active accents):</p>
+      <div class="code-shell">
+        <div class="code-head"><span>Mono Navy Palette</span><button class="copy-button" type="button" data-copy="#preset-navy">Copy</button></div>
+        <pre><code class="code-block" id="preset-navy">class AppColors {
+  static const primary = Color(0xFF18284D);    // MONO Deep Navy
+  static const accent = Color(0xFF059669);     // Emerald green
+  static const background = Color(0xFFF8FAFC); // Clean light slate
+  static const surface = Color(0xFFFFFFFF);    // Pure white cards
+  static const surfaceAlt = Color(0xFFF1F5F9); // Subtle slate
+  static const border = Color(0xFFE2E8F0);     // Clean hairline borders
+  static const textDark = Color(0xFF0F172A);   // Deep slate heading
+  static const textMedium = Color(0xFF334155); // Slate body
+  static const textLight = Color(0xFF64748B);  // Slate muted
+  static const danger = Color(0xFFDC2626);
+  static const warning = Color(0xFFD97706);
+}</code></pre>
+      </div>
+    </article>
+
+    <article class="platform-guide">
+      <h3>Preset 2: Dark AMOLED Console Theme</h3>
+      <p>Designed for dedicated wall-mounted or charging gateway phones requiring an OLED-friendly dark operations interface:</p>
+      <div class="code-shell">
+        <div class="code-head"><span>Dark AMOLED Palette</span><button class="copy-button" type="button" data-copy="#preset-dark">Copy</button></div>
+        <pre><code class="code-block" id="preset-dark">class AppColors {
+  static const primary = Color(0xFF38BDF8);    // Vivid sky blue
+  static const accent = Color(0xFF10B981);     // Neon emerald
+  static const background = Color(0xFF090D16); // Deep AMOLED night
+  static const surface = Color(0xFF111827);    // Dark slate cards
+  static const surfaceAlt = Color(0xFF1F2937); // Raised container
+  static const border = Color(0xFF374151);     // Dark hairline border
+  static const textDark = Color(0xFFF9FAFB);   // High-contrast white
+  static const textMedium = Color(0xFF9CA3AF); // Soft gray body
+  static const textLight = Color(0xFF6B7280);  // Dark muted
+  static const danger = Color(0xFFEF4444);
+  static const warning = Color(0xFFF59E0B);
+}</code></pre>
+      </div>
+    </article>
+  </div>
+
+  <h3 class="heading-2">Customizing Component Styles in <code>buildAppTheme()</code></h3>
+  <p>You can adjust border curves, typography, input fields, and button shapes by modifying the <code>ThemeData</code> object in <code>lib/theme/app_theme.dart</code>:</p>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead>
+        <tr><th scope="col">Component Property</th><th scope="col">Code Snippet</th><th scope="col">Visual Effect</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Card &amp; Input Corner Radius</td>
+          <td><code>const radius = 12.0;</code></td>
+          <td>Changes border roundness across text inputs, cards, and dialogs.</td>
+        </tr>
+        <tr>
+          <td>Input Focus Border</td>
+          <td><code>borderSide: BorderSide(color: AppColors.primary, width: 2.0)</code></td>
+          <td>Thickens the highlight border when focusing on email/password fields.</td>
+        </tr>
+        <tr>
+          <td>AppBar Title Font</td>
+          <td><code>titleTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)</code></td>
+          <td>Controls the top navigation bar title weight and size.</td>
+        </tr>
+        <tr>
+          <td>Active Switch Color</td>
+          <td><code>if (states.contains(WidgetState.selected)) return AppColors.accent;</code></td>
+          <td>Controls the toggle color when the foreground service is active.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="heading-2">Updating the App Launcher Icon</h3>
+  <p>The application icon is automatically generated for Android adaptive launcher icons using <code>flutter_launcher_icons</code>:</p>
+  <ol class="list-item">
+    <li>Prepare your new square icon graphic (recommended dimensions: <strong>1024 &times; 1024 px PNG</strong>).</li>
+    <li>Save the main icon to <code>sms_gateway/assets/icons/app_icon.png</code>.</li>
+    <li>Optionally, save the transparent foreground layer to <code>sms_gateway/assets/icons/app_icon_foreground.png</code>.</li>
+    <li>Review the configuration in <code>pubspec.yaml</code>:</li>
+  </ol>
+  <div class="code-shell">
+    <div class="code-head"><span>pubspec.yaml &mdash; flutter_launcher_icons config</span><button class="copy-button" type="button" data-copy="#code-launcher-yaml">Copy</button></div>
+    <pre><code class="code-block" id="code-launcher-yaml">flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: false
+  image_path: "assets/icons/app_icon.png"
+  adaptive_icon_background: "#18284D" # Set your brand background color
+  adaptive_icon_foreground: "assets/icons/app_icon_foreground.png"</code></pre>
+  </div>
+  <p>Run the generator command in your terminal to build all Android mipmap resolutions:</p>
+  <div class="code-shell code-shell--command">
+    <div class="code-head"><span>Generate icons command</span><button class="copy-button" type="button" data-copy="#cmd-gen-icons">Copy</button></div>
+    <pre><code class="code-block" id="cmd-gen-icons">dart run flutter_launcher_icons</code></pre>
+  </div>
+
+  <h3 class="heading-2">Changing App Name &amp; Launcher Label</h3>
+  <p>To rebrand the name shown under the app icon on the phone home screen and in Android settings:</p>
+  <ul class="list-item">
+    <li><strong>Android Launcher Label:</strong> Open <code>sms_gateway/android/app/src/main/AndroidManifest.xml</code> and update:
+      <div class="code-shell">
+        <div class="code-head"><span>android/app/src/main/AndroidManifest.xml</span><button class="copy-button" type="button" data-copy="#code-manifest-label">Copy</button></div>
+        <pre><code class="code-block" id="code-manifest-label">&lt;application
+    android:label="YourBrand SMS"
+    android:icon="@mipmap/ic_launcher"&gt;</code></pre>
+      </div>
+    </li>
+    <li><strong>Flutter App Window Title:</strong> Open <code>sms_gateway/lib/main.dart</code> and update:
+      <div class="code-shell">
+        <div class="code-head"><span>lib/main.dart</span><button class="copy-button" type="button" data-copy="#code-main-title">Copy</button></div>
+        <pre><code class="code-block" id="code-main-title">return MaterialApp(
+  title: 'YourBrand SMS', // <-- Change from 'MonoSMS'
+  debugShowCheckedModeBanner: false,
+  theme: buildAppTheme(),
+  ...
+);</code></pre>
+      </div>
+    </li>
+  </ul>
+
+</section>
+
+<!-- Section: build-run -->
+<section class="doc-section dashboard-card" id="build-run" data-section-title="Build and release">
+
+  <h2 class="section-title">Build commands and release notes</h2>
+
+  <div class="code-shell code-shell--command">
+    <div class="code-head"><span>Build targets</span><button class="copy-button" type="button" data-copy="#cmd-build">Copy</button></div>
+    <pre><code class="code-block" id="cmd-build"># debug run on a connected phone
+flutter run --dart-define=GATEWAY_API_URL=https://your-store.com/api/v1
+
+# release APK (the gateway ships as a sideloaded APK, not Play Store)
+flutter build apk --release --dart-define=GATEWAY_API_URL=https://your-store.com/api/v1
+
+# regenerate launcher icons after changing assets/icons/
+dart run flutter_launcher_icons</code></pre>
+  </div>
+
+  <div class="table-wrap">
+    <table class="packages-table">
+      <thead><tr><th scope="col">Item</th><th scope="col">State in source</th></tr></thead>
+      <tbody>
+        <tr><td>Signing</td><td>Debug signing by default — add your own keystore to <code>android/app/build.gradle.kts</code> before distributing</td></tr>
+        <tr><td>Versioning</td><td><code>1.0.0+1</code> from <code>pubspec.yaml</code>; reported to the backend in heartbeats and device registration</td></tr>
+        <tr><td>Distribution model</td><td>Direct APK install on the gateway phone; there is nothing store-specific in the source</td></tr>
+        <tr><td>iOS</td><td>No iOS runner is configured; the manifest-level features (SMS receivers, foreground service) are Android-only</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p><strong>One phone, one build.</strong> Because the API URL is compiled in, build a dedicated APK per environment (staging, production) rather than reconfiguring devices by hand.</p>
+  </div>
+
+</section>
+
+<!-- Section: pairing -->
+<section class="doc-section dashboard-card" id="pairing" data-section-title="Admin sign-in and pairing">
+
   <h2 class="section-title">Pairing: from admin credentials to a device token</h2>
   <p>Paring is the only privileged moment in the device's life. It uses the administrator's account once, then immediately narrows down to a device-scoped credential.</p>
 
@@ -408,10 +983,12 @@ static const String baseUrl = String.fromEnvironment(
 
   <h3 class="heading-2">Signing out</h3>
   <p><code>signOutCleanup()</code> cancels both timers, disposes FCM listeners, stops the foreground service, deletes the device token (secure storage) and native credentials, and returns the app to <code>notConfigured</code>. The backend-side device row survives so the admin can revoke or re-issue its token from the panel.</p>
+
 </section>
 
-<!-- =============================================== backend-api-setup -->
-<section class="doc-section" id="backend-api-setup" data-section-title="API client and endpoints">
+<!-- Section: backend-api-setup -->
+<section class="doc-section dashboard-card" id="backend-api-setup" data-section-title="API client and endpoints">
+
   <h2 class="section-title">The device API surface</h2>
   <p>After pairing, every call carries the device token as a bearer token, enforced by the backend's <code>AuthenticateSmsGateway</code> middleware — an admin token or customer token is rejected on these routes. Responses use the platform envelope <code>{ success, data, error }</code>; <code>GatewayResult.fromBody</code> parses exactly that shape.</p>
 
@@ -446,10 +1023,12 @@ static const String baseUrl = String.fromEnvironment(
     <li><strong>Log redaction:</strong> the request interceptor logs method and path, and passes bodies through <code>AppLogger.redact</code>, which masks sensitive keys with <code>***</code> — a queued message can carry a one-time code.</li>
     <li><strong>Failure isolation:</strong> every call returns a <code>GatewayResult</code> rather than throwing; UI state never depends on exceptions.</li>
   </ul>
+
 </section>
 
-<!-- ================================================== message-flow -->
-<section class="doc-section" id="message-flow" data-section-title="Send pipeline">
+<!-- Section: message-flow -->
+<section class="doc-section dashboard-card" id="message-flow" data-section-title="Send pipeline">
+
   <h2 class="section-title">The send pipeline: queue is the source of truth</h2>
   <p>FCM pushes are wake signals only — their data never contains an SMS body or recipient. Delivery is pulled, always, from the queue:</p>
 
@@ -492,10 +1071,12 @@ POST /sms-gateway/sms/{id}/report ◀──────────  sent  |  fa
 
   <h3 class="heading-2">Timers while the app is alive</h3>
   <p>Once paired, the provider runs a <strong>5-minute heartbeat</strong> (which also re-uploads the FCM token after rotation) and the <strong>15-minute fallback poll</strong>. Both are cancelled on sign-out. The foreground service takes over durability when the app is backgrounded or swiped away.</p>
+
 </section>
 
-<!-- ======================================================= inbound -->
-<section class="doc-section" id="inbound" data-section-title="Inbound SMS">
+<!-- Section: inbound -->
+<section class="doc-section dashboard-card" id="inbound" data-section-title="Inbound SMS">
+
   <h2 class="section-title">Inbound SMS: capture, forward, deduplicate</h2>
   <p>Inbound messages (customer replies, carrier notices) flow the opposite way — from Android into the backend's <code>sms_inbound_messages</code> table.</p>
 
@@ -514,10 +1095,12 @@ POST /sms-gateway/sms/{id}/report ◀──────────  sent  |  fa
   <div class="info-block">
     <p><strong>Two capture paths, one truth.</strong> The broadcast receiver is primary; the inbox scan exists only because some OEMs freeze apps and swallow broadcasts. Both feed the same deduplicating endpoint.</p>
   </div>
+
 </section>
 
-<!-- ================================================== android-setup -->
-<section class="doc-section" id="android-setup" data-section-title="Android platform layer">
+<!-- Section: android-setup -->
+<section class="doc-section dashboard-card" id="android-setup" data-section-title="Android platform layer">
+
   <h2 class="section-title">Android permissions and platform components</h2>
   <p>The Kotlin layer exists to keep the gateway alive and to dial the radio. Everything is registered in the manifest so it works without the UI.</p>
 
@@ -555,10 +1138,12 @@ POST /sms-gateway/sms/{id}/report ◀──────────  sent  |  fa
 
   <h3 class="heading-2">Battery optimization</h3>
   <p>Android may freeze the gateway on aggressive OEM skins. The dashboard reads the exemption state and offers a one-tap deep link into the battery settings screen (<code>openBatterySettings</code>). Exempting the app is expected procedure on Xiaomi, Oppo, Vivo, and Samsung.</p>
+
 </section>
 
-<!-- ================================================= firebase-setup -->
-<section class="doc-section" id="firebase-setup" data-section-title="FCM wake channel">
+<!-- Section: firebase-setup -->
+<section class="doc-section dashboard-card" id="firebase-setup" data-section-title="FCM wake channel">
+
   <h2 class="section-title">Firebase is a doorbell, not a courier</h2>
   <p>Push payloads carry a single datum: <code>type: sms_queue_available</code>. No SMS body, no recipient, ever. If Firebase is unavailable the app still works — the fallback poll and backend recovery nudge cover the difference.</p>
 
@@ -582,45 +1167,19 @@ POST /sms-gateway/sms/{id}/report ◀──────────  sent  |  fa
     <li>Enable Cloud Messaging (no APNs key needed unless you also ship iOS).</li>
     <li>Build and pair — the first heartbeat uploads the FCM token, and the admin panel shows the device as <em>Connected</em>.</li>
   </ol>
+
 </section>
 
-<!-- ===================================================== build-run -->
-<section class="doc-section" id="build-run" data-section-title="Build and release">
-  <h2 class="section-title">Build commands and release notes</h2>
+<!-- Section: admin-panel -->
+<section class="doc-section dashboard-card" id="admin-panel" data-section-title="Admin panel controls">
 
-  <div class="code-shell code-shell--command">
-    <div class="code-head"><span>Build targets</span><button class="copy-button" type="button" data-copy="#cmd-build">Copy</button></div>
-    <pre><code class="code-block" id="cmd-build"># debug run on a connected phone
-flutter run --dart-define=GATEWAY_API_URL=https://your-store.com/api/v1
-
-# release APK (the gateway ships as a sideloaded APK, not Play Store)
-flutter build apk --release --dart-define=GATEWAY_API_URL=https://your-store.com/api/v1
-
-# regenerate launcher icons after changing assets/icons/
-dart run flutter_launcher_icons</code></pre>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 18px;">
+    <h2 class="section-title" style="margin-bottom: 0;">What the administrator sees on the other side</h2>
+    <a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="action-button action-button--primary" style="display: inline-flex; align-items: center; gap: 6px;">
+      <span>Open Live Admin Panel &nearr;</span>
+    </a>
   </div>
-
-  <div class="table-wrap">
-    <table class="packages-table">
-      <thead><tr><th scope="col">Item</th><th scope="col">State in source</th></tr></thead>
-      <tbody>
-        <tr><td>Signing</td><td>Debug signing by default — add your own keystore to <code>android/app/build.gradle.kts</code> before distributing</td></tr>
-        <tr><td>Versioning</td><td><code>1.0.0+1</code> from <code>pubspec.yaml</code>; reported to the backend in heartbeats and device registration</td></tr>
-        <tr><td>Distribution model</td><td>Direct APK install on the gateway phone; there is nothing store-specific in the source</td></tr>
-        <tr><td>iOS</td><td>No iOS runner is configured; the manifest-level features (SMS receivers, foreground service) are Android-only</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="callout">
-    <p><strong>One phone, one build.</strong> Because the API URL is compiled in, build a dedicated APK per environment (staging, production) rather than reconfiguring devices by hand.</p>
-  </div>
-</section>
-
-<!-- =================================================== admin-panel -->
-<section class="doc-section" id="admin-panel" data-section-title="Admin panel controls">
-  <h2 class="section-title">What the administrator sees on the other side</h2>
-  <p>The marketplace admin panel has a dedicated <strong>Admin → SMS Gateway</strong> page (guarded by the <code>sms.gateway.manage</code> permission) that manages the devices this app creates.</p>
+  <p>The marketplace admin panel has a dedicated <strong>Admin → SMS Gateway</strong> page (live URL: <a href="https://monomarket.site/admin" target="_blank" rel="noopener"><code>https://monomarket.site/admin</code></a>, guarded by the <code>sms.gateway.manage</code> permission) that manages the devices this app creates.</p>
 
   <div class="table-wrap">
     <table class="packages-table">
@@ -638,10 +1197,12 @@ dart run flutter_launcher_icons</code></pre>
 
   <h3 class="heading-2">Scheduled hygiene on the server</h3>
   <p>The <code>sms-gateway:recover</code> command runs on the managed scheduler. Each pass reclaims claims older than five minutes, parks retry-exhausted messages as failed, and wakes the active device for up to twenty still-pending messages. Combined with the device's own timers, no message depends on a single lucky push.</p>
+
 </section>
 
-<!-- ====================================================== security -->
-<section class="doc-section" id="security" data-section-title="Security and privacy">
+<!-- Section: security -->
+<section class="doc-section dashboard-card" id="security" data-section-title="Security and privacy">
+
   <h2 class="section-title">Security and privacy posture</h2>
   <div class="table-wrap">
     <table class="packages-table">
@@ -660,14 +1221,16 @@ dart run flutter_launcher_icons</code></pre>
   <div class="info-block is-warning">
     <p><strong>Before production:</strong> the manifest sets <code>android:usesCleartextTraffic="true"</code> for LAN testing, and the app ships debug-signed. Point the build at an HTTPS domain, remove the cleartext flag if you do not need local HTTP, and sign with your own keystore.</p>
   </div>
+
 </section>
 
-<!-- =============================================== developer-guide -->
-<section class="doc-section" id="developer-guide" data-section-title="Extension guide">
+<!-- Section: developer-guide -->
+<section class="doc-section dashboard-card" id="developer-guide" data-section-title="Extension guide">
+
   <h2 class="section-title">Extending the gateway safely</h2>
   <p>The architecture has one rule that keeps it safe to extend: <strong>the backend decides, the device dials.</strong> New features should preserve that split.</p>
 
-  <div class="platform-guides" aria-label="Extension surfaces">
+  <div class="platform-guides platform-guides--3col" aria-label="Extension surfaces">
     <article class="platform-guide">
       <h3 class="heading-2">Add a device API call</h3>
       <p>Add the method to <code>GatewayApiClient</code> returning a <code>GatewayResult</code>, and the endpoint to the backend's <code>sms-gateway</code> route group behind <code>gateway.auth</code>. Interceptors already handle the token, logging, and error mapping.</p>
@@ -695,10 +1258,12 @@ dart run flutter_launcher_icons</code></pre>
       </tbody>
     </table>
   </div>
+
 </section>
 
-<!-- ====================================================== support -->
-<section class="doc-section" id="support" data-section-title="Support and limitations">
+<!-- Section: support -->
+<section class="doc-section dashboard-card" id="support" data-section-title="Support and limitations">
+
   <h2 class="section-title">Known limitations, checked against source</h2>
   <div class="table-wrap">
     <table class="packages-table">
@@ -729,40 +1294,41 @@ dart run flutter_launcher_icons</code></pre>
   </div>
 
   <p>Carrier SMS charges apply to every message this app sends. Keep the gateway phone charged, topped up, and exempt from battery optimization, and it will quietly drain the queue.</p>
+
 </section>
 
-        </div>
       </div>
-    </div>
-  </main>
 
-  <footer class="site-footer">
-    <div>
-      <p><strong>MonoSMS Gateway</strong></p>
-      <small>Flutter app documentation</small>
-    </div>
-    <p>Documentation for <code>sms_gateway</code> 1.0.0+1.</p>
-  </footer>
+      <!-- DASHBOARD FOOTER -->
+      <footer class="dashboard-footer">
+        <div class="footer-left">
+          <strong>MonoSMS Gateway Operations Documentation</strong>
+          <span>Part of the MONO Multi-Vendor Marketplace Suite</span>
+        </div>
+        <div class="footer-right">
+          <a href="#introduction" class="footer-back-to-top">Back to top &uarr;</a>
+        </div>
+      </footer>
+    </main>
+  </div>
 
+  <!-- Toast Notification -->
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <dialog class="lightbox" id="image-lightbox" aria-labelledby="lightbox-caption">
-    <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer"><span aria-hidden="true">×</span></button>
+  <!-- Image Lightbox Modal -->
+  <dialog class="lightbox" id="image-lightbox" hidden aria-labelledby="lightbox-caption">
+    <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer"><span aria-hidden="true">&times;</span></button>
     <img id="lightbox-image" src="assets/images/mono-sms-app-icon.png" alt="">
     <div class="lightbox-bar">
       <p id="lightbox-caption"></p>
       <span class="lightbox-counter" id="lightbox-counter"></span>
     </div>
     <div class="lightbox-nav">
-      <button class="lightbox-step" type="button" data-lightbox-prev>← Previous</button>
+      <button class="lightbox-step" type="button" data-lightbox-prev>&larr; Previous</button>
       <button class="lightbox-step" type="button" data-lightbox-close>Close</button>
-      <button class="lightbox-step" type="button" data-lightbox-next>Next →</button>
+      <button class="lightbox-step" type="button" data-lightbox-next>Next &rarr;</button>
     </div>
   </dialog>
 
-  <noscript>
-    <style>.toc-drawer, .toc-toggle, .action-button { display: none !important; } .guide-shell { display: block; }</style>
-    <p class="noscript-note">JavaScript is disabled. All MonoSMS documentation sections are shown below.</p>
-  </noscript>
 </body>
 </html>

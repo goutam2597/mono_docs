@@ -1,184 +1,226 @@
 (() => {
   'use strict';
+
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-  const toc = $('[data-toc-drawer]');
-  const tocToggle = $('#toc-toggle');
-  const scrim = $('[data-drawer-scrim]');
-  const links = $$('.toc-group a[href^="#"]');
-  const sections = $$('.doc-panel > .doc-section');
+
+  const sidebar = $('#admin-sidebar');
+  const sidebarToggleBtn = $('#sidebar-toggle-btn');
+  const mobileToggleBtn = $('#mobile-toggle-btn');
+  const backdrop = $('#sidebar-backdrop');
+  const searchInput = $('#sidebar-search-input');
+  const navLinks = $$('.sidebar-nav-link');
+  const groupLabels = $$('.sidebar-group-label');
+  const sections = $$('.doc-section');
+  const breadcrumbLabel = $('#active-breadcrumb-label');
   const toast = $('#toast');
   const lightbox = $('#image-lightbox');
   const lightboxImage = $('#lightbox-image');
   const lightboxCaption = $('#lightbox-caption');
-  const lightboxCounter = $('#lightbox-counter');
-  const mediaQuery = window.matchMedia('(max-width: 1060px)');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let lastFocus = null;
-  let lastLightboxTrigger = null;
-  let toastTimer = null;
-  let raf = null;
-  let images = [];
-  let imageIndex = 0;
-  let activeNavigationId = null;
 
-  const headerOffset = () => Math.ceil(($('.site-header')?.offsetHeight || 68) + 24);
-  const scrollTo = (target, smooth = true) => {
-    if (!target) return;
-    const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - headerOffset());
-    window.scrollTo({ top, behavior: smooth && !reduceMotion.matches ? 'smooth' : 'auto' });
-  };
-  const setHash = (hash) => {
-    try { history.replaceState(null, '', hash); } catch (_) { window.location.hash = hash; }
-  };
-  const setDrawer = (open, restore = false) => {
-    if (!toc) return;
-    toc.classList.toggle('is-open', open);
-    tocToggle?.setAttribute('aria-expanded', String(open));
+  let toastTimer = null;
+  let rafId = null;
+
+  // Restore saved sidebar collapsed state on desktop
+  try {
+    if (localStorage.getItem('admin-sidebar-collapsed') === '1') {
+      document.documentElement.classList.add('admin-sidebar-collapsed');
+    }
+  } catch (_) {}
+
+  // Desktop sidebar collapse toggle
+  sidebarToggleBtn?.addEventListener('click', () => {
+    const isCollapsed = document.documentElement.classList.toggle('admin-sidebar-collapsed');
+    try {
+      localStorage.setItem('admin-sidebar-collapsed', isCollapsed ? '1' : '0');
+    } catch (_) {}
+  });
+
+  // Mobile sidebar drawer toggle
+  const setMobileDrawer = (open) => {
+    sidebar?.classList.toggle('is-open', open);
+    backdrop?.classList.toggle('is-active', open);
     document.body.classList.toggle('drawer-open', open);
-    if (scrim) scrim.hidden = !open;
-    if (open) {
-      toc.removeAttribute('aria-hidden'); toc.removeAttribute('inert');
-      $('a', toc)?.focus();
-    } else {
-      if (mediaQuery.matches) { toc.setAttribute('aria-hidden', 'true'); toc.setAttribute('inert', ''); }
-      else { toc.removeAttribute('aria-hidden'); toc.removeAttribute('inert'); }
-      if (restore && lastFocus?.focus) lastFocus.focus();
-    }
   };
-  const keepActiveVisible = (link) => {
-    if (!toc || !link) return;
-    const a = link.getBoundingClientRect(), d = toc.getBoundingClientRect();
-    if (a.top < d.top + 74) toc.scrollTop -= d.top + 74 - a.top;
-    else if (a.bottom > d.bottom - 15) toc.scrollTop += a.bottom - d.bottom + 15;
-  };
-  const setActiveLink = (id) => {
-    const selected = links.find(link => link.hash === `#${id}`);
-    if (!selected) return;
-    activeNavigationId = id;
-    links.forEach(link => {
-      const on = link === selected;
-      link.classList.toggle('is-active', on);
-      if (on) link.setAttribute('aria-current', 'location');
-      else link.removeAttribute('aria-current');
+
+  mobileToggleBtn?.addEventListener('click', () => setMobileDrawer(true));
+  backdrop?.addEventListener('click', () => setMobileDrawer(false));
+
+  // Sidebar real-time search filter
+  searchInput?.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    navLinks.forEach(link => {
+      const text = link.textContent.toLowerCase();
+      const match = !query || text.includes(query);
+      link.style.display = match ? 'flex' : 'none';
     });
-    keepActiveVisible(selected);
-  };
-  const updateActive = () => {
-    if (!sections.length) return;
-    const marker = headerOffset() + 5;
-    let current = sections[0];
-    sections.forEach(section => { if (section.getBoundingClientRect().top <= marker) current = section; });
-    if (activeNavigationId) {
-      const selectedSection = document.getElementById(activeNavigationId)?.closest('.doc-section');
-      if (selectedSection) {
-        const rect = selectedSection.getBoundingClientRect();
-        if (rect.top <= marker + 180 && rect.bottom > 0) current = selectedSection;
-        if (rect.top < marker - 220 || rect.bottom < 0) activeNavigationId = null;
+
+    // Hide empty group labels
+    $$('.sidebar-group-items').forEach(group => {
+      const visibleLinks = Array.from(group.querySelectorAll('.sidebar-nav-link')).filter(l => l.style.display !== 'none');
+      const label = group.previousElementSibling;
+      if (label && label.classList.contains('sidebar-group-label')) {
+        label.style.display = visibleLinks.length > 0 ? 'block' : 'none';
       }
-    }
-    if (window.scrollY + innerHeight >= document.documentElement.scrollHeight - 3) current = sections.at(-1);
-    let active;
-    links.forEach(link => {
-      const on = current && link.hash === `#${current.id}`;
-      link.classList.toggle('is-active', on);
-      if (on) { link.setAttribute('aria-current', 'location'); active = link; }
-      else link.removeAttribute('aria-current');
     });
-    keepActiveVisible(active);
+  });
+
+  // Keyboard shortcut '/' to focus search
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement !== searchInput && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+      e.preventDefault();
+      searchInput?.focus();
+    }
+    if (e.key === 'Escape') {
+      if (lightbox && !lightbox.hidden) closeLightbox();
+      setMobileDrawer(false);
+    }
+  });
+
+  // Active section tracking on scroll
+  const updateActiveSection = () => {
+    if (!sections.length) return;
+    const headerHeight = 80;
+    let currentSection = sections[0];
+
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= headerHeight + 40) {
+        currentSection = section;
+      }
+    });
+
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 10) {
+      currentSection = sections[sections.length - 1];
+    }
+
+    if (currentSection) {
+      const currentId = currentSection.id;
+      navLinks.forEach(link => {
+        const isActive = link.dataset.navId === currentId;
+        link.classList.toggle('is-active', isActive);
+        if (isActive) {
+          link.setAttribute('aria-current', 'location');
+          if (breadcrumbLabel) {
+            breadcrumbLabel.textContent = currentSection.dataset.sectionTitle || link.textContent.trim();
+          }
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
   };
-  const requestUpdate = () => { if (raf === null) raf = requestAnimationFrame(() => { raf = null; updateActive(); }); };
-  const notify = (message) => {
+
+  const requestScrollUpdate = () => {
+    if (rafId === null) {
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        updateActiveSection();
+      });
+    }
+  };
+
+  window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+  window.addEventListener('resize', requestScrollUpdate);
+
+  // Smooth scroll and mobile close on nav click
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetId = link.getAttribute('href')?.slice(1);
+      const target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - 74);
+        window.scrollTo({ top, behavior: 'smooth' });
+        try { history.replaceState(null, '', `#${targetId}`); } catch (_) {}
+        setMobileDrawer(false);
+      }
+    });
+  });
+
+  // Smooth scroll for buttons with data-scroll-to
+  document.querySelectorAll('button[data-scroll-to]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = btn.getAttribute('data-scroll-to');
+      const target = document.getElementById(targetId);
+      if (target) {
+        const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - 74);
+        window.scrollTo({ top, behavior: 'smooth' });
+        try { history.replaceState(null, '', `#${targetId}`); } catch (_) {}
+      }
+    });
+  });
+
+  // Toast notification helper
+  const notify = (msg) => {
     if (!toast) return;
-    clearTimeout(toastTimer); toast.textContent = message; toast.hidden = false;
+    clearTimeout(toastTimer);
+    toast.textContent = msg;
+    toast.hidden = false;
     toastTimer = setTimeout(() => { toast.hidden = true; }, 2200);
   };
-  const copy = async (text) => {
-    try {
-      if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); return true; }
-      const area = document.createElement('textarea'); area.value = text; area.readOnly = true;
-      area.style.cssText = 'position:fixed;opacity:0'; document.body.append(area); area.select();
-      const ok = document.execCommand('copy'); area.remove(); return ok;
-    } catch (_) { return false; }
-  };
-  const codeText = (node) => {
-    const clone = node.cloneNode(true);
-    $$('br', clone).forEach(br => br.replaceWith('\n'));
-    return (clone.textContent || '').replace(/\u00a0/g, ' ').trim();
-  };
-  const enhanceCode = () => {
-    $$('.code-block').forEach(block => {
-      if (block.closest('.code-shell')) return;
-      const pre = block.closest('pre');
-      if (!pre) return;
-      const shell = document.createElement('div'); shell.className = 'code-shell';
-      const head = document.createElement('div'); head.className = 'code-head';
-      const id = `generated-code-${Math.random().toString(36).slice(2)}`;
-      block.id = id;
-      head.innerHTML = `<span>Source snippet</span><button class="copy-button" type="button" data-copy="#${id}">Copy</button>`;
-      const parent = pre.parentNode;
-      if (!parent) return;
-      parent.replaceChild(shell, pre);
-      shell.append(head, pre);
-    });
-  };
-  const openLightbox = (trigger) => {
-    images = $$('[data-lightbox]');
-    if (!images.length) return;
-    imageIndex = images.indexOf(trigger);
-    lastLightboxTrigger = trigger;
-    showImage();
-    lightbox.hidden = false;
-    document.body.classList.add('drawer-open');
-    $('[data-lightbox-close]')?.focus();
-  };
-  const showImage = () => {
-    const item = images[imageIndex]; if (!item) return;
-    lightboxImage.src = item.dataset.lightbox; lightboxImage.alt = $('img', item)?.alt || '';
-    lightboxCaption.textContent = item.dataset.caption || item.alt || 'Screenshot';
-    lightboxCounter.textContent = `${imageIndex + 1} / ${images.length}`;
-  };
-  const closeLightbox = () => {
-    if (!lightbox || lightbox.hidden) return;
-    lightbox.hidden = true; document.body.classList.remove('drawer-open');
-    if (lastLightboxTrigger?.focus) lastLightboxTrigger.focus();
-  };
-  const moveLightbox = (delta) => { if (!images.length) return; imageIndex = (imageIndex + delta + images.length) % images.length; showImage(); };
 
-  tocToggle?.addEventListener('click', () => { lastFocus = document.activeElement; setDrawer(!toc.classList.contains('is-open'), true); });
-  $('[data-drawer-close]')?.addEventListener('click', () => setDrawer(false, true));
-  scrim?.addEventListener('click', () => setDrawer(false, true));
-  links.forEach(link => link.addEventListener('click', event => { event.preventDefault(); const id = decodeURIComponent(link.hash.slice(1)); setActiveLink(id); scrollTo(document.getElementById(id)); setHash(link.hash); if (mediaQuery.matches) setDrawer(false); }));
-  $$('[data-scroll-to]').forEach(button => button.addEventListener('click', () => { const id = button.dataset.scrollTo; setActiveLink(id); scrollTo(document.getElementById(id)); setHash(`#${id}`); }));
-  document.addEventListener('click', event => {
-    const copyButton = event.target.closest('[data-copy]');
-    if (copyButton) {
-      const source = document.querySelector(copyButton.dataset.copy);
-      if (source) copy(codeText(source)).then(ok => { if (ok) { copyButton.textContent = 'Copied'; copyButton.classList.add('is-copied'); notify('Copied to clipboard'); setTimeout(() => { copyButton.textContent = 'Copy'; copyButton.classList.remove('is-copied'); }, 1800); } else notify('Copy failed — select the text manually'); });
+  // Clipboard copy helper
+  const copyText = async (text) => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.readOnly = true;
+      area.style.cssText = 'position:fixed;opacity:0';
+      document.body.append(area);
+      area.select();
+      const ok = document.execCommand('copy');
+      area.remove();
+      return ok;
+    } catch (_) {
+      return false;
     }
-    const shot = event.target.closest('[data-lightbox]'); if (shot) openLightbox(shot);
-    if (event.target.closest('[data-lightbox-close]')) closeLightbox();
-  });
-  $('[data-lightbox-prev]')?.addEventListener('click', () => moveLightbox(-1));
-  $('[data-lightbox-next]')?.addEventListener('click', () => moveLightbox(1));
-  lightbox?.addEventListener('click', event => { if (event.target === lightbox) closeLightbox(); });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Tab' && mediaQuery.matches && toc?.classList.contains('is-open')) {
-      const focusable = $$('a[href], button:not([disabled])', toc).filter(element => element.offsetParent !== null);
-      if (focusable.length) {
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  };
+
+  // Click delegation for copy buttons
+  document.addEventListener('click', (e) => {
+    const copyBtn = e.target.closest('[data-copy]');
+    if (copyBtn) {
+      const targetSelector = copyBtn.dataset.copy;
+      const targetEl = document.querySelector(targetSelector);
+      if (targetEl) {
+        const text = (targetEl.textContent || '').replace(/\u00a0/g, ' ').trim();
+        copyText(text).then(ok => {
+          if (ok) {
+            const origText = copyBtn.textContent;
+            copyBtn.textContent = 'Copied!';
+            copyBtn.classList.add('is-copied');
+            notify('Copied snippet to clipboard');
+            setTimeout(() => {
+              copyBtn.textContent = origText;
+              copyBtn.classList.remove('is-copied');
+            }, 1800);
+          } else {
+            notify('Copy failed — select text manually');
+          }
+        });
       }
     }
-    if (event.key === 'Escape') { closeLightbox(); if (toc?.classList.contains('is-open')) setDrawer(false, true); }
-    if (!lightbox.hidden && event.key === 'ArrowLeft') moveLightbox(-1);
-    if (!lightbox.hidden && event.key === 'ArrowRight') moveLightbox(1);
+
+    if (e.target.closest('[data-lightbox-close]')) {
+      closeLightbox();
+    }
   });
-  mediaQuery.addEventListener?.('change', event => { if (!event.matches) setDrawer(false); else { toc?.setAttribute('aria-hidden', 'true'); toc?.setAttribute('inert', ''); } });
-  window.addEventListener('scroll', requestUpdate, { passive: true }); window.addEventListener('resize', requestUpdate);
-  if (mediaQuery.matches) { toc?.setAttribute('aria-hidden', 'true'); toc?.setAttribute('inert', ''); }
-  enhanceCode();
-  updateActive();
+
+  // Lightbox helpers
+  const closeLightbox = () => {
+    if (lightbox) {
+      lightbox.hidden = true;
+      lightbox.removeAttribute('open');
+      document.body.classList.remove('drawer-open');
+    }
+  };
+
+  // Initial update
+  updateActiveSection();
 })();
