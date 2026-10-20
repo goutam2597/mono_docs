@@ -1311,46 +1311,53 @@ button {
 /* Right Column: Sticky Single Smartphone Mockup */
 .story-phone-col {
   position: relative;
+  height: 100%;
 }
 
 .sticky-phone-stage {
   position: sticky;
-  top: 110px;
+  top: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: clamp(12px, 1.8vw, 24px);
+  padding: 6px 0;
 }
 
 .single-phone-mockup {
   position: relative;
-  width: 290px;
+  /* Dynamically size based on available viewport height (100vh - 120px) so it never crops on laptops */
+  width: min(285px, calc((100vh - 110px) * 0.4616));
+  max-width: 285px;
+  min-width: 190px;
   background: #0f172a;
-  border: 8px solid #1e293b;
-  border-radius: 40px;
-  box-shadow: 0 25px 60px -10px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(15, 23, 42, 0.08);
+  border: clamp(5px, 0.7vh, 8px) solid #1e293b;
+  border-radius: clamp(26px, 3.8vh, 40px);
+  box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(15, 23, 42, 0.08);
   overflow: hidden;
+  flex-shrink: 0;
+  transition: width 0.2s ease, border-width 0.2s ease, border-radius 0.2s ease;
 }
 
 .mockup-island {
   position: absolute;
-  top: 10px;
+  top: clamp(6px, 1.5%, 10px);
   left: 50%;
   transform: translateX(-50%);
-  width: 72px;
-  height: 16px;
+  width: clamp(52px, 24%, 72px);
+  height: clamp(12px, 2.5%, 16px);
   background: #000000;
   border-radius: 12px;
   z-index: 20;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 12px;
+  padding-right: clamp(8px, 15%, 12px);
 }
 
 .camera-lens {
-  width: 7px;
-  height: 7px;
+  width: clamp(5px, 10%, 7px);
+  height: clamp(5px, 10%, 7px);
   border-radius: 50%;
   background: #1e293b;
 }
@@ -2231,6 +2238,10 @@ button {
     position: relative;
     top: 0;
   }
+  .single-phone-mockup {
+    width: min(260px, 75vw);
+    margin: 0 auto;
+  }
   .story-step {
     min-height: auto;
     padding: 30px 20px;
@@ -2287,3 +2298,93 @@ button {
     width: 190px;
   }
 }
+
+/* ---------------- Laptop & Compact Viewport Optimizations ---------------- */
+@media (max-width: 1366px) {
+  .story-wrapper {
+    gap: 28px;
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+  .story-steps-col {
+    padding-right: 10px;
+  }
+}
+
+@media (max-height: 860px) {
+  .story-scroll-section {
+    padding: 60px 0;
+  }
+  .story-step {
+    min-height: 52vh;
+    padding: 28px 24px;
+  }
+  .step-title {
+    font-size: 23px;
+    margin-bottom: 8px;
+  }
+  .step-desc {
+    font-size: 14.5px;
+    margin-bottom: 12px;
+  }
+  .sticky-phone-stage {
+    top: 76px;
+  }
+  .single-phone-mockup {
+    width: min(265px, calc((100vh - 106px) * 0.4616));
+    border-width: 6px;
+    border-radius: 34px;
+  }
+  .mockup-island {
+    top: 7px;
+    width: 60px;
+    height: 14px;
+  }
+}
+
+@media (max-height: 720px) {
+  .story-scroll-section {
+    padding: 36px 0;
+  }
+  .story-step {
+    min-height: 46vh;
+    padding: 18px 16px;
+  }
+  .step-title {
+    font-size: 21px;
+    margin-bottom: 6px;
+  }
+  .step-desc {
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .sticky-phone-stage {
+    top: 70px;
+    gap: 14px;
+  }
+  .single-phone-mockup {
+    width: min(220px, calc((100vh - 90px) * 0.4616));
+    border-width: 5px;
+    border-radius: 26px;
+  }
+  .mockup-island {
+    top: 6px;
+    width: 48px;
+    height: 12px;
+  }
+  .camera-lens {
+    width: 5px;
+    height: 5px;
+  }
+  .story-indicators {
+    gap: 8px;
+  }
+  .indicator-dot {
+    padding: 4px 6px;
+  }
+  .dot-fill {
+    width: 6px;
+    height: 6px;
+  }
+}
+
