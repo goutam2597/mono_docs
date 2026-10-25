@@ -3,119 +3,302 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Mono customer app documentation: architecture, 47 public screen classes, API wiring, mobile setup, and release readiness.">
-  <meta name="theme-color" content="#0a0a0a">
-  <title>Mono Customer — App Documentation</title>
+  <meta name="description" content="Mono Customer — App Documentation Dashboard: architecture, 47 public screen classes, API wiring, mobile setup, and release readiness.">
+  <meta name="theme-color" content="#18284D">
+  <title>Mono Customer — App Documentation Dashboard</title>
   <link rel="icon" type="image/png" href="assets/customer-app-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261025_docs1">
   <script src="script.js" defer></script>
 </head>
-<body>
-  <a class="skip-link" href="#main-content">Skip to customer guide</a>
-  <div class="site-grid" aria-hidden="true"></div>
+<body class="dashboard-body">
 
-  <header class="site-header">
-    <a class="brand" href="#top" aria-label="Mono customer guide home">
-      <span class="brand-mark"><img src="assets/customer-app-icon.png" alt=""></span>
-      <span class="brand-copy"><strong>MONO / CUSTOMER</strong><small>Flutter app</small></span>
-    </a>
-    <div class="header-actions">
-      <span class="build-chip"><i aria-hidden="true"></i> mono_customer 1.0.0+1</span>
-      <button class="toc-toggle" id="toc-toggle" type="button" aria-label="Open contents" aria-controls="toc-drawer" aria-expanded="false">
-        <span class="menu-glyph" aria-hidden="true"><i></i><i></i><i></i></span><span>Contents</span>
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop" aria-hidden="true"></div>
+
+  <!-- FIXED FULL-HEIGHT SIDEBAR (Exact Backend Admin Panel Layout) -->
+  <aside id="admin-sidebar" class="admin-sidebar" aria-label="Documentation Navigation">
+    <div class="sidebar-header">
+      <a href="#overview" class="sidebar-brand">
+        <span class="brand-logo-frame">
+          <img src="assets/customer-app-icon.png" alt="Brand Logo" class="brand-logo-img">
+        </span>
+        <div class="brand-meta">
+          <strong class="brand-name">MONO CUSTOMER</strong>
+          <span class="brand-tag">CUSTOMER DOCS</span>
+        </div>
+      </a>
+      <button type="button" id="sidebar-toggle-btn" class="sidebar-toggle-btn" aria-label="Toggle Sidebar Navigation">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 17l4-5-4-5M4 17l4-5-4-5"/></svg>
       </button>
     </div>
-  </header>
 
-  <main id="main-content">
-    <div class="drawer-scrim" data-drawer-scrim hidden></div>
-    <div class="guide-shell">
-      <aside class="toc-drawer" id="toc-drawer" aria-label="On this page" data-toc-drawer>
-        <div class="toc-header"><div><span class="toc-kicker">On this page</span><strong>Customer guide</strong></div><button class="icon-button toc-close" type="button" data-drawer-close aria-label="Close contents"><span aria-hidden="true">×</span></button></div>
-        <nav class="toc-group" aria-label="Mono customer guide contents">
-          <span class="toc-label">Overview</span>
-          <a href="#overview">Mono overview</a>
-          <span class="toc-label">Architecture</span>
-          <a href="#structure">Project structure</a>
-          <a href="#screens">Screens &amp; workflows</a>
-          <a href="#requirements">Requirements &amp; install</a>
-          <a href="#dependencies">Direct dependencies</a>
-          <span class="toc-label">Integration</span>
-          <a href="#api">API client &amp; endpoints</a>
-          <a href="#environment">Environment &amp; auth</a>
-          <a href="#mobile">Mobile settings &amp; theme</a>
-          <a href="#services">Firebase push &amp; Ably</a>
-          <a href="#ios">iOS setup &amp; boundaries</a>
-          <span class="toc-label">Build &amp; release</span>
-          <a href="#build">Build &amp; run</a>
-          <a href="#release">Release readiness</a>
-          <a href="#extend">Extension guide</a>
-          <a href="#support">Support &amp; limitations</a>
+    <!-- Quick Search Filter in Sidebar -->
+    <div class="sidebar-search-box">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="sidebar-search-input" placeholder="Search documentation..." autocomplete="off" aria-label="Search documentation topics">
+      <kbd class="search-kbd">/</kbd>
+    </div>
+
+    <!-- Grouped Sidebar Navigation -->
+    <nav class="sidebar-nav-scroll" id="sidebar-nav" aria-label="Documentation Topics">
+<div class="sidebar-group-label">OVERVIEW</div>
+<div class="sidebar-group-items">
+<a href="#overview" class="sidebar-nav-link" data-nav-id="overview">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
+  <span class="sidebar-link-text">Mono Overview</span>
+</a>
+</div>
+<div class="sidebar-group-label">ARCHITECTURE</div>
+<div class="sidebar-group-items">
+<a href="#structure" class="sidebar-nav-link" data-nav-id="structure">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+  <span class="sidebar-link-text">Project Structure</span>
+</a>
+<a href="#screens" class="sidebar-nav-link" data-nav-id="screens">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6zm0 4h16M8 8h.01M11 8h.01"/></svg>
+  <span class="sidebar-link-text">Screens &amp; Workflows</span>
+</a>
+<a href="#requirements" class="sidebar-nav-link" data-nav-id="requirements">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2 4-4"/></svg>
+  <span class="sidebar-link-text">Requirements &amp; Install</span>
+</a>
+<a href="#dependencies" class="sidebar-nav-link" data-nav-id="dependencies">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+  <span class="sidebar-link-text">Direct Dependencies</span>
+</a>
+</div>
+<div class="sidebar-group-label">INTEGRATION</div>
+<div class="sidebar-group-items">
+<a href="#api" class="sidebar-nav-link" data-nav-id="api">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  <span class="sidebar-link-text">API Client &amp; Endpoints</span>
+</a>
+<a href="#environment" class="sidebar-nav-link" data-nav-id="environment">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"/></svg>
+  <span class="sidebar-link-text">Environment &amp; Auth</span>
+</a>
+<a href="#mobile" class="sidebar-nav-link" data-nav-id="mobile">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0 0 18c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16a5 5 0 0 0 5-5c0-4.42-4.03-8-9-8Z"/></svg>
+  <span class="sidebar-link-text">Mobile Settings &amp; Theme</span>
+</a>
+<a href="#services" class="sidebar-nav-link" data-nav-id="services">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9m-4.27 13a2 2 0 0 1-3.46 0"/></svg>
+  <span class="sidebar-link-text">Firebase Push &amp; Ably</span>
+</a>
+<a href="#ios" class="sidebar-nav-link" data-nav-id="ios">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/></svg>
+  <span class="sidebar-link-text">iOS Setup &amp; Boundaries</span>
+</a>
+</div>
+<div class="sidebar-group-label">BUILD &amp; RELEASE</div>
+<div class="sidebar-group-items">
+<a href="#rebranding" class="sidebar-nav-link" data-nav-id="rebranding">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7h.01"/></svg>
+  <span class="sidebar-link-text">Rebranding Guide</span>
+</a>
+<a href="#build" class="sidebar-nav-link" data-nav-id="build">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3m0 0l5-5c1.5-1.5 3.5-2 5-2 0 1.5-.5 3.5-2 5l-5 5z"/></svg>
+  <span class="sidebar-link-text">Build &amp; Run</span>
+</a>
+<a href="#release" class="sidebar-nav-link" data-nav-id="release">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+  <span class="sidebar-link-text">Release Readiness</span>
+</a>
+<a href="#extend" class="sidebar-nav-link" data-nav-id="extend">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-12a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm12 3a9 9 0 0 1-9 9"/></svg>
+  <span class="sidebar-link-text">Extension Guide</span>
+</a>
+<a href="#support" class="sidebar-nav-link" data-nav-id="support">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zm0-7v.01M12 11a2 2 0 1 0-2-2"/></svg>
+  <span class="sidebar-link-text">Support &amp; Limitations</span>
+</a>
+<a href="#troubleshooting" class="sidebar-nav-link" data-nav-id="troubleshooting">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+  <span class="sidebar-link-text">Troubleshooting &amp; FAQ</span>
+</a>
+</div>
+    </nav>
+
+    <!-- Sidebar System Footer -->
+    <div class="sidebar-footer">
+      <div class="system-status-indicator">
+        <span class="live-dot" aria-hidden="true"></span>
+        <div class="system-status-text">
+          <strong>Customer App 1.0.0+1</strong>
+          <small>Flutter 3.47.4 · Dart 3.12.2</small>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN DASHBOARD CONTENT AREA -->
+  <div id="admin-main" class="admin-main">
+
+    <!-- TOP STICKY DASHBOARD NAVBAR -->
+    <header class="top-navbar">
+      <div class="top-navbar-left">
+        <button type="button" id="mobile-toggle-btn" class="mobile-menu-btn" aria-label="Open sidebar menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <nav class="breadcrumb-trail" aria-label="Breadcrumb">
+          <span class="crumb-root">Documentation</span>
+          <span class="crumb-divider">/</span>
+          <span class="crumb-section">MONO CUSTOMER</span>
+          <span class="crumb-divider">/</span>
+          <span class="crumb-active" id="active-breadcrumb-label">Mono Overview</span>
         </nav>
-        <div class="toc-meta"><span>DOC / MC-1.0.0</span><span>Flutter app</span></div>
-      </aside>
+      </div>
+    </header>
 
-      <div class="doc-stage">
-        <section class="doc-panel" aria-label="Mono customer documentation">
-          <section class="doc-section doc-section--intro" id="overview" data-section-title="Mono overview">
-            <div class="ov" id="top" aria-labelledby="ov-title">
-              <div class="ov-bar">
-                <p class="ov-kicker"><span>Customer app documentation</span><span>Setup · Build · Ship</span></p>
-                <span class="ov-signal"><i aria-hidden="true"></i>Android · iOS</span>
-              </div>
+    <!-- DASHBOARD STAGE -->
+    <main class="dashboard-stage" id="main-content">
 
-              <div class="ov-head">
-                <div class="ov-heading">
-                  <h1 id="ov-title">Mono Customer.<em> App documentation.</em></h1>
-                  <p class="ov-note"><span aria-hidden="true">●</span> Complete setup, API, and release guide.</p>
-                </div>
-                <div class="ov-side">
-                  <p class="ov-lede">Complete documentation for the <code>mono_customer</code> Flutter marketplace app. Explore the layered architecture, run the five-tab customer shell, connect the API and mobile services, and prepare the app for release on Android and iOS.</p>
-                  <div class="ov-actions">
-                    <button class="action-button action-button--primary" type="button" data-scroll-to="requirements">Run the app <span aria-hidden="true">↘</span></button>
-                    <button class="action-button" type="button" data-scroll-to="screens">Inspect workflows <span aria-hidden="true">→</span></button>
-                  </div>
-                </div>
-              </div>
+      <!-- Executive Overview Banner -->
+      <section class="executive-banner" aria-label="Executive Overview">
+        <div class="banner-body">
+          <div class="banner-badge-row">
+            <span class="banner-kicker">MONO CUSTOMER ENGINEERING CONSOLE</span>
+            <span class="banner-tag">Marketplace App</span>
+          </div>
+          <h1 class="banner-title">Mono Customer App Operations &amp; Engineering Dashboard</h1>
+          <p class="banner-desc">Complete field manual for the mono_customer Flutter marketplace app: layered architecture, 47 public screen classes, the five-tab persistent shell, Dio API wiring, Android push and Ably chat, and the release gaps still visible in the repository.</p>
+        </div>
+      </section>
 
-              <div class="ov-kpis" aria-label="Mono customer headline facts">
-                <article class="ov-kpi"><span class="status-index">A / 01</span><p>Screens</p><strong>47 files / 53 declarations</strong><span class="status-badge status-badge--blue">Included</span></article>
-                <article class="ov-kpi"><span class="status-index">A / 02</span><p>Application identity</p><strong><code>com.mono.customer.app</code></strong><span class="status-badge status-badge--teal">1.0.0+1</span></article>
-                <article class="ov-kpi"><span class="status-index">A / 03</span><p>Active API default</p><strong>192.168.0.173 / api / v1</strong><span class="status-badge status-badge--amber">Private LAN</span></article>
-              </div>
+      <!-- 4-Column KPI Metrics Summary Grid -->
+      <section class="kpi-grid" aria-label="System Metrics">
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">APP / 01</span>
+    <span class="kpi-pill kpi-pill-blue">Included</span>
+  </div>
+  <strong class="kpi-metric">47 Screen Files</strong>
+  <p class="kpi-label">53 project-wide screen declarations across lib/screens and lib/widgets.</p>
+</div>
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">APP / 02</span>
+    <span class="kpi-pill kpi-pill-green">1.0.0+1</span>
+  </div>
+  <strong class="kpi-metric">com.mono.customer.app</strong>
+  <p class="kpi-label">Flutter marketplace customer app built for Android and iOS devices.</p>
+</div>
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">APP / 03</span>
+    <span class="kpi-pill kpi-pill-navy">Real-time</span>
+  </div>
+  <strong class="kpi-metric">Ably + FCM Push</strong>
+  <p class="kpi-label">Chat-only Ably transport with Android-startup Firebase notifications.</p>
+</div>
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">APP / 04</span>
+    <span class="kpi-pill kpi-pill-amber">Placeholder</span>
+  </div>
+  <strong class="kpi-metric">your-domain.com / api / v1</strong>
+  <p class="kpi-label">Compiled API default placeholder — point it at your server before building.</p>
+</div>
+      </section>
 
-              <div class="ov-console" aria-label="Mono customer app screens">
-                <div class="console-topline"><span>MONO_CUSTOMER / APP PREVIEW</span><span class="console-live"><i aria-hidden="true"></i>FLUTTER</span></div>
-                <div class="ov-rail">
-                  <figure class="ov-shot"><img src="assets/images/device/customer-after-launch.png" alt="Mono customer Home marketplace screen with search, categories, vouchers and featured products."><figcaption>Home / marketplace</figcaption></figure>
-                  <figure class="ov-shot"><img src="assets/images/device/customer-explore.png" alt="Mono customer Explore screen with category browsing."><figcaption>Explore / categories</figcaption></figure>
-                  <figure class="ov-shot"><img src="assets/images/device/customer-cart.png" alt="Mono customer cart with selected products, quantity controls and totals."><figcaption>Cart / checkout</figcaption></figure>
-                  <figure class="ov-shot"><img src="assets/images/device/customer-messages.png" alt="Mono customer Messages screen with inbox tabs and empty state."><figcaption>Messages / inbox</figcaption></figure>
-                  <figure class="ov-shot"><img src="assets/images/device/customer-profile.png" alt="Mono customer profile menu with orders, downloads, wallet, loyalty, vouchers and wishlist."><figcaption>Profile / account</figcaption></figure>
-                </div>
-                <div class="console-foot"><span>Package <code>com.mono.customer.app</code></span><span>Screens <code>47 files / 53 declarations</code></span><span>Capture <code>5 tabs / 1440 × 3120</code></span><span>API <code>.173 / v1</code></span></div>
-              </div>
-            </div>
+      <!-- DOCUMENTATION SECTIONS (Wrapped in Elevated Dashboard Cards) -->
+      <div class="dashboard-cards-container">
+<!-- Section: overview -->
+<section class="doc-section dashboard-card dashboard-card--hero" id="overview" data-section-title="Mono overview">
 
-            <p class="section-kicker">01 / Identity</p><h2 class="section-title">The customer app at a glance</h2>
-            <p><code>mono_customer</code> is a conventional Provider-based Flutter application for the Mono marketplace. Its Dart description is <strong>“Mono marketplace customer app.”</strong> The display name is <strong>Mono</strong> and the declared version is <code>1.0.0+1</code>. This guide documents the app exactly as it is implemented.</p>
-            <div class="fact-grid">
-              <article class="fact-card fact-card--accent"><span>01</span><strong>Layered by concern</strong><p><code>core</code>, <code>models</code>, <code>providers</code>, <code>repositories</code>, <code>services</code>, screens, theme, and shared widgets.</p></article>
-              <article class="fact-card"><span>02</span><strong>Stateful storefront</strong><p>The five persistent tabs retain state in an <code>IndexedStack</code>: Home, Explore, Cart, Messages, Profile.</p></article>
-              <article class="fact-card"><span>03</span><strong>Backend-shaped</strong><p>Home layouts, localization, theme, legal content, offers, and storefront data can all arrive from API responses.</p></article>
-            </div>
-            <div class="info-block"><p><strong>Count boundary:</strong> <code>lib/screens</code> contains 47 public <code>*Screen</code> files. A separate project-wide scan finds six screen-class declarations under <code>lib/widgets</code>: five checkout result-state classes (<code>ResultCancelledScreen</code>, <code>ResultExpiredScreen</code>, <code>ResultFailedScreen</code>, <code>ResultVerifyingScreen</code>, and <code>ResultSuccessScreen</code>) plus <code>HostedWalletTopupWebViewScreen</code>. Together, that is <strong>53 project-wide declarations</strong>; the 47-file count is specifically the public screen layer.</p></div>
-            <div class="table-wrap"><table class="data-table identity-table"><thead><tr><th>Detail</th><th>Value</th><th>Notes</th></tr></thead><tbody>
-              <tr><td>Dart package</td><td><code>mono_customer</code></td><td><code>pubspec.yaml</code></td></tr><tr><td>Dart constraint</td><td><code>^3.12.2</code></td><td><code>pubspec.yaml</code></td></tr><tr><td>Locked SDK floors</td><td>Dart <code>&gt;=3.12.2 &lt;4.0.0</code> · Flutter <code>&gt;=3.44.0</code></td><td><code>pubspec.lock</code></td></tr><tr><td>Android ID / namespace</td><td><code>com.mono.customer.app</code></td><td><code>android/app/build.gradle.kts</code></td></tr><tr><td>iOS bundle ID</td><td><code>com.mono.customer.app</code></td><td><code>ios/Runner.xcodeproj/project.pbxproj</code></td></tr><tr><td>Named routes</td><td>No registered named-route map; navigation uses Material routes and builders.</td><td><code>lib/main.dart</code></td></tr>
-            </tbody></table></div>
-            <div class="info-block is-warning"><p><strong>Route boundary:</strong> do not describe <code>/login</code> as a registered named route. The 401 handler attempts <code>pushNamedAndRemoveUntil('/login')</code>, but the source does not provide a named-route map to satisfy it.</p></div>
-          </section>
+  <div class="ov" id="top" aria-labelledby="ov-title">
+    <div class="ov-bar">
+      <p class="ov-kicker"><span>Customer app documentation</span><span>Setup · Build · Ship</span></p>
+      <span class="ov-signal"><i aria-hidden="true"></i>Android · iOS</span>
+    </div>
 
-          <section class="doc-section" id="structure" data-section-title="Project structure"><p class="section-kicker">02 / Architecture</p><h2 class="section-title">A layered Flutter customer app</h2><p>Use the existing boundaries when extending the app. Providers own mutable state; repositories make API calls; services wrap shared infrastructure; screens compose workflows; widgets keep presentation reusable.</p>
-            <pre><code class="code-block">mono_customer/
+    <div class="ov-head">
+      <div class="ov-heading">
+        <h1 id="ov-title">Mono Customer.<em> App documentation.</em></h1>
+        <p class="ov-note"><span aria-hidden="true">●</span> Complete setup, API, and release guide.</p>
+      </div>
+      <div class="ov-side">
+        <p class="ov-lede">Complete documentation for the <code>mono_customer</code> Flutter marketplace app. Explore the layered architecture, run the five-tab customer shell, connect the API and mobile services, and prepare the app for release on Android and iOS.</p>
+        <div class="ov-actions">
+          <button class="action-button action-button--primary" type="button" data-scroll-to="requirements">Run the app <span aria-hidden="true">↘</span></button>
+          <button class="action-button" type="button" data-scroll-to="screens">Inspect workflows <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ov-kpis" aria-label="Mono customer headline facts">
+      <article class="ov-kpi">
+        <span class="status-index">A / 01</span>
+        <p>Screens</p>
+        <strong>47 files / 53 declarations</strong>
+        <span class="status-badge status-badge--blue">Included</span>
+      </article>
+      <article class="ov-kpi">
+        <span class="status-index">A / 02</span>
+        <p>Application identity</p>
+        <strong><code>com.mono.customer.app</code></strong>
+        <span class="status-badge status-badge--green">1.0.0+1</span>
+      </article>
+      <article class="ov-kpi">
+        <span class="status-index">A / 03</span>
+        <p>Active API default</p>
+        <strong>your-domain.com / api / v1</strong>
+        <span class="status-badge status-badge--amber">Placeholder</span>
+      </article>
+    </div>
+
+    <div class="ov-console" aria-label="Mono customer app screens">
+      <div class="console-topline"><span>MONO_CUSTOMER / APP PREVIEW</span><span class="console-live"><i aria-hidden="true"></i>FLUTTER</span></div>
+      <div class="ov-rail">
+        <figure class="ov-shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-after-launch.png" data-caption="Home / marketplace — real customer device capture"><img src="assets/images/device/customer-after-launch.png" alt="Mono customer Home marketplace screen with search, categories, vouchers and featured products." loading="lazy"></button><figcaption>Home / marketplace</figcaption></figure>
+        <figure class="ov-shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-explore.png" data-caption="Explore / categories — real customer device capture"><img src="assets/images/device/customer-explore.png" alt="Mono customer Explore screen with category browsing." loading="lazy"></button><figcaption>Explore / categories</figcaption></figure>
+        <figure class="ov-shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-cart.png" data-caption="Cart / checkout — real customer device capture"><img src="assets/images/device/customer-cart.png" alt="Mono customer cart with selected products, quantity controls and totals." loading="lazy"></button><figcaption>Cart / checkout</figcaption></figure>
+        <figure class="ov-shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-messages.png" data-caption="Messages / inbox — real customer device capture"><img src="assets/images/device/customer-messages.png" alt="Mono customer Messages screen with inbox tabs and empty state." loading="lazy"></button><figcaption>Messages / inbox</figcaption></figure>
+        <figure class="ov-shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-profile.png" data-caption="Profile / account — real customer device capture"><img src="assets/images/device/customer-profile.png" alt="Mono customer profile menu with orders, downloads, wallet, loyalty, vouchers and wishlist." loading="lazy"></button><figcaption>Profile / account</figcaption></figure>
+      </div>
+      <div class="console-foot"><span>Package <code>com.mono.customer.app</code></span><span>Screens <code>47 files / 53 declarations</code></span><span>Capture <code>5 tabs / 1440 × 3120</code></span><span>API <code>your-domain / v1</code></span></div>
+    </div>
+  </div>
+
+  <p class="section-kicker">01 / IDENTITY</p>
+  <h2 class="section-title">The customer app at a glance</h2>
+  <p><code>mono_customer</code> is a conventional Provider-based Flutter application for the Mono marketplace. Its Dart description is <strong>“Mono marketplace customer app.”</strong> The display name is <strong>Mono</strong> and the declared version is <code>1.0.0+1</code>. This guide documents the app exactly as it is implemented.</p>
+
+  <div class="fact-grid">
+    <article class="fact-card fact-card--accent"><span>01</span><strong>Layered by concern</strong><p><code>core</code>, <code>models</code>, <code>providers</code>, <code>repositories</code>, <code>services</code>, screens, theme, and shared widgets.</p></article>
+    <article class="fact-card"><span>02</span><strong>Stateful storefront</strong><p>The five persistent tabs retain state in an <code>IndexedStack</code>: Home, Explore, Cart, Messages, Profile.</p></article>
+    <article class="fact-card"><span>03</span><strong>Backend-shaped</strong><p>Home layouts, localization, theme, legal content, offers, and storefront data can all arrive from API responses.</p></article>
+  </div>
+
+  <div class="info-block"><p><strong>Count boundary:</strong> <code>lib/screens</code> contains 47 public <code>*Screen</code> files. A separate project-wide scan finds six screen-class declarations under <code>lib/widgets</code>: five checkout result-state classes (<code>ResultCancelledScreen</code>, <code>ResultExpiredScreen</code>, <code>ResultFailedScreen</code>, <code>ResultVerifyingScreen</code>, and <code>ResultSuccessScreen</code>) plus <code>HostedWalletTopupWebViewScreen</code>. Together, that is <strong>53 project-wide declarations</strong>; the 47-file count is specifically the public screen layer.</p></div>
+
+  <div class="table-wrap">
+    <table class="data-table identity-table">
+      <thead><tr><th scope="col">Detail</th><th scope="col">Value</th><th scope="col">Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Dart package</td><td><code>mono_customer</code></td><td><code>pubspec.yaml</code></td></tr>
+        <tr><td>Dart constraint</td><td><code>^3.12.2</code></td><td><code>pubspec.yaml</code></td></tr>
+        <tr><td>Locked SDK floors</td><td>Dart <code>&gt;=3.12.2 &lt;4.0.0</code> · Flutter <code>&gt;=3.44.0</code></td><td><code>pubspec.lock</code></td></tr>
+        <tr><td>Android ID / namespace</td><td><code>com.mono.customer.app</code></td><td><code>android/app/build.gradle.kts</code></td></tr>
+        <tr><td>iOS bundle ID</td><td><code>com.mono.customer.app</code></td><td><code>ios/Runner.xcodeproj/project.pbxproj</code></td></tr>
+        <tr><td>Named routes</td><td>No registered named-route map; navigation uses Material routes and builders.</td><td><code>lib/main.dart</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-block is-warning"><p><strong>Route boundary:</strong> do not describe <code>/login</code> as a registered named route. The 401 handler attempts <code>pushNamedAndRemoveUntil('/login')</code>, but the source does not provide a named-route map to satisfy it.</p></div>
+</section>
+
+<!-- Section: structure -->
+<section class="doc-section dashboard-card" id="structure" data-section-title="Project structure">
+  <p class="section-kicker">02 / ARCHITECTURE</p>
+  <h2 class="section-title">A layered Flutter customer app</h2>
+  <p>Use the existing boundaries when extending the app. Providers own mutable state; repositories make API calls; services wrap shared infrastructure; screens compose workflows; widgets keep presentation reusable.</p>
+
+  <pre><code class="code-block">mono_customer/
 ├─ lib/main.dart              app bootstrap + 22 providers
 ├─ lib/core/                  cache, logger, translations, push, auth, legal
 ├─ lib/models/                address, cart, chat, checkout, home, product, user...
@@ -128,101 +311,532 @@
 ├─ test/                      22 test files
 ├─ android/ · ios/ · web/ · linux/ · macos/ · windows/
 └─ gui-test-screenshots/      desktop/web folders, not mobile build targets</code></pre>
-            <div class="table-wrap"><table class="data-table"><thead><tr><th>Layer</th><th>Responsibility</th><th>Customer examples</th></tr></thead><tbody><tr><td>Core</td><td>Cross-cutting app services and primitives.</td><td><code>api_client.dart</code> settings, translations, Firebase, session coordinator</td></tr><tr><td>Models</td><td>Typed data and JSON shapes.</td><td>address, order, product, wallet, digital entitlement</td></tr><tr><td>Providers</td><td><code>ChangeNotifier</code> state, loading, mutations, refresh.</td><td>cart, home, orders, user, wishlist, vouchers</td></tr><tr><td>Repositories</td><td>HTTP calls, parsing, endpoint selection.</td><td>auth, products, search, checkout, notifications</td></tr><tr><td>Services</td><td>Shared client and platform/realtime access.</td><td>Dio, Ably chat, endpoint registry, checkout links</td></tr><tr><td>Screens / widgets</td><td>User workflows and reusable presentation.</td><td>47 public screens and 63 shared widgets</td></tr></tbody></table></div>
-          </section>
 
-          <section class="doc-section" id="screens" data-section-title="Screens and workflows"><p class="section-kicker">03 / Product surface</p><h2 class="section-title">Customer screens and real workflows</h2><p>The screen layer has <strong>47 public <code>*Screen</code> files</strong> under <code>lib/screens/</code>. The wider project has six additional screen-class declarations under <code>lib/widgets/</code>—five checkout result states and <code>HostedWalletTopupWebViewScreen</code>—for <strong>53 project-wide declarations</strong>. Internal widgets, cards, tabs, dialogs, and controllers are not additional public screen files. The main shell is persistent and state-preserving.</p>
-            <div class="shell-map" aria-label="Five persistent customer tabs"><div class="shell-tab"><span>01</span><strong>Home</strong><small>HomeScreen / backend layout selection</small></div><div class="shell-tab"><span>02</span><strong>Explore</strong><small>Categories, search, flash sale</small></div><div class="shell-tab"><span>03</span><strong>Cart</strong><small>Selection, vouchers, totals</small></div><div class="shell-tab"><span>04</span><strong>Messages</strong><small>Inbox tabs and chat entry</small></div><div class="shell-tab"><span>05</span><strong>Profile</strong><small>Orders, wallet, loyalty, settings</small></div></div>
-            <div class="workflow-columns"><article><h3>Startup &amp; shell</h3><ul><li><code>SplashScreen</code> → <code>MainScreen</code></li><li>Home layout from backend theme: Standard, Marketplace, Aurora, Nova; unknown falls back to Standard.</li><li><code>IndexedStack</code> preserves tab state.</li></ul></article><article><h3>Auth &amp; account</h3><ul><li>Login, Signup, Forgot Password, OTP, Reset Password, Change Password.</li><li>Google sign-in is conditional on backend configuration.</li><li>Cart and Profile open Login for guests; authenticated Messages fetches are conditional.</li></ul></article><article><h3>Commerce</h3><ul><li>Products, categories, stores, vouchers, cart, checkout, orders, invoice PDF, reorder and payment retry.</li><li>Wallet, loyalty, downloads, wishlist, addresses, legal, settings and support content.</li></ul></article><article><h3>Support &amp; realtime</h3><ul><li>Help &amp; Support renders server contact channels, FAQs, contact form and support cards.</li><li>Notifications group Chats, Orders, Promos and Account with unread actions.</li><li>Ably is chat-only: text, image, file, presence, deduplication and delivered state.</li></ul></article></div>
-            <div class="screenshot-grid"><figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-after-launch.png" data-caption="Home marketplace — real customer device capture"><img src="assets/images/device/customer-after-launch.png" alt="Mono customer home marketplace screen with search, hero, categories, vouchers and products."><span>Open capture ↗</span></button><figcaption>Home marketplace / real device capture</figcaption></figure><figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-launch.png" data-caption="Branded Mono splash — real customer device capture"><img src="assets/images/device/customer-launch.png" alt="Mono customer branded splash screen captured on a real device."><span>Open capture ↗</span></button><figcaption>Launch / branded splash</figcaption></figure><figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-explore.png" data-caption="Explore categories — real customer device capture"><img src="assets/images/device/customer-explore.png" alt="Mono customer Explore screen with category browsing."><span>Open capture ↗</span></button><figcaption>Explore / categories</figcaption></figure><figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-cart.png" data-caption="Cart — real customer device capture"><img src="assets/images/device/customer-cart.png" alt="Mono customer cart with selected products, quantity controls, totals and checkout CTA."><span>Open capture ↗</span></button><figcaption>Cart / checkout entry</figcaption></figure><figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-messages.png" data-caption="Messages — real customer device capture"><img src="assets/images/device/customer-messages.png" alt="Mono customer Messages screen with tabs and empty state."><span>Open capture ↗</span></button><figcaption>Messages / inbox tabs</figcaption></figure><figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-profile.png" data-caption="Profile — real customer device capture"><img src="assets/images/device/customer-profile.png" alt="Mono customer profile menu with orders, downloads, wallet, loyalty, vouchers, wishlist and followed stores."><span>Open capture ↗</span></button><figcaption>Profile / account hub</figcaption></figure></div>
-            <div class="info-block"><p><strong>Implementation note:</strong> the following source-backed behaviors are not completed features: Export Data only confirms; marketing banner category/URL actions parse without routing; About CTA only closes; digital-only checkout conditions conflict; order month translation keys mismatch; wallet top-up callback is not checkout’s authoritative reconciliation model.</p></div>
-          </section>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th scope="col">Layer</th><th scope="col">Responsibility</th><th scope="col">Customer examples</th></tr></thead>
+      <tbody>
+        <tr><td>Core</td><td>Cross-cutting app services and primitives.</td><td><code>api_client.dart</code> settings, translations, Firebase, session coordinator</td></tr>
+        <tr><td>Models</td><td>Typed data and JSON shapes.</td><td>address, order, product, wallet, digital entitlement</td></tr>
+        <tr><td>Providers</td><td><code>ChangeNotifier</code> state, loading, mutations, refresh.</td><td>cart, home, orders, user, wishlist, vouchers</td></tr>
+        <tr><td>Repositories</td><td>HTTP calls, parsing, endpoint selection.</td><td>auth, products, search, checkout, notifications</td></tr>
+        <tr><td>Services</td><td>Shared client and platform/realtime access.</td><td>Dio, Ably chat, endpoint registry, checkout links</td></tr>
+        <tr><td>Screens / widgets</td><td>User workflows and reusable presentation.</td><td>47 public screens and 63 shared widgets</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-          <section class="doc-section" id="requirements" data-section-title="Requirements and install"><p class="section-kicker">04 / Start here</p><h2 class="section-title">Requirements and installation</h2><p>Run this as a mobile Flutter project. Desktop and web folders exist in the repository, but seven source files import <code>dart:io</code>, so web is not a verified customer-mobile target. The local tool marker is Flutter <code>3.47.4</code>.</p>
-            <div class="step-grid"><article><span>01</span><h3>Toolchain</h3><p>Dart <code>^3.12.2</code>; Flutter locked floor <code>&gt;=3.44.0</code>. Use a toolchain compatible with the lockfile.</p></article><article><span>02</span><h3>Install</h3><p>From <code>mono_app/</code>, install packages and launch an Android or iOS target with Flutter tooling.</p></article><article><span>03</span><h3>Connect</h3><p>Fresh installs use the compiled private LAN API default. Configure a reachable API before testing device builds.</p></article></div>
-            <div class="code-shell"><div class="code-head"><span>Terminal / mono_app</span><button class="copy-button" type="button" data-copy="#run-commands">Copy</button></div><pre><code id="run-commands" class="code-block code-block-run">flutter pub get
-flutter run</code></pre></div>
-            <div class="callout-grid"><div class="callout"><strong>Android</strong><p>Compile SDK 37 · min SDK <code>maxOf(flutter.minSdkVersion, 23)</code> · Java/Kotlin 17 · AGP 9.0.1 · Gradle 9.1.0.</p></div><div class="callout"><strong>iOS</strong><p>Deployment target 13.0 · Swift 5.0 · bundle <code>com.mono.customer.app</code>. See the current Apple setup boundary below.</p></div></div>
-          </section>
+<!-- Section: screens -->
+<section class="doc-section dashboard-card" id="screens" data-section-title="Screens and workflows">
+  <p class="section-kicker">03 / PRODUCT SURFACE</p>
+  <h2 class="section-title">Customer screens and real workflows</h2>
+  <p>The screen layer has <strong>47 public <code>*Screen</code> files</strong> under <code>lib/screens/</code>. The wider project has six additional screen-class declarations under <code>lib/widgets/</code>—five checkout result states and <code>HostedWalletTopupWebViewScreen</code>—for <strong>53 project-wide declarations</strong>. Internal widgets, cards, tabs, dialogs, and controllers are not additional public screen files. The main shell is persistent and state-preserving.</p>
 
-          <section class="doc-section" id="dependencies" data-section-title="Direct dependencies"><p class="section-kicker">05 / Packages</p><h2 class="section-title">Direct dependencies from the customer lockfile</h2><p><code>pubspec.lock</code> contains <strong>198 locked packages</strong>: 30 direct main, 3 direct dev/SDK, and 165 transitive. The table below is the direct customer set; do not infer payment, maps, analytics, or UI-suite SDKs that are not declared.</p>
-            <div class="table-wrap"><table class="data-table package-table"><thead><tr><th>Direct main package</th><th>Constraint</th><th>Locked</th></tr></thead><tbody>
-              <tr><td><code>ably_flutter</code></td><td>^1.2.44</td><td>1.2.44</td></tr><tr><td><code>app_links</code></td><td>^7.2.1</td><td>7.2.1</td></tr><tr><td><code>cached_network_image</code></td><td>^4.0.0</td><td>4.0.0</td></tr><tr><td><code>chewie</code></td><td>^1.16.2</td><td>1.16.2</td></tr><tr><td><code>cupertino_icons</code></td><td>^1.0.9</td><td>1.0.9</td></tr><tr><td><code>dio</code></td><td>^5.11.1</td><td>5.11.1</td></tr><tr><td><code>file_picker</code></td><td>^12.2.0</td><td>12.2.0</td></tr><tr><td><code>firebase_core</code></td><td>^4.14.0</td><td>4.14.0</td></tr><tr><td><code>firebase_messaging</code></td><td>^16.6.0</td><td>16.6.0</td></tr><tr><td><code>flutter_cache_manager</code></td><td>^3.4.2</td><td>3.4.2</td></tr><tr><td><code>flutter_inappwebview</code></td><td>^6.1.5</td><td>6.1.5</td></tr><tr><td><code>flutter_local_notifications</code></td><td>^22.3.0</td><td>22.3.0</td></tr><tr><td><code>flutter_secure_storage</code></td><td>^11.0.0</td><td>11.0.0</td></tr><tr><td><code>flutter_staggered_grid_view</code></td><td>^0.7.0</td><td>0.7.0</td></tr><tr><td><code>flutter_svg</code></td><td>^2.3.0</td><td>2.3.0</td></tr><tr><td><code>google_sign_in</code></td><td>^7.2.0</td><td>7.2.0</td></tr><tr><td><code>html</code></td><td>^0.15.7</td><td>0.15.7</td></tr><tr><td><code>image_picker</code></td><td>^1.2.3</td><td>1.2.3</td></tr><tr><td><code>logger</code></td><td>^2.7.0</td><td>2.7.0</td></tr><tr><td><code>package_info_plus</code></td><td>^10.2.1</td><td>10.2.1</td></tr><tr><td><code>path_provider</code></td><td>^2.1.6</td><td>2.1.6</td></tr><tr><td><code>pdfrx</code></td><td>^2.4.8</td><td>2.4.8</td></tr><tr><td><code>provider</code></td><td>^6.1.5+1</td><td>6.1.5+1</td></tr><tr><td><code>share_plus</code></td><td>^13.3.0</td><td>13.3.0</td></tr><tr><td><code>shared_preferences</code></td><td>^2.5.5</td><td>2.5.5</td></tr><tr><td><code>url_launcher</code></td><td>^6.3.2</td><td>6.3.2</td></tr><tr><td><code>video_player</code></td><td>^2.14.0</td><td>2.14.0</td></tr><tr><td><code>youtube_player_flutter</code></td><td>^10.0.1</td><td>10.0.1</td></tr>
-            </tbody></table></div>
-            <p class="table-note"><strong>Dev / SDK:</strong> <code>flutter</code>, <code>flutter_localizations</code>, <code>flutter_test</code>, <code>flutter_lints ^6.0.0</code>, and <code>flutter_launcher_icons ^0.14.4</code>. No payment SDK, maps/geolocation, Firebase Analytics, native splash package, support-ticket package, rich-text editor, or commercial UI suite is declared.</p>
-          </section>
+  <div class="shell-map" aria-label="Five persistent customer tabs">
+    <div class="shell-tab"><span>01</span><strong>Home</strong><small>HomeScreen / backend layout selection</small></div>
+    <div class="shell-tab"><span>02</span><strong>Explore</strong><small>Categories, search, flash sale</small></div>
+    <div class="shell-tab"><span>03</span><strong>Cart</strong><small>Selection, vouchers, totals</small></div>
+    <div class="shell-tab"><span>04</span><strong>Messages</strong><small>Inbox tabs and chat entry</small></div>
+    <div class="shell-tab"><span>05</span><strong>Profile</strong><small>Orders, wallet, loyalty, settings</small></div>
+  </div>
 
-          <section class="doc-section" id="api" data-section-title="API client and endpoints"><p class="section-kicker">06 / Networking</p><h2 class="section-title">Dio, the .173 default, and unprefixed endpoints</h2><p>The active compiled default is <code>http://192.168.0.173/mono/mono_market/api/v1</code>, a private LAN cleartext development URL—not a production URL. <code>ApiClient</code> applies a 15-second connect timeout, 60-second receive timeout, JSON headers, Bearer token, <code>X-Locale</code>, <code>Accept-Language</code>, and relative media URL resolution.</p>
-            <div class="api-console"><div class="console-topline"><span>API CLIENT / ACTIVE DEFAULT</span><span class="console-live"><i aria-hidden="true"></i>DEV URL</span></div><div class="api-url"><span>BASE URL</span><code id="api-url-code">http://192.168.0.173/mono/mono_market/api/v1</code><button class="copy-button" type="button" data-copy="#api-url-code">Copy</button></div><div class="api-facts"><span><b>CONNECT</b> 15s</span><span><b>RECEIVE</b> 60s</span><span><b>SEND</b> explicit timeout not set</span></div></div>
-            <div class="code-shell"><div class="code-head"><span>Endpoint registry shape</span><button class="copy-button" type="button" data-copy="#endpoint-code">Copy</button></div><pre><code id="endpoint-code" class="code-block">ApiClient → api_endpoints.dart → repositories → providers</code></pre></div>
-            <div class="endpoint-groups"><article><h3>Customer API surface</h3><p>Unprefixed endpoint families cover auth, theme, home/storefront, products, stores/follow, search, cart, coupons, vouchers, loyalty, wishlist, checkout/hosted checkout, orders/invoices, downloads, notifications, addresses, settings, localization, content, and chat.</p></article><article><h3>Media + headers</h3><p>Relative media URLs resolve against the active base URL. Locale headers accompany requests; the client expects JSON and uses the secure token as a Bearer credential.</p></article></div>
-          </section>
+  <div class="workflow-columns">
+    <article><h3>Startup &amp; shell</h3><ul><li><code>SplashScreen</code> → <code>MainScreen</code></li><li>Home layout from backend theme: Standard, Marketplace, Aurora, Nova; unknown falls back to Standard.</li><li><code>IndexedStack</code> preserves tab state.</li></ul></article>
+    <article><h3>Auth &amp; account</h3><ul><li>Login, Signup, Forgot Password, OTP, Reset Password, Change Password.</li><li>Google sign-in is conditional on backend configuration.</li><li>Cart and Profile open Login for guests; authenticated Messages fetches are conditional.</li></ul></article>
+    <article><h3>Commerce</h3><ul><li>Products, categories, stores, vouchers, cart, checkout, orders, invoice PDF, reorder and payment retry.</li><li>Wallet, loyalty, downloads, wishlist, addresses, legal, settings and support content.</li></ul></article>
+    <article><h3>Support &amp; realtime</h3><ul><li>Help &amp; Support renders server contact channels, FAQs, contact form and support cards.</li><li>Notifications group Chats, Orders, Promos and Account with unread actions.</li><li>Ably is chat-only: text, image, file, presence, deduplication and delivered state.</li></ul></article>
+  </div>
 
-          <section class="doc-section" id="environment" data-section-title="Environment and authentication"><p class="section-kicker">07 / Session</p><h2 class="section-title">Environment, token migration, and auth boundaries</h2><p>Secure storage reads <code>api_base_url</code> when present, but the app has no setter or settings UI for it. Fresh installs therefore use the compiled <code>.173</code> default. Secure token storage uses <code>api_token</code>; a legacy <code>auth_token</code> value is migrated once from <code>SharedPreferences</code>. There is no refresh-token implementation.</p>
-            <div class="table-wrap"><table class="data-table"><thead><tr><th>Concern</th><th>Current source behavior</th><th>Boundary</th></tr></thead><tbody><tr><td>Login</td><td>Email/password, register, Google when enabled.</td><td>Backend config gates Google sign-in.</td></tr><tr><td>Password recovery</td><td>Forgot-password OTP, send, verify and reset.</td><td>No refresh-token path.</td></tr><tr><td>401</td><td>Clears session and user-scoped state.</td><td>Attempted named login push is not backed by registered routes.</td></tr><tr><td>Logout</td><td>Unregisters FCM and clears local state.</td><td>Does not call <code>/auth/logout</code>.</td></tr></tbody></table></div>
-            <div class="info-block is-danger"><p><strong>Do not overstate session security:</strong> there is no refresh-token implementation in source, and manual logout is local cleanup plus FCM unregister—not a demonstrated server logout call.</p></div>
-          </section>
+  <div class="screenshot-grid">
+    <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-after-launch.png" data-caption="Home marketplace — real customer device capture"><img src="assets/images/device/customer-after-launch.png" alt="Mono customer home marketplace screen with search, hero, categories, vouchers and products." loading="lazy"><span>Open capture</span></button><figcaption>Home marketplace / real device capture</figcaption></figure>
+    <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-launch.png" data-caption="Branded Mono splash — real customer device capture"><img src="assets/images/device/customer-launch.png" alt="Mono customer branded splash screen captured on a real device." loading="lazy"><span>Open capture</span></button><figcaption>Launch / branded splash</figcaption></figure>
+    <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-explore.png" data-caption="Explore categories — real customer device capture"><img src="assets/images/device/customer-explore.png" alt="Mono customer Explore screen with category browsing." loading="lazy"><span>Open capture</span></button><figcaption>Explore / categories</figcaption></figure>
+    <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-cart.png" data-caption="Cart — real customer device capture"><img src="assets/images/device/customer-cart.png" alt="Mono customer cart with selected products, quantity controls, totals and checkout CTA." loading="lazy"><span>Open capture</span></button><figcaption>Cart / checkout entry</figcaption></figure>
+    <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-messages.png" data-caption="Messages — real customer device capture"><img src="assets/images/device/customer-messages.png" alt="Mono customer Messages screen with tabs and empty state." loading="lazy"><span>Open capture</span></button><figcaption>Messages / inbox tabs</figcaption></figure>
+    <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/images/device/customer-profile.png" data-caption="Profile — real customer device capture"><img src="assets/images/device/customer-profile.png" alt="Mono customer profile menu with orders, downloads, wallet, loyalty, vouchers, wishlist and followed stores." loading="lazy"><span>Open capture</span></button><figcaption>Profile / account hub</figcaption></figure>
+  </div>
 
-            <section class="doc-section" id="mobile" data-section-title="Mobile settings, branding, theme, localization"><p class="section-kicker">08 / Presentation</p><h2 class="section-title">Customer identity, theme, and localization</h2><p>The customer mark is a black/white shopping-bag “M” with a yellow dot, distinct from other app identities. Splash copy is <strong>MONO.</strong>, <strong>Everything You Need, One Store</strong>, <strong>Preparing your store…</strong>, and <strong>Powered by Mono</strong>.</p>
-            <div class="brand-panel"><img src="assets/customer-app-icon.png" alt="Mono customer app icon: black shopping bag with white monogram and yellow dot."><div><span class="eyebrow">CUSTOMER BRAND ASSET</span><strong>Use the customer mark consistently.</strong><p>Copy from <code>mono_app/assets/logo.png</code> and <code>assets/icons/</code>. The bundled <code>wishlist.svg</code> exists but is not directly referenced by current Dart code.</p></div></div>
-            <div class="workflow-columns"><article><h3>Backend theme layouts</h3><p><code>/theme</code> and <code>/app-theme</code> drive Standard, Marketplace, Aurora, or Nova. Splash checks theme version; unknown layouts fall back to Standard.</p></article><article><h3>Dark mode</h3><p>User dark mode is ORed with backend dark mode. Fallback surfaces include <code>#0A0A0A</code>, <code>#18181B</code>, primary <code>#171717</code>, and teal, orange, amber, and blue accents.</p></article><article><h3>Localization</h3><p>Built-in English and Arabic maps are merged with server bundles. Selected locale is sent to the API; sparse Arabic falls back to English.</p></article></div>
-          </section>
+  <div class="info-block"><p><strong>Implementation note:</strong> the following source-backed behaviors are not completed features: Export Data only confirms; marketing banner category/URL actions parse without routing; About CTA only closes; digital-only checkout conditions conflict; order month translation keys mismatch; wallet top-up callback is not checkout’s authoritative reconciliation model. Each item carries a status and workaround in the <a href="#release">Release readiness</a> table.</p></div>
+</section>
 
-          <section class="doc-section" id="services" data-section-title="Firebase push and Ably chat"><p class="section-kicker">09 / Platform services</p><h2 class="section-title">Android-only FCM startup, chat-only Ably</h2><p>Unlike a lazy-after-login design, customer <code>main()</code> initializes Firebase before <code>runApp</code>. Runtime push initialization is Android-only: <code>!kIsWeb &amp;&amp; defaultTargetPlatform == TargetPlatform.android</code>.</p>
-            <div class="service-grid"><article class="service-card service-card--amber"><span>ANDROID / FCM</span><h3>Startup sequence</h3><ul><li>Firebase project <code>mono-dd879</code>, package <code>com.mono.customer.app</code>.</li><li>Channel <code>high_importance_channel</code>: “Messages and Updates”.</li><li>Requests alert, badge, sound, and notification permission.</li><li>Registers token only with an authenticated API token; stable key <code>notification_device_id</code>.</li><li>Unregisters on manual logout.</li></ul><p class="service-warning">Never reproduce Firebase API keys, OAuth client IDs, or certificate values from the config file.</p></article><article class="service-card service-card--blue"><span>ABLY / CHAT ONLY</span><h3>Conversation transport</h3><ul><li>Requests <code>GET /chat/token?conversationId=...</code>.</li><li>Uses private <code>conversation.customer</code> channel.</li><li>Publishes <code>chat.message.sent</code>.</li><li>No hard-coded key in source.</li><li>Supports customer-to-store text, image, file, presence, deduplication, and delivered state.</li></ul></article></div>
-            <h3 class="heading-2">Set up your own Firebase project, step by step</h3>
-            <p>The package ships with a working <code>google-services.json</code> so the app runs immediately, but it points at a shared Firebase project. Create your own before you publish — it takes about ten minutes and needs only a free Google account.</p>
-            <ol class="walkthrough"><li><strong>Create the project</strong><p>Open <a href="https://console.firebase.google.com" target="_blank" rel="noopener">console.firebase.google.com</a> and click <em>Add project</em>. Name it something like <code>mono-customer</code> and disable Google Analytics unless you want it. The project finishes creating once you confirm the analytics choice.</p></li><li><strong>Add the Android app</strong><p>On the project overview click the <em>Android</em> icon. The package name must match your <code>applicationId</code> character for character, so enter <code>com.mono.customer.app</code> until you rename it. Add a nickname and download <code>google-services.json</code>.</p></li><li><strong>Place the config file</strong><p>Copy it to <code>android/app/google-services.json</code>, replacing the bundled one. Both the filename and the folder are required — a wrong path still builds but throws <code>DefaultFirebaseApp is not initialized</code> at runtime.</p></li><li><strong>Enable Cloud Messaging</strong><p>In the left sidebar open <em>Build → Cloud Messaging</em>. The <em>Send test message</em> button confirms delivery works. No other FCM setup is needed.</p></li><li><strong>Leave the channel to the app</strong><p>The app creates <code>high_importance_channel</code> (“Messages and Updates”) at runtime. Do not create a matching channel in the console; the app owns it and a duplicate is ignored.</p></li><li><strong>Rebuild, do not hot reload</strong><p>Changing the config file needs a full rebuild. Stop the app and run <code>flutter run -d &lt;device&gt;</code> again, adding <code>flutter clean</code> first if the old configuration looks cached.</p></li></ol>
-            <div class="info-block"><p><strong>Finding your values.</strong> Project settings → <em>Your apps</em> shows the registered package name and API key. Never commit a service-account key or a private key file. The API key in <code>google-services.json</code> identifies the project but is not a secret on its own — access is governed by Firebase security rules.</p></div>
-            <div class="notification-map"><span>Tap routing</span><div><b>Chat</b> → conversation</div><div><b>Order</b> → order detail</div><div><b>Product</b> → product detail</div><div><b>Fallback</b> → Messages</div></div>
-          </section>
+<!-- Section: requirements -->
+<section class="doc-section dashboard-card" id="requirements" data-section-title="Requirements and install">
+  <p class="section-kicker">04 / START HERE</p>
+  <h2 class="section-title">Requirements and installation</h2>
+  <p>Run this as a mobile Flutter project. Desktop and web folders exist in the repository, but seven source files import <code>dart:io</code>, so web is not a verified customer-mobile target. The local tool marker is Flutter <code>3.47.4</code>.</p>
 
-          <section class="doc-section" id="ios" data-section-title="iOS setup and boundaries"><p class="section-kicker">10 / iOS</p><h2 class="section-title">iOS 13.0 exists; Apple setup does not</h2><p>The iOS target is present with deployment target 13.0, Swift 5.0, bundle ID <code>com.mono.customer.app</code>, and URL scheme <code>mono</code>. The current project is not fully configured as a production iOS client.</p>
-            <div class="boundary-grid"><article class="boundary boundary--missing"><span>Missing</span><strong>Apple / Firebase setup</strong><ul><li>No <code>DEVELOPMENT_TEAM</code>.</li><li>No <code>GoogleService-Info.plist</code>.</li><li>No entitlements, APNs, or push background mode.</li><li>No camera, photo, or microphone usage strings.</li><li>No Podfile or Podfile.lock; Xcode references a generated local Swift package.</li></ul></article><article class="boundary boundary--watch"><span>Watch</span><strong>HTTP boundary</strong><p><code>Info.plist</code> has no ATS exception for the current HTTP URL. Do not claim arbitrary cleartext loads are allowed on iOS.</p><p>Verify Apple signing, Firebase, push, privacy usage descriptions, and dependency integration before a device release.</p></article></div>
-          </section>
+  <div class="fact-grid">
+    <article class="fact-card fact-card--accent"><span>01</span><strong>Toolchain</strong><p>Dart <code>^3.12.2</code>; Flutter locked floor <code>&gt;=3.44.0</code>. Use a toolchain compatible with the lockfile.</p></article>
+    <article class="fact-card"><span>02</span><strong>Install</strong><p>From <code>mono_app/</code>, install packages and launch an Android or iOS target with Flutter tooling.</p></article>
+    <article class="fact-card"><span>03</span><strong>Connect</strong><p>Fresh installs use the compiled placeholder API default. Configure a reachable API before testing device builds.</p></article>
+  </div>
 
-          <section class="doc-section" id="build" data-section-title="Build and run"><p class="section-kicker">11 / Build loop</p><h2 class="section-title">Build and run from the customer project</h2><p>Start with a reachable API, an authenticated or guest-capable session, and the correct platform configuration. A clean clone may need Gradle wrapper setup because wrapper artifacts are locally present but ignored/not tracked.</p>
-            <div class="build-commands"><div><span>01 / Packages</span><code>flutter pub get</code></div><div><span>02 / Android</span><code>flutter run -d &lt;device&gt;</code></div><div><span>03 / Static analysis</span><code>flutter analyze</code></div><div><span>04 / Tests</span><code>flutter test</code></div></div>
-            <div class="info-block is-warning"><p><strong>Android release signing:</strong> the release build uses debug signing. There is no <code>key.properties</code>, JKS, or production signing config in the package, so you must add your own before uploading to Google Play. The generic steps are: run <code>keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload</code>, create <code>android/key.properties</code> next to <code>build.gradle.kts</code> with your store passwords, point the <code>release</code> build type at that file, then rebuild. Keep the keystore and <code>key.properties</code> out of version control and back them up — losing the key means you can never update the listing again.</p></div>
-            <h3 class="heading-2">Change the application ID before you publish</h3>
-            <p>Both platforms ship with the identifier <code>com.mono.customer.app</code>, a real reverse-domain identifier that builds fine. Google Play and the App Store each require the identifier to belong to the account publishing the app, so replace it with your own before your first upload — for example <code>com.yourcompany.mono.customer</code>.</p>
-            <div class="table-wrap"><table class="data-table"><thead><tr><th>Platform</th><th>File</th><th>What to change</th></tr></thead><tbody><tr><td>Android namespace</td><td><code>android/app/build.gradle.kts</code></td><td><code>namespace = "com.yourcompany.mono.customer"</code></td></tr><tr><td>Android application ID</td><td><code>android/app/build.gradle.kts</code></td><td><code>applicationId = "com.yourcompany.mono.customer"</code></td></tr><tr><td>iOS bundle ID</td><td><code>ios/Runner.xcodeproj/project.pbxproj</code></td><td><code>PRODUCT_BUNDLE_IDENTIFIER</code> for the <code>Runner</code> target</td></tr><tr><td>Firebase Android app</td><td>Firebase console</td><td>Re-register under the new package name and download a fresh <code>google-services.json</code></td></tr></tbody></table></div>
-            <p>Renaming the Android package also means moving the Kotlin source to match: <code>android/app/src/main/kotlin/com/mono/customer/app/MainActivity.kt</code> becomes <code>android/app/src/main/kotlin/com/yourcompany/mono/customer/app/MainActivity.kt</code>, with its <code>package</code> line updated too. Skipping this fails the build with a <code>Namespace</code> error pointing at the manifest.</p>
-            <h3 class="heading-2">Android SDK levels are pinned deliberately</h3>
-            <p><code>android/app/build.gradle.kts</code> sets <code>compileSdk = 37</code> and pins <code>targetSdk = 36</code> as an explicit integer rather than <code>flutter.targetSdkVersion</code>, which resolves to 35 on Flutter 3.29 and newer — below the current Google Play submission requirement. The explicit number keeps uploads accepted as you upgrade Flutter. <code>minSdk</code> stays at <code>maxOf(flutter.minSdkVersion, 23)</code> because Firebase Messaging and <code>flutter_local_notifications</code> need a modern minimum.</p>
-          </section>
+  <div class="code-shell">
+    <div class="code-head"><span>Terminal / mono_app</span><button class="copy-button" type="button" data-copy="#run-commands">Copy</button></div>
+    <pre><code id="run-commands" class="code-block code-block-run">flutter pub get
+flutter run</code></pre>
+  </div>
 
-          <section class="doc-section" id="release" data-section-title="Release readiness"><p class="section-kicker">12 / Readiness</p><h2 class="section-title">What is ready, and what is not</h2><div class="readiness-grid"><article class="readiness-card readiness-card--ready"><span class="readiness-mark">READY / SOURCE</span><h3>Mobile foundation</h3><ul><li>Provider-based layered app with 47 public screens.</li><li>Android FCM and customer chat flows are wired to source services.</li><li>Backend theme, localization, and storefront workflows are represented.</li><li>Test directory contains 22 test files.</li></ul></article><article class="readiness-card readiness-card--block"><span class="readiness-mark">BLOCKED / RELEASE</span><h3>Before production</h3><ul><li>Replace the private LAN cleartext API default with a production configuration path.</li><li>Configure Android production signing and track the Gradle wrapper.</li><li>Complete Apple/Firebase, APNs, privacy, and dependency setup.</li><li>Reconcile checkout, wallet callback, digital-only conditions, translations, and logout semantics.</li></ul></article></div>
-            <div class="table-wrap"><table class="data-table"><thead><tr><th>Area</th><th>Source-backed limitation / next check</th></tr></thead><tbody><tr><td>API</td><td>Compiled <code>.173</code> default is private LAN cleartext; secure base URL has no setter/UI.</td></tr><tr><td>Auth</td><td>No refresh token; logout does not call <code>/auth/logout</code>; 401 named-route attempt is unsupported.</td></tr><tr><td>Actions</td><td>Export Data only confirms; banner actions parse without routing; About CTA only closes.</td></tr><tr><td>Commerce</td><td>Digital-only checkout UI/request and place-order conditions conflict; hosted status is backend-authoritative.</td></tr><tr><td>Localization</td><td>Order month translation keys mismatch; sparse Arabic falls back to English.</td></tr><tr><td>Release ops</td><td>No tracked CI workflow, changelog, license file, or release checklist.</td></tr></tbody></table></div>
-          </section>
+  <div class="callout-grid">
+    <div class="callout"><strong>Android</strong><p>Compile SDK 37 · min SDK <code>maxOf(flutter.minSdkVersion, 23)</code> · Java/Kotlin 17 · AGP 9.0.1 · Gradle 9.1.0.</p></div>
+    <div class="callout"><strong>iOS</strong><p>Deployment target 13.0 · Swift 5.0 · bundle <code>com.mono.customer.app</code>. See the current Apple setup boundary below.</p></div>
+  </div>
+</section>
 
-          <section class="doc-section" id="extend" data-section-title="Extension guide"><p class="section-kicker">13 / Developer path</p><h2 class="section-title">Extend the app without breaking its architecture</h2><div class="extension-steps"><article><span>01</span><strong>Model the payload</strong><p>Add or update a typed model under <code>lib/models/</code>. Keep parsing close to the data shape and preserve source-backed field names.</p></article><article><span>02</span><strong>Add endpoint access</strong><p>Register the customer path in <code>lib/services/api_endpoints.dart</code> and use <code>ApiClient</code> from a repository rather than a screen.</p></article><article><span>03</span><strong>Own state in a provider</strong><p>Add loading, error, refresh, and mutation behavior in the matching provider under <code>lib/providers/</code>.</p></article><article><span>04</span><strong>Compose a screen</strong><p>Add the public <code>*Screen</code> workflow, then extract reusable visual pieces into <code>lib/widgets/</code>.</p></article><article><span>05</span><strong>Cover the boundary</strong><p>Add or update tests under <code>test/</code>, then verify the affected mobile state, empty, loading, and error paths.</p></article></div>
-            <div class="code-shell"><div class="code-head"><span>Extension data flow</span><button class="copy-button" type="button" data-copy="#flow-code">Copy</button></div><pre><code id="flow-code" class="code-block">Screen → Provider → Repository → ApiClient → customer endpoint
-                         ↘ models / services / widgets</code></pre></div>
-            <h3 class="heading-2">Worked example: add a reviews feature module</h3>
-            <p>Here is the five-step shape above applied to one concrete feature, so you can copy it rather than infer it. The example adds a product-reviews view backed by <code>GET /products/{id}/reviews</code>.</p>
-            <ol class="walkthrough"><li><strong>Model — <code>lib/models/product_review.dart</code></strong><p>A data class with <code>fromJson</code> that tolerates a missing optional field such as <code>reviewer_name</code>, so one sparse API response cannot break the whole list.</p></li><li><strong>Endpoint — <code>lib/services/api_endpoints.dart</code></strong><p>Add a static path builder alongside the existing product routes. Keep URLs out of screens and repositories.</p></li><li><strong>Repository — <code>lib/repositories/review_repository.dart</code></strong><p>Takes an <code>ApiClient</code>, fetches the list, maps each item into the model, and returns typed data or throws. No widget imports.</p></li><li><strong>Provider — <code>lib/providers/review_provider.dart</code></strong><p>A <code>ChangeNotifier</code> with <code>reviews</code>, <code>isLoading</code>, and <code>error</code>, exposing <code>load(productId)</code>. Register it in the <code>MultiProvider</code> list in <code>lib/main.dart</code> only if it should survive tab changes; otherwise create it in the owning screen.</p></li><li><strong>Screen — <code>lib/screens/product/product_reviews_screen.dart</code></strong><p>A <code>*Screen</code> class that watches the provider and renders loading, empty, error, and populated states, reusing existing cards from <code>lib/widgets/</code>. Reach it from the existing product screen with <code>Navigator.push</code> — do not add a sixth bottom tab for it.</p></li></ol>
-            <pre><code class="code-block">lib/
+<!-- Section: dependencies -->
+<section class="doc-section dashboard-card" id="dependencies" data-section-title="Direct dependencies">
+  <p class="section-kicker">05 / PACKAGES</p>
+  <h2 class="section-title">Direct dependencies from the customer lockfile</h2>
+  <p><code>pubspec.lock</code> contains <strong>198 locked packages</strong>: 30 direct main, 3 direct dev/SDK, and 165 transitive. The table below is the direct customer set; do not infer payment, maps, analytics, or UI-suite SDKs that are not declared.</p>
+
+  <div class="table-wrap">
+    <table class="data-table package-table">
+      <thead><tr><th scope="col">Direct main package</th><th scope="col">Constraint</th><th scope="col">Locked</th></tr></thead>
+      <tbody>
+        <tr><td><code>ably_flutter</code></td><td>^1.2.44</td><td>1.2.44</td></tr>
+        <tr><td><code>app_links</code></td><td>^7.2.1</td><td>7.2.1</td></tr>
+        <tr><td><code>cached_network_image</code></td><td>^4.0.0</td><td>4.0.0</td></tr>
+        <tr><td><code>chewie</code></td><td>^1.16.2</td><td>1.16.2</td></tr>
+        <tr><td><code>cupertino_icons</code></td><td>^1.0.9</td><td>1.0.9</td></tr>
+        <tr><td><code>dio</code></td><td>^5.11.1</td><td>5.11.1</td></tr>
+        <tr><td><code>file_picker</code></td><td>^12.2.0</td><td>12.2.0</td></tr>
+        <tr><td><code>firebase_core</code></td><td>^4.14.0</td><td>4.14.0</td></tr>
+        <tr><td><code>firebase_messaging</code></td><td>^16.6.0</td><td>16.6.0</td></tr>
+        <tr><td><code>flutter_cache_manager</code></td><td>^3.4.2</td><td>3.4.2</td></tr>
+        <tr><td><code>flutter_inappwebview</code></td><td>^6.1.5</td><td>6.1.5</td></tr>
+        <tr><td><code>flutter_local_notifications</code></td><td>^22.3.0</td><td>22.3.0</td></tr>
+        <tr><td><code>flutter_secure_storage</code></td><td>^11.0.0</td><td>11.0.0</td></tr>
+        <tr><td><code>flutter_staggered_grid_view</code></td><td>^0.7.0</td><td>0.7.0</td></tr>
+        <tr><td><code>flutter_svg</code></td><td>^2.3.0</td><td>2.3.0</td></tr>
+        <tr><td><code>google_sign_in</code></td><td>^7.2.0</td><td>7.2.0</td></tr>
+        <tr><td><code>html</code></td><td>^0.15.7</td><td>0.15.7</td></tr>
+        <tr><td><code>image_picker</code></td><td>^1.2.3</td><td>1.2.3</td></tr>
+        <tr><td><code>logger</code></td><td>^2.7.0</td><td>2.7.0</td></tr>
+        <tr><td><code>package_info_plus</code></td><td>^10.2.1</td><td>10.2.1</td></tr>
+        <tr><td><code>path_provider</code></td><td>^2.1.6</td><td>2.1.6</td></tr>
+        <tr><td><code>pdfrx</code></td><td>^2.4.8</td><td>2.4.8</td></tr>
+        <tr><td><code>provider</code></td><td>^6.1.5+1</td><td>6.1.5+1</td></tr>
+        <tr><td><code>share_plus</code></td><td>^13.3.0</td><td>13.3.0</td></tr>
+        <tr><td><code>shared_preferences</code></td><td>^2.5.5</td><td>2.5.5</td></tr>
+        <tr><td><code>url_launcher</code></td><td>^6.3.2</td><td>6.3.2</td></tr>
+        <tr><td><code>video_player</code></td><td>^2.14.0</td><td>2.14.0</td></tr>
+        <tr><td><code>youtube_player_flutter</code></td><td>^10.0.1</td><td>10.0.1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="table-note"><strong>Dev / SDK:</strong> <code>flutter</code>, <code>flutter_localizations</code>, <code>flutter_test</code>, <code>flutter_lints ^6.0.0</code>, and <code>flutter_launcher_icons ^0.14.4</code>. No payment SDK, maps/geolocation, Firebase Analytics, native splash package, support-ticket package, rich-text editor, or commercial UI suite is declared.</p>
+</section>
+
+<!-- Section: api -->
+<section class="doc-section dashboard-card" id="api" data-section-title="API client and endpoints">
+  <p class="section-kicker">06 / NETWORKING</p>
+  <h2 class="section-title">Dio, the default base URL, and unprefixed endpoints</h2>
+  <p>The active compiled default is the placeholder <code>https://your-domain.com/api/v1</code> — a development default you must point at your own API root before building, not a production URL. <code>ApiClient</code> applies a 15-second connect timeout, 60-second receive timeout, JSON headers, Bearer token, <code>X-Locale</code>, <code>Accept-Language</code>, and relative media URL resolution.</p>
+
+  <div class="code-shell">
+    <div class="code-head"><span>API CLIENT / ACTIVE DEFAULT</span><button class="copy-button" type="button" data-copy="#api-url-code">Copy</button></div>
+    <pre><code id="api-url-code" class="code-block code-block-run">BASE URL   https://your-domain.com/api/v1
+HEADERS    Accept: application/json · Bearer token · X-Locale · Accept-Language
+MEDIA      relative media URLs resolve against the active base URL</code></pre>
+  </div>
+
+  <div class="callout-grid">
+    <div class="callout"><strong>CONNECT</strong><p>15 seconds — Dio connect timeout on every request.</p></div>
+    <div class="callout"><strong>RECEIVE</strong><p>60 seconds — Dio receive timeout for API responses.</p></div>
+    <div class="callout"><strong>SEND</strong><p>Explicit send timeout is not set in the current source.</p></div>
+  </div>
+
+  <h3 class="heading-2">Point the app at your server — step by step</h3>
+  <p>The compiled URL inside the app is a placeholder. Connect the app to your own backend once, before any real testing — five minutes, one file, no other code changes:</p>
+  <ol class="walkthrough">
+    <li><strong>Open the API client file.</strong><p>In your Flutter project, open <code>lib/services/api_client.dart</code> in any code editor (VS Code or Android Studio).</p></li>
+    <li><strong>Find the default URL.</strong><p>Search the file for <code>defaultBaseUrl</code>. You will see one line like <code>static const defaultBaseUrl = '...';</code> — this single value decides which server the whole app talks to.</p></li>
+    <li><strong>Replace it with your domain.</strong><p>Change the value to your own API root, keeping the <code>/api/v1</code> suffix exactly as your server exposes it: <code>static const defaultBaseUrl = 'https://your-domain.com/api/v1';</code>. Save the file.</p></li>
+    <li><strong>Run and log in.</strong><p>Start the app again with <code>flutter run -d &lt;device&gt;</code>, then log in with an account that exists on <em>your</em> server. The storefront should now load your products and categories.</p></li>
+    <li><strong>Check images too.</strong><p>Product and banner images resolve against the same base URL, so if JSON loads but pictures do not, run <code>php artisan storage:link</code> on the server and confirm <code>/storage</code> is reachable in the browser.</p></li>
+  </ol>
+  <div class="info-block is-warning"><p><strong>Release rule:</strong> published builds must use <code>https://</code>. The manifest's cleartext-HTTP allowance exists for LAN development only; do not ship an app pointed at an IP address.</p></div>
+
+  <div class="code-shell">
+    <div class="code-head"><span>Endpoint registry shape</span><button class="copy-button" type="button" data-copy="#endpoint-code">Copy</button></div>
+    <pre><code id="endpoint-code" class="code-block">ApiClient → api_endpoints.dart → repositories → providers</code></pre>
+  </div>
+
+  <div class="endpoint-groups">
+    <article><h3>Customer API surface</h3><p>Unprefixed endpoint families cover auth, theme, home/storefront, products, stores/follow, search, cart, coupons, vouchers, loyalty, wishlist, checkout/hosted checkout, orders/invoices, downloads, notifications, addresses, settings, localization, content, and chat.</p></article>
+    <article><h3>Media + headers</h3><p>Relative media URLs resolve against the active base URL. Locale headers accompany requests; the client expects JSON and uses the secure token as a Bearer credential.</p></article>
+  </div>
+</section>
+
+<!-- Section: environment -->
+<section class="doc-section dashboard-card" id="environment" data-section-title="Environment and authentication">
+  <p class="section-kicker">07 / SESSION</p>
+  <h2 class="section-title">Environment, token migration, and auth boundaries</h2>
+  <p>Secure storage reads <code>api_base_url</code> when present, but the app has no setter or settings UI for it. Fresh installs therefore use the compiled placeholder default. Secure token storage uses <code>api_token</code>; a legacy <code>auth_token</code> value is migrated once from <code>SharedPreferences</code>. There is no refresh-token implementation.</p>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th scope="col">Concern</th><th scope="col">Current source behavior</th><th scope="col">Boundary</th></tr></thead>
+      <tbody>
+        <tr><td>Login</td><td>Email/password, register, Google when enabled.</td><td>Backend config gates Google sign-in.</td></tr>
+        <tr><td>Password recovery</td><td>Forgot-password OTP, send, verify and reset.</td><td>No refresh-token path.</td></tr>
+        <tr><td>401</td><td>Clears session and user-scoped state.</td><td>Attempted named login push is not backed by registered routes.</td></tr>
+        <tr><td>Logout</td><td>Unregisters FCM and clears local state.</td><td>Does not call <code>/auth/logout</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-block is-danger"><p><strong>Do not overstate session security:</strong> there is no refresh-token implementation in source, and manual logout is local cleanup plus FCM unregister—not a demonstrated server logout call.</p></div>
+</section>
+
+<!-- Section: mobile -->
+<section class="doc-section dashboard-card" id="mobile" data-section-title="Mobile settings, branding, theme, localization">
+  <p class="section-kicker">08 / PRESENTATION</p>
+  <h2 class="section-title">Customer identity, theme, and localization</h2>
+  <p>The customer mark is a black/white shopping-bag “M” with a yellow dot, distinct from other app identities. Splash copy is <strong>MONO.</strong>, <strong>Everything You Need, One Store</strong>, <strong>Preparing your store…</strong>, and <strong>Powered by Mono</strong>.</p>
+
+  <div class="brand-panel">
+    <img src="assets/customer-app-icon.png" alt="Mono customer app icon: black shopping bag with white monogram and yellow dot.">
+    <div>
+      <span class="eyebrow">CUSTOMER BRAND ASSET</span>
+      <strong>Use the customer mark consistently.</strong>
+      <p>Copy from <code>mono_app/assets/logo.png</code> and <code>assets/icons/</code>. The bundled <code>wishlist.svg</code> exists but is not directly referenced by current Dart code.</p>
+    </div>
+  </div>
+
+  <div class="workflow-columns">
+    <article><h3>Backend theme layouts</h3><p><code>/theme</code> and <code>/app-theme</code> drive Standard, Marketplace, Aurora, or Nova. Splash checks theme version; unknown layouts fall back to Standard.</p></article>
+    <article><h3>Dark mode</h3><p>User dark mode is ORed with backend dark mode. Fallback surfaces include <code>#0A0A0A</code>, <code>#18181B</code>, primary <code>#171717</code>, and teal, orange, amber, and blue accents.</p></article>
+    <article><h3>Localization</h3><p>Built-in English and Arabic maps are merged with server bundles. Selected locale is sent to the API; sparse Arabic falls back to English.</p></article>
+  </div>
+</section>
+
+<!-- Section: services -->
+<section class="doc-section dashboard-card" id="services" data-section-title="Firebase push and Ably chat">
+  <p class="section-kicker">09 / PLATFORM SERVICES</p>
+  <h2 class="section-title">Android-only FCM startup, chat-only Ably</h2>
+  <p>Unlike a lazy-after-login design, customer <code>main()</code> initializes Firebase before <code>runApp</code>. Runtime push initialization is Android-only: <code>!kIsWeb &amp;&amp; defaultTargetPlatform == TargetPlatform.android</code>.</p>
+
+  <div class="service-grid">
+    <article class="service-card"><h3>Android / FCM — startup sequence</h3><ul><li>Firebase project <code>mono-customer</code> (example ID — replace with your own project, see the walkthrough below), package <code>com.mono.customer.app</code>.</li><li>Channel <code>high_importance_channel</code>: “Messages and Updates”.</li><li>Requests alert, badge, sound, and notification permission.</li><li>Registers token only with an authenticated API token; stable key <code>notification_device_id</code>.</li><li>Unregisters on manual logout.</li></ul></article>
+    <article class="service-card"><h3>Ably / chat only — conversation transport</h3><ul><li>Requests <code>GET /chat/token?conversationId=...</code>.</li><li>Uses private <code>conversation.customer</code> channel.</li><li>Publishes <code>chat.message.sent</code>.</li><li>No hard-coded key in source.</li><li>Supports customer-to-store text, image, file, presence, deduplication, and delivered state.</li></ul></article>
+  </div>
+
+  <div class="info-block is-warning"><p><strong>Never reproduce Firebase API keys, OAuth client IDs, or certificate values</strong> from the config file in docs, screenshots, or support replies.</p></div>
+
+  <h3 class="heading-2">Set up your own Firebase project, step by step</h3>
+  <p>The package ships with a working <code>google-services.json</code> so the app runs immediately, but it points at a shared Firebase project. Create your own before you publish — it takes about ten minutes and needs only a free Google account.</p>
+
+  <ol class="walkthrough">
+    <li><strong>Create the project</strong><p>Open <a href="https://console.firebase.google.com" target="_blank" rel="noopener">console.firebase.google.com</a> and click <em>Add project</em>. Name it something like <code>mono-customer</code> and disable Google Analytics unless you want it. The project finishes creating once you confirm the analytics choice.</p></li>
+    <li><strong>Add the Android app</strong><p>On the project overview click the <em>Android</em> icon. The package name must match your <code>applicationId</code> character for character, so enter <code>com.mono.customer.app</code> until you rename it. Add a nickname and download <code>google-services.json</code>.</p></li>
+    <li><strong>Place the config file</strong><p>Copy it to <code>android/app/google-services.json</code>, replacing the bundled one. Both the filename and the folder are required — a wrong path still builds but throws <code>DefaultFirebaseApp is not initialized</code> at runtime.</p></li>
+    <li><strong>Enable Cloud Messaging</strong><p>In the left sidebar open <em>Build → Cloud Messaging</em>. The <em>Send test message</em> button confirms delivery works. No other FCM setup is needed.</p></li>
+    <li><strong>Leave the channel to the app</strong><p>The app creates <code>high_importance_channel</code> (“Messages and Updates”) at runtime. Do not create a matching channel in the console; the app owns it and a duplicate is ignored.</p></li>
+    <li><strong>Rebuild, do not hot reload</strong><p>Changing the config file needs a full rebuild. Stop the app and run <code>flutter run -d &lt;device&gt;</code> again, adding <code>flutter clean</code> first if the old configuration looks cached.</p></li>
+  </ol>
+
+  <div class="info-block"><p><strong>Finding your values.</strong> Project settings → <em>Your apps</em> shows the registered package name and API key. Never commit a service-account key or a private key file. The API key in <code>google-services.json</code> identifies the project but is not a secret on its own — access is governed by Firebase security rules.</p></div>
+
+  <div class="table-wrap">
+    <table class="drawer-map-table">
+      <thead><tr><th scope="col">Notification tap</th><th scope="col">Routing destination</th></tr></thead>
+      <tbody>
+        <tr><td>Chat</td><td>Opens the conversation</td></tr>
+        <tr><td>Order</td><td>Opens the order detail</td></tr>
+        <tr><td>Product</td><td>Opens the product detail</td></tr>
+        <tr><td>Fallback</td><td>Opens Messages</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Section: ios -->
+<section class="doc-section dashboard-card" id="ios" data-section-title="iOS setup and boundaries">
+  <p class="section-kicker">10 / iOS</p>
+  <h2 class="section-title">iOS 13.0 exists; Apple setup does not</h2>
+  <p>The iOS target is present with deployment target 13.0, Swift 5.0, bundle ID <code>com.mono.customer.app</code>, and URL scheme <code>mono</code>. The current project is not fully configured as a production iOS client.</p>
+
+  <div class="boundary-grid">
+    <article class="boundary"><h3>Missing — Apple / Firebase setup</h3><ul><li>No <code>DEVELOPMENT_TEAM</code>.</li><li>No <code>GoogleService-Info.plist</code>.</li><li>No entitlements, APNs, or push background mode.</li><li>No camera, photo, or microphone usage strings.</li><li>No Podfile or Podfile.lock; Xcode references a generated local Swift package.</li></ul></article>
+    <article class="boundary"><h3>Watch — HTTP boundary</h3><ul><li><code>Info.plist</code> has no ATS exception for the current HTTP URL. Do not claim arbitrary cleartext loads are allowed on iOS.</li><li>Verify Apple signing, Firebase, push, privacy usage descriptions, and dependency integration before a device release.</li></ul></article>
+  </div>
+</section>
+
+<!-- Section: rebranding -->
+<section class="doc-section dashboard-card" id="rebranding" data-section-title="Rebranding guide">
+  <p class="section-kicker">11 / MAKE IT YOURS</p>
+  <h2 class="section-title">Rebrand the app without writing Dart code</h2>
+  <p>You can rename the app, replace its icon, and refresh the splash screen for your own store by editing <strong>configuration files and swapping two images</strong> — no Dart logic involved. The single exception is the splash tagline, which is two plain text strings in one file. Everything below works on Android and iOS.</p>
+
+  <div class="fact-grid">
+    <article class="fact-card fact-card--accent"><span>01</span><strong>Swap the images</strong><p>Replace <code>assets/icons/app_icon.png</code> and <code>assets/icons/app_icon_foreground.png</code> with your own 1024×1024 PNGs. Keep the same file names.</p></article>
+    <article class="fact-card"><span>02</span><strong>Run one command</strong><p><code>dart run flutter_launcher_icons</code> regenerates every Android and iOS icon size from the <code>flutter_launcher_icons:</code> block already configured in <code>pubspec.yaml</code>.</p></article>
+    <article class="fact-card"><span>03</span><strong>Rename the app</strong><p>Two one-line config edits: the Android manifest label and the iOS display name. No code, no rebuild scripts.</p></article>
+  </div>
+
+  <h3 class="heading-2">Change the app name (Android)</h3>
+  <p>Open <code>android/app/src/main/AndroidManifest.xml</code> and change the label on the application tag. The shipped value is <code>Mono</code>; the home-screen name uses whatever you put here:</p>
+  <div class="code-shell">
+    <div class="code-head"><span>android/app/src/main/AndroidManifest.xml</span><button class="copy-button" type="button" data-copy="#rebrand-android-label">Copy</button></div>
+    <pre><code id="rebrand-android-label" class="code-block">&lt;application
+    android:label="Your Store Name"
+    ...&gt;</code></pre>
+  </div>
+
+  <h3 class="heading-2">Change the app name (iOS)</h3>
+  <p>Open <code>ios/Runner/Info.plist</code> and set <code>CFBundleDisplayName</code> (the name shown under the icon). Leave <code>CFBundleName</code> as a short internal identifier:</p>
+  <div class="code-shell">
+    <div class="code-head"><span>ios/Runner/Info.plist</span><button class="copy-button" type="button" data-copy="#rebrand-ios-name">Copy</button></div>
+    <pre><code id="rebrand-ios-name" class="code-block">&lt;key&gt;CFBundleDisplayName&lt;/key&gt;
+&lt;string&gt;Your Store Name&lt;/string&gt;</code></pre>
+  </div>
+
+  <h3 class="heading-2">Replace the launcher icon</h3>
+  <p>The icon pipeline is pre-configured. <code>pubspec.yaml</code> points <code>image_path</code> at <code>assets/icons/app_icon.png</code>, uses <code>assets/icons/app_icon_foreground.png</code> for the Android adaptive foreground, and sets <code>#000000</code> as the adaptive background. Drop in your files and run:</p>
+  <div class="code-shell">
+    <div class="code-head"><span>Terminal / mono_app</span><button class="copy-button" type="button" data-copy="#rebrand-icon-cmd">Copy</button></div>
+    <pre><code id="rebrand-icon-cmd" class="code-block code-block-run">dart run flutter_launcher_icons</code></pre>
+  </div>
+  <div class="info-block"><p><strong>Icon tips.</strong> Use a 1024×1024 PNG. The adaptive foreground is the mark itself with transparent padding around it (roughly the center 66%), because Android masks it into circles, squircles, and rounded squares. If your brand color is not black, also update <code>adaptive_icon_background</code> in the <code>flutter_launcher_icons:</code> block of <code>pubspec.yaml</code>.</p></div>
+
+  <h3 class="heading-2">Refresh the splash screen</h3>
+  <p>Two layers make up the launch experience:</p>
+  <ul class="workflow-columns" style="list-style:none;padding-left:0;">
+    <li><h3>System launch screen (no code)</h3><p>Android 12 and newer build the launch screen from the <strong>adaptive launcher icon</strong> on the <code>adaptive_icon_background</code> color — so regenerating icons with the command above rebrands the launch screen automatically. iOS shows a plain launch image from <code>ios/Runner/Assets.xcassets/LaunchImage</code>; replace those images or keep the default white flash.</p></li>
+    <li><h3>In-app branded splash (two strings)</h3><p>The animated splash then shows the brand copy: <strong>MONO.</strong> and <strong>Powered by Mono</strong>. Both are plain text strings in <code>lib/screens/splash_screen.dart</code> — search for <code>'MONO'</code> and <code>'Powered by Mono'</code> and replace the text. No layout or logic changes needed; longer brand names simply wrap.</p></li>
+  </ul>
+
+  <div class="info-block is-warning"><p><strong>Before you publish:</strong> the application ID (<code>com.mono.customer.app</code>) is a separate identity from the display name — stores require it to belong to your account. Renaming it is a five-row change documented in the next section, and it must match the Android package you register in Firebase.</p></div>
+
+  <div class="code-shell">
+    <div class="code-head"><span>Rebrand checklist — verify after each step</span><button class="copy-button" type="button" data-copy="#rebrand-checklist">Copy</button></div>
+    <pre><code id="rebrand-checklist" class="code-block code-block-run">1. Replace assets/icons/app_icon.png + app_icon_foreground.png
+2. dart run flutter_launcher_icons
+3. AndroidManifest.xml  -> android:label
+4. Info.plist           -> CFBundleDisplayName
+5. (optional) splash strings in lib/screens/splash_screen.dart
+6. flutter clean && flutter run -d &lt;device&gt;   # icons need a clean build</code></pre>
+  </div>
+</section>
+
+<!-- Section: build -->
+<section class="doc-section dashboard-card" id="build" data-section-title="Build and run">
+  <p class="section-kicker">12 / BUILD LOOP</p>
+  <h2 class="section-title">Build and run from the customer project</h2>
+  <p>Start with a reachable API, an authenticated or guest-capable session, and the correct platform configuration. A clean clone may need Gradle wrapper setup because wrapper artifacts are locally present but ignored/not tracked.</p>
+
+  <div class="code-shell">
+    <div class="code-head"><span>Terminal / mono_customer</span><button class="copy-button" type="button" data-copy="#build-commands-code">Copy</button></div>
+    <pre><code id="build-commands-code" class="code-block code-block-run"># 01 / packages
+flutter pub get
+
+# 02 / android (or an attached iOS device)
+flutter run -d &lt;device&gt;
+
+# 03 / static analysis
+flutter analyze
+
+# 04 / tests
+flutter test</code></pre>
+  </div>
+
+  <div class="info-block is-warning"><p><strong>Android release signing:</strong> the release build uses debug signing. There is no <code>key.properties</code>, JKS, or production signing config in the package, so you must add your own before uploading to Google Play. The generic steps are: run <code>keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload</code>, create <code>android/key.properties</code> next to <code>build.gradle.kts</code> with your store passwords, point the <code>release</code> build type at that file, then rebuild. Keep the keystore and <code>key.properties</code> out of version control and back them up — losing the key means you can never update the listing again.</p></div>
+
+  <h3 class="heading-2">Change the application ID before you publish</h3>
+  <p>Both platforms ship with the identifier <code>com.mono.customer.app</code>, a real reverse-domain identifier that builds fine. Google Play and the App Store each require the identifier to belong to the account publishing the app, so replace it with your own before your first upload — for example <code>com.yourcompany.mono.customer</code>.</p>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th scope="col">Platform</th><th scope="col">File</th><th scope="col">What to change</th></tr></thead>
+      <tbody>
+        <tr><td>Android namespace</td><td><code>android/app/build.gradle.kts</code></td><td><code>namespace = "com.yourcompany.mono.customer"</code></td></tr>
+        <tr><td>Android application ID</td><td><code>android/app/build.gradle.kts</code></td><td><code>applicationId = "com.yourcompany.mono.customer"</code></td></tr>
+        <tr><td>iOS bundle ID</td><td><code>ios/Runner.xcodeproj/project.pbxproj</code></td><td><code>PRODUCT_BUNDLE_IDENTIFIER</code> for the <code>Runner</code> target</td></tr>
+        <tr><td>Firebase Android app</td><td>Firebase console</td><td>Re-register under the new package name and download a fresh <code>google-services.json</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Renaming the Android package also means moving the Kotlin source to match: <code>android/app/src/main/kotlin/com/mono/customer/app/MainActivity.kt</code> becomes <code>android/app/src/main/kotlin/com/yourcompany/mono/customer/app/MainActivity.kt</code>, with its <code>package</code> line updated too. Skipping this fails the build with a <code>Namespace</code> error pointing at the manifest.</p>
+
+  <h3 class="heading-2">Android SDK levels are pinned deliberately</h3>
+  <p><code>android/app/build.gradle.kts</code> sets <code>compileSdk = 37</code> and pins <code>targetSdk = 36</code> as an explicit integer rather than <code>flutter.targetSdkVersion</code>, which resolves to 35 on Flutter 3.29 and newer — below the current Google Play submission requirement. The explicit number keeps uploads accepted as you upgrade Flutter. <code>minSdk</code> stays at <code>maxOf(flutter.minSdkVersion, 23)</code> because Firebase Messaging and <code>flutter_local_notifications</code> need a modern minimum.</p>
+</section>
+
+<!-- Section: release -->
+<section class="doc-section dashboard-card" id="release" data-section-title="Release readiness">
+  <p class="section-kicker">13 / READINESS</p>
+  <h2 class="section-title">What is ready, and what is not</h2>
+
+  <div class="readiness-grid">
+    <article class="readiness-card readiness-card--ready"><span class="status-badge status-badge--green">READY / SOURCE</span><h3>Mobile foundation</h3><ul><li>Provider-based layered app with 47 public screens.</li><li>Android FCM and customer chat flows are wired to source services.</li><li>Backend theme, localization, and storefront workflows are represented.</li><li>Test directory contains 22 test files.</li></ul></article>
+    <article class="readiness-card readiness-card--block"><span class="status-badge status-badge--amber">BLOCKED / RELEASE</span><h3>Before production</h3><ul><li>Replace the placeholder cleartext API default with a production configuration path.</li><li>Configure Android production signing and track the Gradle wrapper.</li><li>Complete Apple/Firebase, APNs, privacy, and dependency setup.</li><li>Reconcile checkout, wallet callback, digital-only conditions, translations, and logout semantics.</li></ul></article>
+  </div>
+
+  <h3 class="heading-2">Limitation status, item by item</h3>
+  <p>Every source-backed limitation below is classified so you can plan around it: <span class="status-badge status-badge--blue">PLANNED FIX</span> items are queued for a forthcoming app update, <span class="status-badge status-badge--amber">ACCEPTED</span> items are deliberate boundaries of the current architecture, and items marked <span class="status-badge status-badge--green">WORKAROUND</span> ship with a concrete workaround you can apply today.</p>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th scope="col">Area</th><th scope="col">Status</th><th scope="col">Source-backed limitation / next check</th></tr></thead>
+      <tbody>
+        <tr><td>API</td><td><span class="status-badge status-badge--green">WORKAROUND</span></td><td>The compiled default base URL is a placeholder; secure base URL has no setter/UI. <strong>Workaround:</strong> set <code>defaultBaseUrl</code> in <code>lib/services/api_client.dart</code> to your production HTTPS endpoint and rebuild — then remove the cleartext assumption entirely.</td></tr>
+        <tr><td>Auth</td><td><span class="status-badge status-badge--amber">ACCEPTED</span></td><td>No refresh token; logout does not call <code>/auth/logout</code>; 401 named-route attempt is unsupported. Session lifetime is governed by the backend token; re-login recovers.</td></tr>
+        <tr><td>Actions</td><td><span class="status-badge status-badge--amber">ACCEPTED</span></td><td>Export Data only confirms; banner actions parse without routing; About CTA only closes. Cosmetic surfaces — no data loss; deep links for banner actions arrive with the routing update.</td></tr>
+        <tr><td>Commerce</td><td><span class="status-badge status-badge--blue">PLANNED FIX</span></td><td>Digital-only checkout UI/request and place-order conditions conflict; hosted status is backend-authoritative. Treat the backend verdict as final until the checkout reconciliation lands.</td></tr>
+        <tr><td>Localization</td><td><span class="status-badge status-badge--blue">PLANNED FIX</span></td><td>Order month translation keys mismatch; sparse Arabic falls back to English. Meanwhile, missing keys degrade to English instead of failing.</td></tr>
+        <tr><td>Release ops</td><td><span class="status-badge status-badge--amber">ACCEPTED</span></td><td>No tracked CI workflow, changelog, license file, or release checklist. The rebranding and build sections of this guide double as the manual release checklist.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-block"><p><strong>How to read the statuses.</strong> A workaround item needs an action from you (shown in bold). Accepted items are safe to ship as-is but should be mentioned in your store listing if user-visible. Planned-fix items are code-level and will change in an update — avoid building custom logic on top of them.</p></div>
+</section>
+
+<!-- Section: extend -->
+<section class="doc-section dashboard-card" id="extend" data-section-title="Extension guide">
+  <p class="section-kicker">14 / DEVELOPER PATH</p>
+  <h2 class="section-title">Extend the app without breaking its architecture</h2>
+
+  <div class="fact-grid">
+    <article class="fact-card"><span>01</span><strong>Model the payload</strong><p>Add or update a typed model under <code>lib/models/</code>. Keep parsing close to the data shape and preserve source-backed field names.</p></article>
+    <article class="fact-card"><span>02</span><strong>Add endpoint access</strong><p>Register the customer path in <code>lib/services/api_endpoints.dart</code> and use <code>ApiClient</code> from a repository rather than a screen.</p></article>
+    <article class="fact-card"><span>03</span><strong>Own state in a provider</strong><p>Add loading, error, refresh, and mutation behavior in the matching provider under <code>lib/providers/</code>.</p></article>
+    <article class="fact-card"><span>04</span><strong>Compose a screen</strong><p>Add the public <code>*Screen</code> workflow, then extract reusable visual pieces into <code>lib/widgets/</code>.</p></article>
+    <article class="fact-card fact-card--accent"><span>05</span><strong>Cover the boundary</strong><p>Add or update tests under <code>test/</code>, then verify the affected mobile state, empty, loading, and error paths.</p></article>
+  </div>
+
+  <div class="code-shell">
+    <div class="code-head"><span>Extension data flow</span><button class="copy-button" type="button" data-copy="#flow-code">Copy</button></div>
+    <pre><code id="flow-code" class="code-block">Screen → Provider → Repository → ApiClient → customer endpoint
+                         ↘ models / services / widgets</code></pre>
+  </div>
+
+  <h3 class="heading-2">Worked example: add a reviews feature module</h3>
+  <p>Here is the five-step shape above applied to one concrete feature, so you can copy it rather than infer it. The example adds a product-reviews view backed by <code>GET /products/{id}/reviews</code>.</p>
+
+  <ol class="walkthrough">
+    <li><strong>Model — <code>lib/models/product_review.dart</code></strong><p>A data class with <code>fromJson</code> that tolerates a missing optional field such as <code>reviewer_name</code>, so one sparse API response cannot break the whole list.</p></li>
+    <li><strong>Endpoint — <code>lib/services/api_endpoints.dart</code></strong><p>Add a static path builder alongside the existing product routes. Keep URLs out of screens and repositories.</p></li>
+    <li><strong>Repository — <code>lib/repositories/review_repository.dart</code></strong><p>Takes an <code>ApiClient</code>, fetches the list, maps each item into the model, and returns typed data or throws. No widget imports.</p></li>
+    <li><strong>Provider — <code>lib/providers/review_provider.dart</code></strong><p>A <code>ChangeNotifier</code> with <code>reviews</code>, <code>isLoading</code>, and <code>error</code>, exposing <code>load(productId)</code>. Register it in the <code>MultiProvider</code> list in <code>lib/main.dart</code> only if it should survive tab changes; otherwise create it in the owning screen.</p></li>
+    <li><strong>Screen — <code>lib/screens/product/product_reviews_screen.dart</code></strong><p>A <code>*Screen</code> class that watches the provider and renders loading, empty, error, and populated states, reusing existing cards from <code>lib/widgets/</code>. Reach it from the existing product screen with <code>Navigator.push</code> — do not add a sixth bottom tab for it.</p></li>
+  </ol>
+
+  <pre><code class="code-block">lib/
 ├─ models/product_review.dart               ← new
 ├─ services/api_endpoints.dart              ← add reviews path
 ├─ repositories/review_repository.dart      ← new
 ├─ providers/review_provider.dart           ← new
 ├─ screens/product/product_reviews_screen.dart  ← new
 └─ widgets/review_tile.dart                 ← new, if reused</code></pre>
-            <div class="info-block"><p><strong>Test the boundary, not the pixels.</strong> A repository test asserting that <code>fromJson</code> survives a missing optional field, and a provider test asserting that <code>load()</code> sets <code>error</code> on failure, cover what actually breaks. Add a widget test when a screen has a non-trivial empty or error state.</p></div>
-          </section>
 
-          <section class="doc-section" id="support" data-section-title="Support and limitations"><p class="section-kicker">14 / Support</p><h2 class="section-title">Support and release checklist</h2><p>Help &amp; Support is a server-content surface: it renders support cards, FAQs, contact channels and a contact form. About renders server content; Legal renders API-managed privacy, terms and slugs. These are client presentation flows, not proof that the backend is configured or available.</p>
-            <div class="next-grid"><article><span>01</span><h3>Production API</h3><p>Replace <code>.173</code> cleartext development defaults with an environment-aware, production-safe base URL and ATS/network policy.</p></article><article><span>02</span><h3>Session lifecycle</h3><p>Decide whether to add refresh tokens, implement server logout, or register a real named login route before relying on 401 recovery.</p></article><article><span>03</span><h3>Mobile release</h3><p>Add Android release signing; complete Apple team, Firebase, APNs, privacy strings, and dependency integration.</p></article><article><span>04</span><h3>Behavior contracts</h3><p>Resolve digital checkout conditions, wallet reconciliation, order translations, banner routing, Export Data, and About CTA before documenting them as complete.</p></article></div>
-            <div class="final-note"><span class="eyebrow">BEFORE YOU SHIP</span><h3>Complete the release checklist.</h3><p>Work through the four items above before publishing to Google Play or the App Store. Each one covers a production API base URL, session handling, release signing, and the checkout and wallet flows that still need wiring.</p></div>
-          </section>
-        </section>
-        <footer class="site-footer"><span>MONO / CUSTOMER</span><span>Flutter app documentation</span><a href="#top">Back to top ↑</a></footer>
+  <div class="info-block"><p><strong>Test the boundary, not the pixels.</strong> A repository test asserting that <code>fromJson</code> survives a missing optional field, and a provider test asserting that <code>load()</code> sets <code>error</code> on failure, cover what actually breaks. Add a widget test when a screen has a non-trivial empty or error state.</p></div>
+</section>
+
+<!-- Section: support -->
+<section class="doc-section dashboard-card" id="support" data-section-title="Support and limitations">
+  <p class="section-kicker">15 / SUPPORT</p>
+  <h2 class="section-title">Support and release checklist</h2>
+  <p>Help &amp; Support is a server-content surface: it renders support cards, FAQs, contact channels and a contact form. About renders server content; Legal renders API-managed privacy, terms and slugs. These are client presentation flows, not proof that the backend is configured or available.</p>
+
+  <div class="fact-grid">
+    <article class="fact-card"><span>01</span><strong>Production API</strong><p>Replace the placeholder cleartext development defaults with an environment-aware, production-safe base URL and ATS/network policy.</p></article>
+    <article class="fact-card"><span>02</span><strong>Session lifecycle</strong><p>Decide whether to add refresh tokens, implement server logout, or register a real named login route before relying on 401 recovery.</p></article>
+    <article class="fact-card"><span>03</span><strong>Mobile release</strong><p>Add Android release signing; complete Apple team, Firebase, APNs, privacy strings, and dependency integration.</p></article>
+    <article class="fact-card"><span>04</span><strong>Behavior contracts</strong><p>Resolve digital checkout conditions, wallet reconciliation, order translations, banner routing, Export Data, and About CTA before documenting them as complete.</p></article>
+  </div>
+
+  <div class="info-block is-warning"><p><strong>Before you ship:</strong> work through the four items above before publishing to Google Play or the App Store. Each one covers a production API base URL, session handling, release signing, and the checkout and wallet flows that still need wiring.</p></div>
+</section>
+
+<!-- Section: troubleshooting -->
+<section class="doc-section dashboard-card" id="troubleshooting" data-section-title="Troubleshooting and FAQ">
+  <p class="section-kicker">16 / TROUBLESHOOTING</p>
+  <h2 class="section-title">Troubleshooting and FAQ</h2>
+  <p>Concrete fixes for the errors that come up most during installation and first runs. Each answer names the file or setting responsible — search this page for your error text first; if the exact error is not here, the section linked in the answer holds the deeper explanation.</p>
+
+  <h3 class="heading-2">Install &amp; build</h3>
+
+  <h3 class="heading-2">“Version solving failed” when running <code>flutter pub get</code></h3>
+  <p>The lockfile pins Dart <code>^3.12.2</code> and a Flutter floor of <code>&gt;=3.44.0</code>. Upgrade your Flutter SDK (<code>flutter upgrade</code>) to a release that satisfies the lock — do not downgrade the app's dependencies. The project is verified with Flutter <code>3.47.4</code>.</p>
+
+  <h3 class="heading-2">Gradle errors about a missing wrapper on a clean clone</h3>
+  <p>Gradle wrapper artifacts are deliberately not tracked. Run <code>flutter build apk --debug</code> once with a local Gradle <code>9.1.0</code> (Android Studio can generate it), or run <code>gradle wrapper</code> inside <code>android/</code>. The build needs <strong>JDK 17</strong>, AGP <code>9.0.1</code>, and the Android SDK with <code>compileSdk = 37</code> installed.</p>
+
+  <h3 class="heading-2">“Namespace” or manifest error after changing the application ID</h3>
+  <p>Renaming the package also means moving the Kotlin source: <code>android/app/src/main/kotlin/com/mono/customer/app/MainActivity.kt</code> must live under folders matching your new ID, with its <code>package</code> line updated to match. The full four-platform rename table is in the <a href="#build">Build &amp; Run</a> section.</p>
+
+  <h3 class="heading-2"><code>Default FirebaseApp is not initialized</code> at startup</h3>
+  <p>The <code>google-services.json</code> file is missing or in the wrong folder. It must be exactly <code>android/app/google-services.json</code>, replacing the bundled demo project file. A config change needs a <strong>full rebuild</strong> — stop the app and run <code>flutter run</code> again (add <code>flutter clean</code> first if the old config looks cached).</p>
+
+  <h3 class="heading-2">Google Play rejects the release bundle / it is signed with a debug key</h3>
+  <p>The shipped release build type uses debug signing. Generate an upload keystore, create <code>android/key.properties</code>, and point the <code>release</code> build type at it — the complete step list is in the <a href="#build">Build &amp; Run</a> section. Keep the keystore out of version control and back it up.</p>
+
+  <h3 class="heading-2">Networking &amp; API</h3>
+
+  <h3 class="heading-2">The app launches but the storefront is empty or shows connection errors</h3>
+  <p>The compiled API default points at a placeholder domain, not your server. Open <code>lib/services/api_client.dart</code>, change <code>defaultBaseUrl</code> to your own API root (for example <code>https://your-domain.com/api/v1</code>), and rebuild. For release builds use HTTPS; the manifest currently allows cleartext HTTP for LAN development only.</p>
+
+  <h3 class="heading-2">Products load but images are broken</h3>
+  <p>Media URLs are relative and resolve against the active base URL, so a wrong base URL breaks images even when JSON loads. If the base URL is correct, check the backend side: <code>php artisan storage:link</code> must have been run and <code>storage/app/public</code> must be reachable under <code>/storage</code> on your domain.</p>
+
+  <h3 class="heading-2">Users are logged out immediately or see repeated 401s</h3>
+  <p>The app keeps one bearer token with no refresh flow. A 401 means the backend session expired or the API URL is pointed at a different environment than the one that issued the token. Log in again; if it repeats instantly, verify the API behind your base URL is the environment you think it is.</p>
+
+  <h3 class="heading-2">The Google sign-in button never appears</h3>
+  <p>It is conditional on backend configuration. Enable Google sign-in for the shop in the admin panel settings; the app hides the button when the backend reports it unavailable. Nothing to change in the app.</p>
+
+  <h3 class="heading-2">Runtime &amp; platform</h3>
+
+  <h3 class="heading-2">Push notifications never arrive on iOS</h3>
+  <p>Runtime push initialization is Android-only by design (<code>!kIsWeb &amp;&amp; platform == android</code>). iOS push requires the full Apple setup — team, APNs <code>.p8</code> key, <code>GoogleService-Info.plist</code>, and background modes — documented in the <a href="#ios">iOS setup</a> section. Nothing on iOS works until that checklist is done.</p>
+
+  <h3 class="heading-2">Push works on one Android device but not another</h3>
+  <p>Tokens register only for signed-in users, and Android 13+ requires the notification permission prompt to be accepted. Check that the device granted notifications for the app and that the account completed login; the app creates its own <code>high_importance_channel</code>, so no console-side channel setup is needed.</p>
+
+  <h3 class="heading-2">A web build crashes or imports fail</h3>
+  <p>Web, Linux, macOS, and Windows folders exist in the repository but are not supported targets — seven source files import <code>dart:io</code>. Build for Android and iOS; do not ship a web build from this package.</p>
+
+  <h3 class="heading-2">Some Arabic strings show in English</h3>
+  <p>Built-in Arabic translations merge with server bundles, and sparse keys fall back to English by design. Missing strings come from the server's translation bundle — add them server-side rather than editing app code.</p>
+
+  <div class="info-block"><p><strong>Still stuck?</strong> Reproduce with <code>flutter run -d &lt;device&gt; --verbose</code> and note the first exception, then compare against the <a href="#release">Release readiness</a> table — most reported issues are one of the classified limitations, not new defects.</p></div>
+</section>
       </div>
-    </div>
-  </main>
 
-  <div class="lightbox" id="image-lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-caption" hidden><button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image">×</button><button class="lightbox-nav lightbox-prev" type="button" data-lightbox-prev aria-label="Previous image">‹</button><figure><img id="lightbox-image" src="" alt=""><figcaption id="lightbox-caption"></figcaption><span id="lightbox-counter"></span></figure><button class="lightbox-nav lightbox-next" type="button" data-lightbox-next aria-label="Next image">›</button></div>
-  <div class="toast" id="toast" role="status" aria-live="polite" hidden>Copied to clipboard</div>
+      <footer class="dashboard-footer">
+        <div class="footer-left">
+          <strong>Mono Customer — App Documentation Dashboard</strong>
+          <span>Part of the MONO Multi-Vendor Marketplace Suite</span>
+        </div>
+        <div class="footer-right">
+          <a href="#overview" class="footer-back-to-top">Back to top &uarr;</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Image Lightbox Modal -->
+  <dialog class="lightbox" id="image-lightbox" hidden aria-labelledby="lightbox-caption">
+    <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer"><span aria-hidden="true">&times;</span></button>
+    <img id="lightbox-image" src="assets/customer-app-icon.png" alt="">
+    <div class="lightbox-bar">
+      <p id="lightbox-caption"></p>
+      <span class="lightbox-counter" id="lightbox-counter"></span>
+    </div>
+    <div class="lightbox-nav">
+      <button class="lightbox-step" type="button" data-lightbox-prev>&larr; Previous</button>
+      <button class="lightbox-step" type="button" data-lightbox-close>Close</button>
+      <button class="lightbox-step" type="button" data-lightbox-next>Next &rarr;</button>
+    </div>
+  </dialog>
+
 </body>
 </html>

@@ -647,7 +647,7 @@ a:hover {
 .dashboard-stage {
   flex: 1;
   padding: 28px 36px 60px;
-  max-width: 1400px;
+  max-width: none;
   width: 100%;
 }
 
@@ -1292,6 +1292,62 @@ dialog.lightbox[open] {
   place-items: center;
 }
 
+/* Constrain lightbox media to the viewport (phone captures are very tall) */
+dialog.lightbox img#lightbox-image {
+  width: auto !important;
+  height: auto !important;
+  max-width: min(92vw, 1400px) !important;
+  max-height: 82vh !important;
+  object-fit: contain !important;
+  border-radius: 10px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+}
+
+dialog.lightbox .lightbox-bar {
+  margin-top: 16px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 14px;
+  max-width: min(92vw, 1400px);
+  font-family: var(--font-code);
+  font-size: 12px;
+}
+
+dialog.lightbox .lightbox-bar p {
+  margin: 0;
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+dialog.lightbox .lightbox-counter {
+  color: #94a3b8;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+dialog.lightbox .lightbox-nav {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+}
+
+dialog.lightbox .lightbox-step {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+dialog.lightbox .lightbox-step:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
 /* ---------------- RESPONSIVE MEDIA QUERIES ---------------- */
 @media (max-width: 1023.98px) {
   .admin-sidebar {
@@ -1743,6 +1799,17 @@ dialog.lightbox[open] {
   border: 1px solid var(--border-subtle);
   border-radius: 10px;
   padding: 18px;
+}
+.callout--warn {
+  background: var(--accent-amber-light);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-left: 4px solid var(--accent-amber);
+  color: var(--accent-amber-text);
+}
+.callout--warn code {
+  background: #ffffff;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #92400e;
 }
 .workflow-columns h3 {
   font-size: 15px;
@@ -2710,5 +2777,61 @@ pre .code-block,
   .endpoint-groups > *,
   .grid--3col > * {
     grid-column: auto !important;
+  }
+}
+
+/* ---------------- SCOPE SWITCHER TABS (Web doc: Web Storefront / Vendor Portal / Admin Panel) ---------------- */
+.scope-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.scope-tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  background: #ffffff;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.scope-tab:hover {
+  color: var(--text-heading);
+  border-color: var(--border-strong);
+  background: var(--bg-subtle);
+}
+.scope-tab.is-active {
+  background: var(--primary-brand);
+  border-color: var(--primary-brand);
+  color: #ffffff;
+}
+.scope-tab.is-active:hover {
+  background: var(--primary-brand-hover);
+  border-color: var(--primary-brand-hover);
+  color: #ffffff;
+}
+@media (max-width: 1023.98px) {
+  .scope-tab {
+    padding: 5px 10px;
+    font-size: 10.5px;
+  }
+  .top-navbar .breadcrumb-trail {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  .scope-tabs {
+    gap: 4px;
+  }
+  .scope-tab {
+    padding: 4px 7px;
+    font-size: 9.5px;
   }
 }

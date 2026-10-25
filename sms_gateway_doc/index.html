@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261019_all3_in_row">
+  <link rel="stylesheet" href="styles.css?v=20261025_docs1">
   <script src="script.js" defer></script>
 </head>
 <body class="dashboard-body">
@@ -147,6 +147,11 @@
   <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0-12a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm12 3a9 9 0 0 1-9 9"/></svg>
   <span class="sidebar-link-text">Extension Guide</span>
   
+</a>
+<a href="#troubleshooting" class="sidebar-nav-link" data-nav-id="troubleshooting">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+  <span class="sidebar-link-text">Troubleshooting &amp; FAQ</span>
+
 </a>
 <a href="#support" class="sidebar-nav-link" data-nav-id="support">
   <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zm0-7v.01M12 11a2 2 0 1 0-2-2"/></svg>
@@ -285,7 +290,7 @@
       <article class="ov-kpi">
         <span class="status-index">A / 03</span>
         <p>API default</p>
-        <strong>monomarket.site / api / v1</strong>
+        <strong>your-domain.com / api / v1</strong>
         <span class="status-badge status-badge--amber">--dart-define</span>
       </article>
     </div>
@@ -305,7 +310,7 @@
         <tr><td>Description</td><td>Self-hosted SMS gateway: sends queued messages from the device's own SIM</td><td><code>pubspec.yaml</code></td></tr>
         <tr><td>App label (launcher)</td><td><code>MonoSMS</code></td><td><code>AndroidManifest.xml</code></td></tr>
         <tr><td>Android application ID</td><td><code>com.mono.sms_gateway</code></td><td><code>android/app/build.gradle.kts</code></td></tr>
-        <tr><td>API base URL</td><td><code>String.fromEnvironment('GATEWAY_API_URL')</code>, default <code>https://monomarket.site/api/v1</code></td><td><code>lib/core/gateway_config.dart</code></td></tr>
+        <tr><td>API base URL</td><td><code>String.fromEnvironment('GATEWAY_API_URL')</code>, default <code>https://your-domain.com/api/v1</code></td><td><code>lib/core/gateway_config.dart</code></td></tr>
         <tr><td>Routes</td><td><code>/login</code>, <code>/home</code> inside one Navigator; an auth gate picks between them</td><td><code>lib/main.dart</code></td></tr>
       </tbody>
     </table>
@@ -723,7 +728,7 @@ adb install -r build/app/outputs/flutter-apk/app-release.apk</code></pre>
 ──────────────────────────────
 static const String baseUrl = String.fromEnvironment(
   'GATEWAY_API_URL',
-  defaultValue: 'https://monomarket.site/api/v1',
+  defaultValue: 'https://your-domain.com/api/v1',
 );</code></pre>
 
   <div class="table-wrap">
@@ -731,7 +736,7 @@ static const String baseUrl = String.fromEnvironment(
       <thead><tr><th scope="col">Task</th><th scope="col">Command / source</th></tr></thead>
       <tbody>
         <tr><td>Point a build at another environment</td><td><code>flutter build apk --dart-define=GATEWAY_API_URL=https://store.example.com/api/v1</code></td></tr>
-        <tr><td>Default environment</td><td>The compiled-in default (<code>monomarket.site</code>) is used when the define is absent</td></tr>
+        <tr><td>Default environment</td><td>The compiled-in default (<code>your-domain.com</code>) is used when the define is absent</td></tr>
         <tr><td>Native credential fallback</td><td>The same URL is mirrored into <code>SharedPreferences</code> under <code>base_url</code> — non-secret, kept for native upgrades</td></tr>
         <tr><td>Transport security</td><td><code>android:usesCleartextTraffic="true"</code> — HTTP is allowed so a LAN backend can be tested; see the security section before shipping</td></tr>
       </tbody>
@@ -924,6 +929,21 @@ static const String baseUrl = String.fromEnvironment(
     </li>
   </ul>
 
+  <h3 class="heading-2">iOS Display Name &amp; Splash Branding</h3>
+  <p>Two finishing touches complete the rebrand:</p>
+  <ul class="list-item">
+    <li><strong>iOS Display Name:</strong> Open <code>sms_gateway/ios/Runner/Info.plist</code> and update <code>CFBundleDisplayName</code> (the shipped value is <code>MonoSMS</code>). The internal <code>CFBundleName</code> (<code>sms_gateway</code>) can stay as-is:
+      <div class="code-shell">
+        <div class="code-head"><span>ios/Runner/Info.plist</span><button class="copy-button" type="button" data-copy="#code-ios-name">Copy</button></div>
+        <pre><code class="code-block" id="code-ios-name">&lt;key&gt;CFBundleDisplayName&lt;/key&gt;
+&lt;string&gt;YourBrand SMS&lt;/string&gt;</code></pre>
+      </div>
+    </li>
+    <li><strong>Splash Wordmark:</strong> the launch splash shows the bag mark and the wordmark text. To change the text, open <code>sms_gateway/lib/screens/splash_screen.dart</code> and replace the <code>'MonoSMS'</code> string — it is plain display text, no layout or logic changes needed.</li>
+  </ul>
+
+  <div class="info-block"><p><strong>No-code summary.</strong> App name and launcher icon are pure configuration: swap <code>assets/icons/app_icon.png</code> + <code>app_icon_foreground.png</code>, run <code>dart run flutter_launcher_icons</code>, edit the manifest label and <code>Info.plist</code>. Only the MaterialApp title and the splash wordmark are text strings inside two Dart files — copy-paste replacements, no logic.</p></div>
+
 </section>
 
 <!-- Section: build-run -->
@@ -934,10 +954,10 @@ static const String baseUrl = String.fromEnvironment(
   <div class="code-shell code-shell--command">
     <div class="code-head"><span>Build targets</span><button class="copy-button" type="button" data-copy="#cmd-build">Copy</button></div>
     <pre><code class="code-block" id="cmd-build"># debug run on a connected phone
-flutter run --dart-define=GATEWAY_API_URL=https://your-store.com/api/v1
+flutter run --dart-define=GATEWAY_API_URL=https://your-domain.com/api/v1
 
 # release APK (the gateway ships as a sideloaded APK, not Play Store)
-flutter build apk --release --dart-define=GATEWAY_API_URL=https://your-store.com/api/v1
+flutter build apk --release --dart-define=GATEWAY_API_URL=https://your-domain.com/api/v1
 
 # regenerate launcher icons after changing assets/icons/
 dart run flutter_launcher_icons</code></pre>
@@ -1179,7 +1199,7 @@ POST /sms-gateway/sms/{id}/report ◀──────────  sent  |  fa
       <span>Open Live Admin Panel &nearr;</span>
     </a>
   </div>
-  <p>The marketplace admin panel has a dedicated <strong>Admin → SMS Gateway</strong> page (live URL: <a href="https://monomarket.site/admin" target="_blank" rel="noopener"><code>https://monomarket.site/admin</code></a>, guarded by the <code>sms.gateway.manage</code> permission) that manages the devices this app creates.</p>
+  <p>The marketplace admin panel has a dedicated <strong>Admin → SMS Gateway</strong> page (admin URL: <a href="https://your-domain.com/admin" target="_blank" rel="noopener"><code>https://your-domain.com/admin</code></a>, guarded by the <code>sms.gateway.manage</code> permission) that manages the devices this app creates.</p>
 
   <div class="table-wrap">
     <table class="packages-table">
@@ -1262,6 +1282,49 @@ POST /sms-gateway/sms/{id}/report ◀──────────  sent  |  fa
 </section>
 
 <!-- Section: support -->
+<!-- Section: troubleshooting -->
+<section class="doc-section dashboard-card" id="troubleshooting" data-section-title="Troubleshooting and FAQ">
+
+  <h2 class="section-title">Troubleshooting and FAQ</h2>
+  <p>Concrete fixes for the errors that come up most during installation and first runs. The gateway is a real Android device doing real carrier work, so most issues are device-side — permissions, battery restrictions, or pairing — rather than code.</p>
+
+  <h3 class="heading-2">Install &amp; build</h3>
+
+  <h3 class="heading-2">“Version solving failed” when running <code>flutter pub get</code></h3>
+  <p>The lockfile pins the toolchain; upgrade your Flutter SDK (<code>flutter upgrade</code>) to a release that satisfies it instead of editing package constraints. Build with <strong>JDK 17</strong> and the AGP/Gradle versions pinned in <code>android/app/build.gradle.kts</code>.</p>
+
+  <h3 class="heading-2">The app installs but immediately closes on launch</h3>
+  <p>Rebuild after any change to <code>google-services.json</code> — a stale build crashes on Firebase init. The file must be exactly <code>android/app/google-services.json</code>, and config changes require a <strong>full rebuild</strong> (stop the app, run <code>flutter run</code> again, add <code>flutter clean</code> first if needed).</p>
+
+  <h3 class="heading-2">Pairing &amp; connection</h3>
+
+  <h3 class="heading-2">Pairing fails or the device never shows “Online”</h3>
+  <p>Three things must line up: (1) the admin panel URL and credentials entered during pairing are correct and reachable from the phone's network; (2) the vendor/gateway account is active in the admin panel; (3) the phone has working mobile data or Wi-Fi. The pairing status and a <strong>Retry</strong> button with the last-sync clock appear on the device card — use it after fixing any of the three.</p>
+
+  <h3 class="heading-2">The device goes offline after a while (especially Xiaomi, Oppo, Vivo, Samsung)</h3>
+  <p>Aggressive battery optimization is killing background work. Exempt the app from battery restrictions — the app exposes a shortcut into the battery-optimization screen, or find it under <em>Settings → Battery → App launch / Battery optimization</em> and set it to <strong>Unrestricted / Allow background activity</strong>. Keep the device plugged in for production duty; the device card shows the live battery level so you can monitor it remotely.</p>
+
+  <h3 class="heading-2">Android kills the app overnight</h3>
+  <p>Same root cause as above, plus: disable “Remove permissions if app is unused” for the app, allow autostart on Chinese OEM skins, and keep WorkManager intact — the queue passes are scheduled through WorkManager, and force-stopping the app from recents can cancel scheduled work until the next FCM wake or manual open.</p>
+
+  <h3 class="heading-2">Sending &amp; receiving</h3>
+
+  <h3 class="heading-2">Messages stay queued and never send</h3>
+  <p>Check, in order: (1) the device card shows <strong>Online</strong>; (2) the app holds <strong>SMS send permission</strong> — open the app once after install and grant both SMS permissions when prompted; (3) the SIM can actually send an SMS from the native messaging app (carriers block SIMs with zero usage, premium-rate restrictions, or expired plans); (4) the queue has capacity — the send pipeline processes the admin panel's pending queue in passes, and each pass retries with backoff.</p>
+
+  <h3 class="heading-2">Inbound replies are not forwarded to the admin panel</h3>
+  <p>Inbound forwarding needs the <strong>receive/SMS permission</strong> granted and the device awake enough to observe incoming messages — the battery-optimization exemption fixes this too. Verify the inbound-sync toggle for the device is enabled in the admin panel's gateway controls, then send a test SMS to the device from another phone.</p>
+
+  <h3 class="heading-2">No FCM wake-up; messages send only when the app is opened</h3>
+  <p>The Firebase wake channel is what pushes the device between queue passes. Confirm <code>google-services.json</code> matches the Firebase project registered in the admin panel, the notification permission is granted, and the device is not in Doze with no battery exemption. As a fallback, the WorkManager schedule still wakes the device periodically even without FCM.</p>
+
+  <h3 class="heading-2">Vendor-specific SIM behavior</h3>
+  <p>The gateway sends through the SIM the device selects as default for messaging. Dual-SIM phones: set the SIM you want to bill as the default SMS SIM in Android settings, and be aware carrier rate limits apply per SIM — a flood of queued orders on one SIM can trigger carrier throttling that looks like the app failing.</p>
+
+  <div class="info-block"><p><strong>Still stuck?</strong> Open the device card in the admin panel and read the live state (connection dot, battery, last sync, retry) before diving into code — the state shown there maps one-to-one onto the checks above.</p></div>
+
+</section>
+
 <section class="doc-section dashboard-card" id="support" data-section-title="Support and limitations">
 
   <h2 class="section-title">Known limitations, checked against source</h2>

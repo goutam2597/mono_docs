@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MONO Marketplace — Web Documentation Dashboard">
+  <meta name="theme-color" content="#18284D">
+  <title>Mono Web — Admin Panel Documentation Dashboard</title>
+  <link rel="icon" type="image/png" href="assets/images/mono-web-icon.png">
+  <link rel="shortcut icon" href="assets/images/mono-web-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261025_docs1">
+  <script src="script.js" defer></script>
+</head>
+<body class="dashboard-body">
+
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop" aria-hidden="true"></div>
+
+  <!-- FIXED FULL-HEIGHT SIDEBAR (Exact Backend Admin Panel Layout) -->
+  <aside id="admin-sidebar" class="admin-sidebar" aria-label="Documentation Navigation">
+    <div class="sidebar-header">
+      <a href="#introduction" class="sidebar-brand">
+        <span class="brand-logo-frame">
+          <img src="assets/images/mono-web-icon.png" alt="Brand Logo" class="brand-logo-img">
+        </span>
+        <div class="brand-meta">
+          <strong class="brand-name">MONO WEB</strong>
+          <span class="brand-tag">WEB SUITE</span>
+        </div>
+      </a>
+      <button type="button" id="sidebar-toggle-btn" class="sidebar-toggle-btn" aria-label="Toggle Sidebar Navigation">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 17l4-5-4-5M4 17l4-5-4-5"/></svg>
+      </button>
+    </div>
+
+    <!-- Quick Search Filter in Sidebar -->
+    <div class="sidebar-search-box">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="sidebar-search-input" placeholder="Search documentation..." autocomplete="off" aria-label="Search documentation topics">
+      <kbd class="search-kbd">/</kbd>
+    </div>
+
+    <!-- Grouped Sidebar Navigation -->
+    <nav class="sidebar-nav-scroll" id="sidebar-nav" aria-label="Documentation Topics">
+<div class="sidebar-group-label">OVERVIEW & ARCHITECTURE</div>
+<div class="sidebar-group-items">
+<a href="#introduction" class="sidebar-nav-link" data-nav-id="introduction">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
+  <span class="sidebar-link-text">Codebase Overview</span>
+  
+</a>
+</div>
+<div class="sidebar-group-label">ADMIN PANEL</div>
+<div class="sidebar-group-items">
+<a href="#admin-dashboard" class="sidebar-nav-link" data-nav-id="admin-dashboard">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6zm10 0a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V6zM4 16a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2zm10 0a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-2z"/></svg>
+  <span class="sidebar-link-text">Admin Dashboard</span>
+  
+</a>
+<a href="#admin-access" class="sidebar-nav-link" data-nav-id="admin-access">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
+  <span class="sidebar-link-text">Admins, Roles & Permissions</span>
+  
+</a>
+<a href="#admin-orders" class="sidebar-nav-link" data-nav-id="admin-orders">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.6a1 1 0 0 1 .7.3l5.4 5.4a1 1 0 0 1 .3.7V19a2 2 0 0 1-2 2Z"/></svg>
+  <span class="sidebar-link-text">Orders & Invoices</span>
+  
+</a>
+<a href="#admin-catalog" class="sidebar-nav-link" data-nav-id="admin-catalog">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7l8-4 8 4v10l-8 4-8-4V7Zm8 4v10M4 7l8 4 8-4"/></svg>
+  <span class="sidebar-link-text">Catalog Administration</span>
+  
+</a>
+<a href="#admin-customers" class="sidebar-nav-link" data-nav-id="admin-customers">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 20h5v-2a3 3 0 0 0-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 0 1 5.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 0 1 9.288 0M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm6 3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM7 10a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg>
+  <span class="sidebar-link-text">Customers, Wallets & Coupons</span>
+  
+</a>
+<a href="#admin-marketplace" class="sidebar-nav-link" data-nav-id="admin-marketplace">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/></svg>
+  <span class="sidebar-link-text">Vendors & Settlements</span>
+  
+</a>
+<a href="#admin-delivery" class="sidebar-nav-link" data-nav-id="admin-delivery">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 16V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1m8-1a1 1 0 0 1-1 1H9m4-1V8a1 1 0 0 1 1-1h2.586a1 1 0 0 1 .707.293l3.414 3.414a1 1 0 0 1 .293.707V16a1 1 0 0 1-1 1h-1m-6-1a1 1 0 0 0 1 1h2"/></svg>
+  <span class="sidebar-link-text">Delivery Operations</span>
+  
+</a>
+<a href="#admin-messaging" class="sidebar-nav-link" data-nav-id="admin-messaging">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 0 1-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+  <span class="sidebar-link-text">Chat, Push & Broadcasts</span>
+  
+</a>
+<a href="#admin-ai" class="sidebar-nav-link" data-nav-id="admin-ai">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+  <span class="sidebar-link-text">AI Engine & Quotas</span>
+  
+</a>
+<a href="#admin-appearance" class="sidebar-nav-link" data-nav-id="admin-appearance">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 21a4 4 0 0 1-4-4V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v12a4 4 0 0 1-4 4zm0 0h12a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 0 1 2.828 0l2.829 2.829a2 2 0 0 1 0 2.828l-8.486 8.485M7 17h.01"/></svg>
+  <span class="sidebar-link-text">Themes & Custom Colors</span>
+  
+</a>
+<a href="#admin-settings" class="sidebar-nav-link" data-nav-id="admin-settings">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
+  <span class="sidebar-link-text">Settings Reference</span>
+  
+</a>
+<a href="#admin-platform" class="sidebar-nav-link" data-nav-id="admin-platform">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 16l4.586-4.586a2 2 0 0 1 2.828 0L16 16m-2-2l1.586-1.586a2 2 0 0 1 2.828 0L20 14m-6-6h.01M6 20h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"/></svg>
+  <span class="sidebar-link-text">Administrators & Media</span>
+  
+</a>
+</div>
+    </nav>
+
+    <!-- Sidebar System Footer -->
+    <div class="sidebar-footer">
+      <div class="system-status-indicator">
+        <span class="live-dot" aria-hidden="true"></span>
+        <div class="system-status-text">
+          <strong>Web Marketplace 1.0.0</strong>
+          <small>Laravel 11 · MySQL · PHP 8.3</small>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN DASHBOARD CONTENT AREA -->
+  <div id="admin-main" class="admin-main">
+    
+    <!-- TOP STICKY DASHBOARD NAVBAR -->
+    <header class="top-navbar">
+      <div class="top-navbar-left">
+        <button type="button" id="mobile-toggle-btn" class="mobile-menu-btn" aria-label="Open sidebar menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <nav class="breadcrumb-trail" aria-label="Breadcrumb">
+          <span class="crumb-root">Documentation</span>
+          <span class="crumb-divider">/</span>
+          <span class="crumb-section">MONO WEB · ADMIN PANEL</span>
+          <span class="crumb-divider">/</span>
+          <span class="crumb-active" id="active-breadcrumb-label">Codebase Overview</span>
+        </nav>
+      </div>
+        <nav class="scope-tabs" aria-label="Documentation scope">
+          <a href="index.html" class="scope-tab">Web Storefront</a>
+          <a href="vendor.html" class="scope-tab">Vendor Portal</a>
+          <a href="admin.html" class="scope-tab is-active">Admin Panel</a>
+        </nav>
+    </header>
+
+    <!-- DASHBOARD STAGE -->
+    <main class="dashboard-stage" id="main-content">
+
+      <!-- Executive Overview Banner -->
+      
+      <section class="executive-banner" aria-label="Executive Overview">
+        <div class="banner-body">
+          <div class="banner-badge-row">
+            <span class="banner-kicker">MONO SUPER ADMIN ENGINEERING CONSOLE</span>
+            <span class="banner-tag">Operations &amp; Governance</span>
+          </div>
+          <h1 class="banner-title">Super Admin Panel Operations &amp; Engineering Dashboard</h1>
+          <p class="banner-desc">Super-admin field manual for the MONO Marketplace: vendor governance and KYC approvals, commissions and settlements, catalog and order operations, delivery, chat and push, AI tooling, themes, and every platform setting.</p>
+        </div>
+      </section>
+
+      <!-- 4-Column KPI Metrics Summary Grid -->
+      
+      <section class="kpi-grid" aria-label="System Metrics">
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">ADMIN / 01</span>
+    <span class="kpi-pill kpi-pill-blue">Governance</span>
+  </div>
+  <strong class="kpi-metric">Vendors + KYC Approvals</strong>
+  <p class="kpi-label">Multi-step registration, document verification, store approvals, and suspensions.</p>
+</div>
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">ADMIN / 02</span>
+    <span class="kpi-pill kpi-pill-green">Money</span>
+  </div>
+  <strong class="kpi-metric">Commissions &amp; Payouts</strong>
+  <p class="kpi-label">Category-wise rates, automated settlement, and withdrawal control.</p>
+</div>
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">ADMIN / 03</span>
+    <span class="kpi-pill kpi-pill-navy">Catalog</span>
+  </div>
+  <strong class="kpi-metric">Orders, Refunds &amp; Invoices</strong>
+  <p class="kpi-label">Catalog administration, order lifecycle, and refund operations end to end.</p>
+</div>
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">ADMIN / 04</span>
+    <span class="kpi-pill kpi-pill-amber">Access</span>
+  </div>
+  <strong class="kpi-metric">Roles + 32 Permissions</strong>
+  <p class="kpi-label">Granular permission gates on every admin action.</p>
+</div>
+      </section>
+
+      <!-- DOCUMENTATION SECTIONS (Wrapped in Elevated Dashboard Cards) -->
+      <div class="dashboard-cards-container">
+<!-- Section: introduction -->
+<section class="doc-section dashboard-card dashboard-card--hero" id="introduction" data-section-title="One codebase, three front doors">
+
+                    
+            <div class="ov" id="top" aria-labelledby="ov-title">
+            <div class="ov-bar">
+              <p class="ov-kicker"><span>Super admin documentation</span><span>Operate &middot; Govern &middot; Scale</span></p>
+              <span class="ov-signal"><i aria-hidden="true"></i>Laravel · /admin</span>
+            </div>
+
+            <div class="ov-head">
+              <div class="ov-heading">
+                <h1 id="ov-title">Mono.<em> Admin Panel.</em></h1>
+                <p class="ov-note"><span aria-hidden="true">&bull;</span> Complete operations and governance guide.</p>
+              </div>
+              <div class="ov-side">
+                <p class="ov-lede">The Laravel super-admin console behind the marketplace: govern vendors and KYC approvals, tune commissions and settlements, run catalog, order, delivery, chat, and AI operations, and control every platform setting from one place.</p>
+                <div class="ov-actions">
+                  <a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="action-button action-button--primary">Live Admin Panel <span aria-hidden="true">&nearr;</span></a>
+                  <a href="index.html#installation" class="action-button">Installation Guide <span aria-hidden="true">&darr;</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="ov-kpis" aria-label="Super admin headline facts">
+              <article class="ov-kpi"><span class="status-index">A / 01</span><p>Surface</p><strong>/admin console</strong><span class="status-badge status-badge--blue">Super Admin</span></article>
+              <article class="ov-kpi"><span class="status-index">A / 02</span><p>Access control</p><strong>Roles + 32 permissions</strong><span class="status-badge status-badge--teal">Granular</span></article>
+              <article class="ov-kpi"><span class="status-index">A / 03</span><p>Stack</p><strong>Laravel 13 / PHP 8.3</strong><span class="status-badge status-badge--amber">Self-hosted</span></article>
+            </div>
+          </div>
+          <p class="section-kicker">01 / Overview</p>
+          <h2 class="section-title">One codebase, three front doors</h2>
+          <p>MONO Marketplace is a multi-vendor commerce platform. A single Laravel
+application serves three completely separate front doors, and they all share
+one database, one permission system, and one theme engine.</p>
+
+<div class="service-grid service-grid--3col">
+  <article class="service-card"><span>STOREFRONT</span><h3>Customer website</h3>
+  <ul><li>Themeable catalog with nine shipped storefront themes.</li>
+  <li>Cart, coupons, vouchers, wishlist, loyalty, and wallet.</li>
+  <li>Fourteen payment methods including cash on delivery and bank transfer.</li>
+  <li>Digital goods, bundles, and vendor chat with realtime delivery.</li></ul>
+  <div style="margin-top: 14px;"><a href="https://monomarket.site/" target="_blank" rel="noopener" class="action-button" style="display: inline-block; padding: 6px 12px; font-size: 11px;">View Storefront &nearr;</a></div>
+  </article>
+
+  <article class="service-card service-card--teal"><span>VENDOR PANEL</span><h3>Seller dashboard</h3>
+  <ul><li>Applications, product, bundle, and taxonomy management.</li>
+  <li>Order fulfilment with per-item digital delivery.</li>
+  <li>Settlements, withdrawal requests, subscription packages.</li>
+  <li>AI suite with metered text, translation, and image quotas.</li></ul>
+  <div style="margin-top: 14px;"><a href="https://monomarket.site/vendor" target="_blank" rel="noopener" class="action-button" style="display: inline-block; padding: 6px 12px; font-size: 11px;">View Live Vendor Panel &nearr;</a></div>
+  </article>
+
+  <article class="service-card service-card--amber"><span>ADMIN PANEL</span><h3>Platform control</h3>
+  <ul><li>Orders, invoices, refunds, and a full finance ledger.</li>
+  <li>Vendor approvals, subscriptions, payouts, and delivery operations.</li>
+  <li>Roles, permissions, languages, media, and site settings.</li>
+  <li>Push broadcasting, newsletters, and an AI administration toolset.</li></ul>
+  <div style="margin-top: 14px;"><a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="action-button" style="display: inline-block; padding: 6px 12px; font-size: 11px;">View Live Admin Panel &nearr;</a></div>
+  </article>
+</div>
+
+<h3 class="heading-2">What ships in the package</h3>
+<div class="callout-grid callout-grid--3col">
+  <div class="callout"><strong>Storefront themes</strong><p>Nine themes on disk: <code>mono</code> (built in), plus <code>beauty</code>, <code>electronics</code>, <code>fashion</code>, <code>fullwidth</code>, <code>grocery</code>, <code>home</code>, <code>petshop</code>, and <code>sports</code>. Each is a self-contained package with its own views, assets, palette, and optional database tables.</p></div>
+  <div class="callout"><strong>Mobile applications</strong><p>Two Flutter clients ship alongside: the customer app and the vendor app. Both talk to the same versioned API described in this document.</p></div>
+  <div class="callout"><strong>Web installer</strong><p><code>public/install.php</code> is a self-contained wizard that creates the database, writes the environment file, creates the first administrator, and activates a theme. No Composer, Node, or shell access is required on the host.</p></div>
+</div>
+
+<h3 class="heading-2">The three front doors, at a glance</h3>
+<p>Each interface is purpose-built for desktop web workflows &mdash; responsive Blade templates styled with Tailwind CSS, with zero client-side compilation steps.</p>
+<div class="screenshot-grid">
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-home-desktop.jpg" data-caption="Storefront — themeable customer web marketplace"><img src="assets/storefront/storefront-home-desktop.jpg" alt="MONO Storefront home page with announcement bar, search, category strip, hero slider, and trust badges." loading="lazy"><span>Open capture</span></button><figcaption>Storefront &mdash; Customer web marketplace</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/vendor/vendor-dashboard.png" data-caption="Vendor Panel — seller dashboard, catalog, earnings &amp; orders"><img src="assets/vendor/vendor-dashboard.png" alt="MONO Vendor Dashboard showing net earnings, order counts, AI quota tracker, revenue chart, and top products." loading="lazy"><span>Open capture</span></button><figcaption>Vendor Panel &mdash; Seller dashboard &amp; catalog</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/admin/admin-dashboard.png" data-caption="Admin Panel — platform control, live operations &amp; orders"><img src="assets/admin/admin-dashboard.png" alt="MONO Admin Dashboard showing platform commission, orders, active vendors, customers, and order status pipeline." loading="lazy"><span>Open capture</span></button><figcaption>Admin Panel &mdash; Platform operations control</figcaption></figure>
+</div>
+
+<h3 class="heading-2">Who this documentation is for</h3>
+<p>This guide covers the web product: the storefront, the vendor panel, the
+admin panel, and the backend services that support them. The two Flutter
+applications have their own companion documents. Everything here is written
+against the shipped source, so route names, table names, and permission keys
+match what you will find in the package.</p>
+
+<div class="api-url"><span>API PREFIX</span><code>https://your-domain.com/api/v1</code></div>
+        
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Section: admin-dashboard -->
+<section class="doc-section dashboard-card" id="admin-dashboard" data-section-title="Dashboard and admin navigation">
+
+                    <p class="section-kicker">17 / Admin panel</p>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 18px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Dashboard and admin navigation</h2>
+            <a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="action-button action-button--primary" style="display: inline-flex; align-items: center; gap: 6px;">
+              <span>Live Admin Panel Demo &nearr;</span>
+            </a>
+          </div>
+          <p>The admin panel is served from <code>/admin</code> (on your domain: <a href="https://your-domain.com/admin" target="_blank" rel="noopener"><code>https://your-domain.com/admin</code></a>) behind
+<code>auth:admin</code>. The sidebar is defined as PHP arrays in
+<code>resources/views/layouts/admin.blade.php</code> and filtered by
+permission, so an administrator only ever sees the modules they can actually
+use. The same permission keys guard the routes, which means the menu is not
+the security boundary — the middleware is.</p>
+
+<figure class="doc-figure">
+  <button class="doc-shot-btn" type="button" data-lightbox="assets/admin/admin-dashboard.png" data-caption="Admin Panel — Main Operations Dashboard"><img class="doc-shot" src="assets/admin/admin-dashboard.png" alt="MONO Admin Dashboard showing platform commission, orders, active vendors, customers, 14-day revenue trend chart, order status pipeline, and recent orders." loading="lazy"></button>
+  <figcaption>Admin Dashboard — real-time sales overview, revenue trends, and operational status</figcaption>
+</figure>
+
+<h3 class="heading-2">Navigation groups</h3>
+<div class="table-scroll"><table class="data-table">
+<thead><tr><th>Group</th><th>Modules</th></tr></thead>
+<tbody>
+<tr><td>Overview</td><td>Dashboard</td></tr>
+<tr><td>Commerce</td><td>Orders, Invoices, Coupons, Loyalty, Reviews</td></tr>
+<tr><td>Notification</td><td>Push notifications, Newsletter, Promos</td></tr>
+<tr><td>Customers</td><td>Customers</td></tr>
+<tr><td>Marketplace</td><td>Vendors, Delivery pickup, Applications</td></tr>
+<tr><td>Content</td><td>Pages, Blog, Media</td></tr>
+<tr><td>Communication</td><td>Messages, Inbox</td></tr>
+<tr><td>Administration</td><td>Administrators, Languages</td></tr>
+<tr><td>Themes &amp; appearance</td><td>Themes</td></tr>
+<tr><td>Settings</td><td>Settings</td></tr>
+</tbody></div></table>
+
+<h3 class="heading-2">Dashboard</h3>
+<p>The landing page shows revenue, order, vendor, and customer totals each with
+a thirty-day delta, a revenue chart, order status counts, the six most recent
+orders, the five most recent pending vendor applications, and the five top
+vendors. Every figure is computed from current rows rather than a cached
+summary, so it cannot drift.</p>
+
+<h3 class="heading-2">Global admin search</h3>
+<p><code>/admin/search</code> is a JSON endpoint that searches a fixed index of
+roughly forty admin pages plus records, so an operator can jump straight to a
+setting or an order from anywhere in the panel.</p>
+
+<h3 class="heading-2">Your own profile</h3>
+<p><code>/admin/profile</code> edits your name, email, avatar, and password.
+It is deliberately outside every permission gate: changing your own password
+must never depend on a role assignment that someone else controls.</p>
+        
+</section>
+
+<!-- Section: admin-access -->
+<section class="doc-section dashboard-card" id="admin-access" data-section-title="Administrators, roles, and the permission system">
+
+                    <p class="section-kicker">18 / Admin panel</p>
+          <h2 class="section-title">Administrators, roles, and the permission system</h2>
+          <p>There is no admin self-registration. The first account is created by the
+installer; every account after that is created by another administrator at
+<code>/admin/administrators</code>. Administrators authenticate against the
+<code>admin</code> guard and the <code>App\Models\Admin</code> model, which is
+entirely separate from customers and vendors.</p>
+
+<h3 class="heading-2">How permissions work</h3>
+<p>Roles and permissions are hand-rolled, not Spatie. Five tables carry it:
+<code>roles</code>, <code>permissions</code>, the <code>role_permission</code>
+pivot, the <code>admin_role</code> pivot, and <code>admins</code>. A role
+carries an <code>is_super</code> flag, and
+<code>Admin::hasPermission()</code> returns true unconditionally for a super
+administrator.</p>
+
+<p>Routes declare a permission through the <code>permission:</code> middleware.
+Pipe-separated values mean "any of", so
+<code>permission:products.manage|blogs.manage|pages.manage</code> grants access
+to any one of the three.</p>
+
+<h3 class="heading-2">Seeded roles</h3>
+<div class="table-scroll"><table class="data-table">
+<thead><tr><th>Role</th><th>Super</th><th>Access</th></tr></thead>
+<tbody>
+<tr><td><code>super_admin</code></td><td>Yes</td><td>Everything, plus the bypass in <code>hasPermission()</code>.</td></tr>
+<tr><td><code>administrator</code></td><td>No</td><td>All 32 permissions. Effectively identical day to day; it simply cannot grant itself new ones by virtue of existing.</td></tr>
+<tr><td><code>editor</code></td><td>No</td><td><code>dashboard.view</code>, <code>orders.view</code>, <code>coupons.manage</code>, <code>reviews.manage</code>, <code>products.manage</code>, <code>customers.manage</code>.</td></tr>
+</tbody></div></table>
+
+<p>Administrators and roles are managed at
+<code>/admin/administrators</code> and <code>/admin/roles</code>, guarded by
+<code>admins.manage</code> and <code>roles.manage</code>.</p>
+
+<h3 class="heading-2">The thirty-two permissions</h3>
+<div class="table-scroll"><table class="data-table">
+<thead><tr><th>Group</th><th>Permissions</th></tr></thead>
+<tbody>
+<tr><td>Overview</td><td><code>dashboard.view</code></td></tr>
+<tr><td>Commerce</td><td><code>orders.view</code>, <code>coupons.manage</code>, <code>loyalty.manage</code>, <code>notifications.manage</code>, <code>promos.manage</code>, <code>reviews.manage</code>, <code>products.manage</code>, <code>customers.manage</code>, <code>wallets.manage</code></td></tr>
+<tr><td>Marketplace</td><td><code>vendors.manage</code>, <code>vendors.impersonate</code>, <code>registrations.manage</code>, <code>packages.manage</code>, <code>delivery.settings.manage</code>, <code>applications.manage</code>, <code>payouts.manage</code>, <code>delivery.manage</code></td></tr>
+<tr><td>Administration</td><td><code>messages.manage</code>, <code>languages.manage</code>, <code>themes.manage</code>, <code>shipping.manage</code>, <code>taxes.manage</code>, <code>locations.manage</code>, <code>payments.manage</code>, <code>settings.manage</code>, <code>blogs.manage</code>, <code>pages.manage</code>, <code>media.manage</code>, <code>roles.manage</code>, <code>admins.manage</code></td></tr>
+</tbody></div></table>
+
+<div class="callout callout--warn"><strong>Impersonation is a separate grant.</strong>
+<p><code>vendors.impersonate</code> is deliberately not bundled into
+<code>vendors.manage</code>. "Login as vendor" signs you in as a seller with
+their full session, so it should be held by as few people as possible and
+revoked when someone leaves.</p></div>
+        
+</section>
+
+<!-- Section: admin-orders -->
+<section class="doc-section dashboard-card" id="admin-orders" data-section-title="Orders, invoices, and refunds">
+
+                    <p class="section-kicker">19 / Admin panel</p>
+          <h2 class="section-title">Orders, invoices, and refunds</h2>
+          <p>Everything in the commerce group sits behind <code>orders.view</code>. The
+order list filters by status, including the <code>returned</code> state, and
+the detail page is the hub for everything about a purchase.</p>
+
+<h3 class="heading-2">Order actions</h3>
+<div class="table-scroll"><table class="data-table">
+<thead><tr><th>Action</th><th>Route</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td>Create</td><td><code>POST /admin/orders</code></td><td>Manual order, with product and customer search endpoints behind it.</td></tr>
+<tr><td>Change status</td><td><code>PATCH /admin/orders/{order}/status</code></td><td>Drives customer notifications and loyalty accrual.</td></tr>
+<tr><td>Change payment</td><td><code>PATCH /admin/orders/{order}/payment</code></td><td>Status, method, and reference.</td></tr>
+<tr><td>Generate invoice</td><td><code>POST /admin/orders/{order}/invoice</code></td><td>Renders a PDF through dompdf.</td></tr>
+<tr><td>Email invoice</td><td><code>POST /admin/orders/{order}/invoice/send</code></td><td>Sends the rendered document.</td></tr>
+<tr><td>Delete</td><td><code>DELETE /admin/orders/{order}</code></td><td>Single, or bulk via <code>bulk-destroy</code>.</td></tr>
+</tbody></div></table>
+
+<h3 class="heading-2">Invoices</h3>
+<p><code>InvoiceService</code> issues numbered invoices and is idempotent per
+(kind, trigger, reference), so a repeated trigger cannot produce a duplicate
+document. Each invoice stores its number, sequence, fiscal year, kind, trigger,
+bill-to details, a line breakdown, the company block as a JSON snapshot, the
+generated PDF path, and its email delivery status and error.</p>
+
+<p>Triggers are configurable at <code>/admin/settings/invoices</code>: order
+placed, paid, delivered, status change, refund, wallet adjustment, package
+purchase, and featured promotion. The number prefix, tax ID, and footer are set
+in the same place.</p>
+
+<div class="callout"><strong>One active invoice per order.</strong>
+<p>Regenerating supersedes rather than stacks, and the invoice list at
+<code>/admin/invoices</code> shows the current document for each order plus
+the full history of downloads and re-sends.</p></div>
+
+<h3 class="heading-2">Refunds</h3>
+<p>Refunds are supported for three gateways only: Stripe, PayPal, and
+SSLCommerz. The admin controller exposes <code>refundStripe</code>,
+<code>refundPaypal</code>, and <code>refundSslCommerz</code>. There is no
+generic refund path, because a generic path would be a generic way to lose
+money.</p>
+        
+</section>
+
+<!-- Section: admin-catalog -->
+<section class="doc-section dashboard-card" id="admin-catalog" data-section-title="Catalog administration">
+
+                    <p class="section-kicker">20 / Admin panel</p>
+          <h2 class="section-title">Catalog administration</h2>
+          <p>The whole catalog block shares one permission,
+<code>products.manage</code>. That is a deliberate simplification: a catalog
+that a role can add to but not moderate is worse than one it cannot touch at
+all.</p>
+
+<div class="service-grid service-grid--3col">
+  <article class="service-card"><span>PRODUCTS</span><h3>Listing and editing</h3>
+  <ul><li>Create and edit products with digital assets, variations, SEO, and
+  per-field translations.</li>
+  <li>Bulk and single delete.</li>
+  <li>Digital assets, removed files, and bulk licence keys are handled by
+  <code>DigitalProductService</code>, shared with the vendor form.</li></ul></article>
+
+  <article class="service-card service-card--teal"><span>BUNDLES</span><h3>Bundled sets</h3>
+  <ul><li>Create and edit bundles at <code>/admin/product-bundles</code>.</li>
+  <li>Candidate lookup for choosing line items.</li>
+  <li>Variable children can be pinned to a specific variation.</li>
+  <li>Cancellation restocks every line.</li></ul></article>
+
+  <article class="service-card service-card--amber"><span>FEATURED</span><h3>Paid promotion</h3>
+  <ul><li>Feature or unfeature any product by hand.</li>
+  <li>Approve or reject vendor featured-placement requests.</li>
+  <li>Define and price the featured packages themselves.</li>
+  <li><code>featured:expire</code> clears lapsed placements
+  automatically.</li></ul></article>
+</div>
+
+<h3 class="heading-2">Taxonomy approval</h3>
+<p>Vendors create their own categories, brands, and attributes. Those entries
+are pending until an administrator acts on them:</p>
+<ul>
+  <li>Categories are a tree via <code>parent_id</code> and are approved or
+      rejected at <code>/admin/categories</code>.</li>
+  <li>Brands and attributes can be promoted to global with "make global",
+      which makes them available to every vendor.</li>
+  <li>Every list view has a JSON search endpoint, which is what the pickers in
+      the product forms call.</li>
+</ul>
+
+<h3 class="heading-2">Review moderation</h3>
+<p>Reviews are managed at <code>/admin/reviews</code> with approve, reject,
+status change, and bulk delete. <code>ProductReviewService</code> resolves who
+is allowed to review what from the review settings, so the eligibility rule is
+one decision rather than one per entry point.</p>
+        
+</section>
+
+<!-- Section: admin-customers -->
+<section class="doc-section dashboard-card" id="admin-customers" data-section-title="Customers, wallets, coupons, and loyalty">
+
+                    <p class="section-kicker">21 / Admin panel</p>
+          <h2 class="section-title">Customers, wallets, coupons, and loyalty</h2>
+          <div class="service-grid service-grid--3col">
+  <article class="service-card"><span><code>customers.manage</code></span><h3>Customer accounts</h3>
+  <ul><li>List, create, edit, and delete customer accounts.</li>
+  <li>Bulk delete for cleanup.</li>
+  <li>Search powers the manual-order customer picker.</li></ul></article>
+
+  <article class="service-card service-card--teal"><span><code>wallets.manage</code></span><h3>Wallets</h3>
+  <ul><li>Wallet list, single wallet detail, and the full transaction ledger.</li>
+  <li>Pending top-ups queue for approval or rejection.</li>
+  <li>Manual credit and debit with an attributed administrator.</li></ul></article>
+
+  <article class="service-card service-card--amber"><span><code>coupons.manage</code> · <code>loyalty.manage</code></span><h3>Discounts and points</h3>
+  <ul><li>Coupon CRUD, bulk delete, and scoped target search.</li>
+  <li>Loyalty settings and redemption tier CRUD.</li>
+  <li>Manual point adjustment with a customer search.</li></ul></article>
+</div>
+
+<h3 class="heading-2">Wallet approval flow</h3>
+<ol class="walkthrough">
+  <li><strong>Customer requests a top-up.</strong>
+    <p>The request is written to <code>wallet_transactions</code> as pending.
+    Money has not moved and the balance has not changed.</p></li>
+  <li><strong>It appears in the admin queue.</strong>
+    <p><code>/admin/wallets/pending</code> lists every outstanding request with
+    its method, reference, and amount.</p></li>
+  <li><strong>An administrator approves or rejects.</strong>
+    <p>Approval credits the wallet and records the administrator. Rejection
+    leaves the balance untouched. Neither is silent: both are ledger rows.</p></li>
+</ol>
+
+<p>Unapproved requests that expire are reversed rather than left open, which
+is why a pending top-up never becomes a surprise balance later.</p>
+
+<div class="callout callout--warn"><strong>Wallet writes are auditable by design.</strong>
+<p>Every transaction row carries the acting <code>admin_id</code> when a person
+caused it, plus a reference, method, and free-form metadata. If you add a
+balance path, populate all four.</p></div>
+        
+</section>
+
+<!-- Section: admin-marketplace -->
+<section class="doc-section dashboard-card" id="admin-marketplace" data-section-title="Vendors, packages, settlements, and withdrawals">
+
+                    <p class="section-kicker">22 / Admin panel</p>
+          <h2 class="section-title">Vendors, packages, settlements, and withdrawals</h2>
+          <p>This is the largest group in the admin panel, and it is split across three
+permissions so that approving a seller, selling them a plan, and paying them
+are three separate decisions.</p>
+
+<h3 class="heading-2">Getting vendors on the platform</h3>
+<div class="table-scroll"><table class="data-table">
+<thead><tr><th>Surface</th><th>Route</th><th>Permission</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td>Applications</td><td><code>/admin/applications</code></td><td><code>applications.manage</code></td><td>Submissions from the public "become a vendor" form, with per-item and bulk status actions.</td></tr>
+<tr><td>Registrations</td><td><code>/admin/vendors/registrations</code></td><td><code>registrations.manage</code></td><td>Approval workflow with a configurable approval mode and its own settings page.</td></tr>
+<tr><td>Vendors</td><td><code>/admin/vendors</code></td><td><code>vendors.manage</code></td><td>CRUD, verify toggle, suspend toggle, bulk delete.</td></tr>
+<tr><td>Impersonation</td><td><code>POST /admin/vendors/{vendor}/impersonate</code></td><td><code>vendors.impersonate</code></td><td>Opens a full vendor session as that seller.</td></tr>
+<tr><td>Store FAQs</td><td><code>/admin/faqs</code></td><td><code>vendors.manage</code></td><td>Per-store FAQs, with translations.</td></tr>
+</tbody></div></table>
+
+<p>Verification, suspension, and approval are independent states. A verified
+vendor can still be suspended, and suspending one does not delete their
+catalog.</p>
+
+<h3 class="heading-2">Subscription packages</h3>
+<p>Vendors buy plans. A <code>vendor_packages</code> row carries price,
+duration, a benefits array, and either a global commission or a per-package
+commission percentage and fixed amount. <code>VendorBillingService</code> owns
+the maths, and subscriptions snapshot price, duration, and commission at the
+moment of purchase so a later plan edit cannot rewrite history.</p>
+
+<div class="workflow-columns">
+  <article><h3>Lifecycle</h3><ul>
+    <li>Requested, then approved, rejected, or cancelled by an administrator.</li>
+    <li>Payment status tracked separately from subscription status.</li>
+    <li><code>vendor-packages:notify-expiry</code> warns vendors before a plan
+    lapses.</li></ul></article>
+  <article><h3>Settlement lines</h3><ul>
+    <li>One line per vendor and subscription.</li>
+    <li>Gross, discount, commission, vendor earning, admin earning.</li>
+    <li>Refund columns so a reversed commission stays visible instead of
+    vanishing.</li></ul></article>
+</div>
+
+<h3 class="heading-2">Money out</h3>
+<ul>
+  <li><strong>Settlements</strong> at <code>/admin/vendors/settlements</code>
+      show the full ledger: gross, discount, commission, vendor earning, and
+      admin earning per line.</li>
+  <li><strong>Withdrawal requests</strong> at
+      <code>/admin/vendors/withdrawals</code> are approved or rejected; paid and
+      rejected history is kept separately at
+      <code>/admin/vendors/withdrawals/history</code>.</li>
+  <li><strong>Global presets</strong> at
+      <code>/admin/vendors/withdrawal-presets</code> define the supported
+      methods (bank transfer, PayPal, bKash, and so on).</li>
+  <li><strong>Per-vendor accounts</strong> at
+      <code>/admin/vendors/{vendor}/withdrawal-methods</code> hold the payout
+      destination for that seller.</li>
+</ul>
+
+<div class="callout callout--warn"><strong>Route ordering matters here.</strong>
+<p>The payouts group must stay above the vendors group in
+<code>routes/web.php</code>. The static <code>withdrawal-presets</code> path has
+to match before the <code>/vendors/{vendor}</code> wildcard swallows it. If you
+reorder those groups, that page will 404.</p></div>
+
+<h3 class="heading-2">AI credit packs</h3>
+<p>Sellors can buy token packs for the AI suite. Packs are defined at
+<code>/admin/vendors/ai-packs</code>, purchases are approved or rejected, and a
+pack can also be granted directly to a vendor. <code>AiCreditPurchaseObserver</code>
+fires the "credits added" notification when a purchase becomes active from
+<em>any</em> flow, and de-duplicates it against the explicit notification call
+so sellers are not told twice.</p>
+        
+</section>
+
+<!-- Section: admin-delivery -->
+<section class="doc-section dashboard-card" id="admin-delivery" data-section-title="Delivery operations">
+
+                    <p class="section-kicker">23 / Admin panel</p>
+          <h2 class="section-title">Delivery operations</h2>
+          <p>Delivery covers the physical path from a vendor's shelf to a customer's
+door. It is split into operations and configuration, because the people who run
+shipments are rarely the people who set courier contracts.</p>
+
+<h3 class="heading-2">Operations, behind <code>delivery.manage</code></h3>
+<div class="table-scroll"><table class="data-table">
+<thead><tr><th>Surface</th><th>Route</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td>Pickup requests</td><td><code>/admin/delivery/pickup-requests</code></td><td>Vendor to warehouse pickups.</td></tr>
+<tr><td>Drop-off requests</td><td><code>/admin/delivery/dropoff-requests</code></td><td>Warehouse to customer drop-offs.</td></tr>
+<tr><td>Request lifecycle</td><td><code>POST /admin/delivery/requests/{id}/…</code></td><td>Approve, reject, schedule, assign personnel, change status, add a note, set the warehouse.</td></tr>
+<tr><td>Shipments</td><td><code>/admin/delivery/shipments</code></td><td>Outbound shipments with courier, tracking number, and tracking URL.</td></tr>
+<tr><td>Tracking</td><td><code>/admin/delivery/tracking</code></td><td>One merged timeline per order.</td></tr>
+</tbody></div></table>
+
+<p>Every state change on a request is written to
+<code>delivery_request_events</code>, so the timeline is a record rather than a
+reconstruction. <code>TrackingService</code> merges request events and shipment
+events into the single per-order timeline that customers and vendors both see.</p>
+
+<div class="callout"><strong>Order status is synced conservatively.</strong>
+<p><code>ShipmentService</code> moves the parent order forward only when the
+evidence is unambiguous. It will not downgrade an order to match a lagging
+shipment, because a late courier scan should never tell a customer their
+delivered order is processing again.</p></div>
+
+<h3 class="heading-2">Configuration, behind <code>delivery.settings.manage</code></h3>
+<div class="callout-grid">
+  <div class="callout"><strong>Delivery personnel</strong><p>CRUD for delivery staff at <code>/admin/delivery/personnel</code>, assignable to any request.</p></div>
+  <div class="callout"><strong>Warehouses and pickup points</strong><p><code>/admin/delivery/locations</code>, created, updated, and deleted.</p></div>
+  <div class="callout"><strong>Couriers</strong><p><code>/admin/delivery/couriers</code>, the courier partners available when creating a shipment.</p></div>
+  <div class="callout"><strong>Feature flags</strong><p><code>/admin/delivery/settings</code> via <code>DeliverySettings</code>, including the <code>delivery_notify_*</code> switches that gate vendor, admin, and customer notifications.</p></div>
+</div>
+
+<p><code>DeliveryService</code> is the single source of validation shared by the
+vendor panel, the admin panel, and the API, so a request created from any of
+the three is checked the same way.</p>
+        
+</section>
+
+<!-- Section: admin-messaging -->
+<section class="doc-section dashboard-card" id="admin-messaging" data-section-title="Chat, messages, push, and newsletters">
+
+                    <p class="section-kicker">24 / Admin panel</p>
+          <h2 class="section-title">Chat, messages, push, and newsletters</h2>
+          <h3 class="heading-2">Realtime chat inbox</h3>
+<p>The admin inbox is the platform operator's view of every customer-vendor
+conversation. It uses Ably for delivery with a REST polling fallback, so the
+inbox still works if the realtime connection drops.</p>
+
+<div class="table-scroll"><table class="data-table">
+<thead><tr><th>Route</th><th>Rate limit</th><th>Purpose</th></tr></thead>
+<tbody>
+<tr><td><code>inbox</code></td><td>none</td><td>Conversation list</td></tr>
+<tr><td><code>inbox/{conversation}</code></td><td>none</td><td>Message thread</td></tr>
+<tr><td><code>inbox/reply</code></td><td>20 / 1 min</td><td>Send as the platform</td></tr>
+<tr><td><code>inbox/{id}/poll</code></td><td>none</td><td>Polling fallback</td></tr>
+<tr><td><code>inbox/{id}/delivered</code></td><td>60 / 1 min</td><td>Read and delivered receipts</td></tr>
+<tr><td><code>inbox/ably/token</code></td><td>30 / 1 min</td><td>Short-lived client token</td></tr>
+<tr><td><code>inbox/messages/remove</code></td><td>none</td><td>Moderation removal</td></tr>
+</tbody></div></table>
+
+<p>The Ably secret never leaves the server. <code>AblyTokenService</code> mints
+short-lived client tokens per request, and <code>routes/channels.php</code>
+authorises each private channel against the correct guard. Admin access to a
+conversation requires both <code>messages.manage</code> and that the
+conversation belongs to the platform vendor.</p>
+
+<div class="callout callout--warn"><strong>Message content is untrusted.</strong>
+<p>It arrives from customers and vendors. Escape it on render, and do not allow
+it to introduce markup. Chat attachments are served through signed URLs with a
+one-hour expiry, and the download route must verify the caller.</p></div>
+
+<h3 class="heading-2">Contact messages</h3>
+<p>The public contact form feeds <code>/admin/messages</code>.
+<code>ContactMessageService</code> persists the message first and then treats
+the admin notification email as best-effort, so a mail failure never loses a
+customer's enquiry.</p>
+
+<h3 class="heading-2">Push notifications</h3>
+<p><code>/admin/notifications/push</code> broadcasts to customer devices over
+Firebase Cloud Messaging. <code>FcmClient</code> implements the FCM HTTP v1 API
+directly, including JWT-bearer OAuth2 token caching, so no Firebase Admin SDK
+is required. <code>SendPushNotification</code> fans out across a customer's
+registered devices and prunes tokens that have gone dead.</p>
+
+<p>Service-account credentials are uploaded at
+<code>/admin/settings/firebase</code> and stored in the database, not
+<code>.env</code>.</p>
+
+<h3 class="heading-2">Newsletters</h3>
+<p><code>/admin/newsletter</code> manages subscribers, a campaign editor, CSV
+export, test sends, and dispatch.
+<code>SendNewsletterCampaign</code> chunks through active subscribers in one
+worker run with a thirty-minute timeout, which is why a queue worker matters on
+a real site.</p>
+
+<h3 class="heading-2">Promo banners</h3>
+<p><code>/admin/promos</code> controls the promotional banner shown on the
+mobile apps' home screen. It is a separate surface from the storefront hero, so
+a campaign can target app users without changing the website.</p>
+        
+</section>
+
+<!-- Section: admin-ai -->
+<section class="doc-section dashboard-card" id="admin-ai" data-section-title="AI tools, providers, and vendor quotas">
+
+                    <p class="section-kicker">25 / Admin panel</p>
+          <h2 class="section-title">AI tools, providers, and vendor quotas</h2>
+          <p>The AI toolset is available to authenticated administrators for translating
+content, generating copy, and generating images. Providers and model selection
+live at <code>/admin/settings/ai</code>.</p>
+
+<h3 class="heading-2">What administrators can do</h3>
+<div class="api-facts"><span><b>TRANSLATE</b> 20 / min</span><span><b>TAXONOMY BATCH</b> 10 / min</span><span><b>GENERATE</b> rate limited</span></div>
+
+<ul>
+  <li><code>POST /admin/translate</code> translates arbitrary content,
+      throttled to 20 requests per minute.</li>
+  <li><code>POST /admin/translate/taxonomy</code> bulk-translates taxonomy in
+      one pass, throttled to 10 per minute.</li>
+  <li><code>POST /admin/generate</code> and
+      <code>POST /admin/generate-image</code> produce copy and imagery, gated
+      by <code>products.manage|blogs.manage|pages.manage</code>.</li>
+</ul>
+
+<p>Translation runs through <code>AiTranslationService</code>, which chunks
+long fields and keeps every field that succeeded. A record with one
+untranslatable field is partially translated rather than rolled back, and the
+response lists what was skipped.</p>
+
+<h3 class="heading-2">Vendors get metered access</h3>
+<p>Sellers reach the same tools from the vendor panel and the vendor API, but
+through <code>VendorAiQuotaService</code>, which enforces three separate
+pools:</p>
+<div class="service-grid service-grid--3col">
+  <article class="service-card"><span>POOL 1</span><h3>Text generation</h3><p>Tokens consumed by copy and description generation.</p></article>
+  <article class="service-card service-card--teal"><span>POOL 2</span><h3>Translation</h3><p>A separate token pool, because translation volume scales very differently from authoring.</p></article>
+  <article class="service-card service-card--amber"><span>POOL 3</span><h3>Images</h3><p>Counted per generated image rather than per token.</p></article>
+</div>
+
+<p>Vendor AI endpoints are throttled to 30 requests per minute each, and
+quota is checked before the call, not after. Credits are drawn down from the
+active package allowance, and unused allowances expire rather than rolling
+over: <code>ai-credits:cancel-expired</code> runs every minute.</p>
+
+<p>Every AI call is recorded in <code>ai_usage</code> with its provider, model,
+token counts, and cost attribution, so you can reconcile spend against
+packages.</p>
+
+<div class="callout callout--warn"><strong>AI keys live in the database.</strong>
+<p>Provider credentials are stored through the settings store and edited from
+the admin panel. They are never written to <code>.env</code>, and they are
+never returned to the browser.</p></div>
+        
+</section>
+
+<!-- Section: admin-appearance -->
+<section class="doc-section dashboard-card" id="admin-appearance" data-section-title="Themes, app themes, and colours">
+
+                    <p class="section-kicker">26 / Admin panel</p>
+          <h2 class="section-title">Themes, app themes, and colours</h2>
+          <p>Everything here sits behind <code>themes.manage</code> and lives under
+<code>/admin/appearance</code>.</p>
+
+<div class="table-scroll"><table class="data-table">
+<thead><tr><th>Surface</th><th>Route</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td>Branding</td><td><code>/admin/appearance/branding</code></td><td>Site logo, favicon, and brand marks.</td></tr>
+<tr><td>Storefront themes</td><td><code>/admin/appearance/themes</code></td><td>Install, activate, and remove storefront themes.</td></tr>
+<tr><td>App themes</td><td><code>/admin/appearance/app-themes</code></td><td>Activate the mobile app's visual system.</td></tr>
+<tr><td>Colours</td><td><code>/admin/appearance/colors</code></td><td>Edit and reset the active palette.</td></tr>
+</tbody></div></table>
+
+<h3 class="heading-2">Palette resolution</h3>
+<p><code>ThemePalette</code> maps a manifest palette onto CSS custom
+properties. Each colour carries a label, a default, and a variable name, so an
+administrator sees "Button background" rather than
+<code>--el-primary-500</code>. The palette also carries shape radii, an
+<code>isDark</code> flag, and status colours for the seven order statuses, so a
+dark theme automatically gets readable status badges instead of inheriting light
+ones.</p>
+
+<h3 class="heading-2">Storefront and app themes move independently</h3>
+<p>Switching the storefront theme does not change the mobile app's layout, and
+switching the app theme does not change the website. They share a colour
+palette, but each has its own activation state. Legacy
+<code>/settings/branding</code>, <code>/settings/themes</code>, and
+<code>/settings/colors</code> URLs redirect here, so old bookmarks and old
+documentation links keep working.</p>
+
+<div class="callout callout--warn"><strong>Removing a theme is destructive.</strong>
+<p>Uninstall drops every table the manifest declares. The
+<code>mono</code> theme is kept outside the removable tree for exactly this
+reason.</p></div>
+        
+</section>
+
+<!-- Section: admin-settings -->
+<section class="doc-section dashboard-card" id="admin-settings" data-section-title="Settings reference">
+
+                    <p class="section-kicker">27 / Admin panel</p>
+          <h2 class="section-title">Settings reference</h2>
+          <p><code>/admin/settings</code> redirects to the shop settings page. The rest
+of the group is a set of focused screens rather than one long form, so an
+operator changes one thing at a time.</p>
+
+<div class="table-scroll"><table class="data-table">
+<thead><tr><th>Page</th><th>Route</th><th>Permission</th><th>Contains</th></tr></thead>
+<tbody>
+<tr><td>Shop</td><td><code>/admin/settings/shop</code></td><td><code>settings.manage</code></td><td>Site name, tagline, contact details, currency, free-shipping threshold, flat shipping, product grid columns, pagination.</td></tr>
+<tr><td>Shipping</td><td><code>/admin/settings/shipping</code></td><td><code>shipping.manage</code></td><td>Shipping rates, flat rate, free-shipping zone, and shipping method CRUD.</td></tr>
+<tr><td>Locations</td><td><code>/admin/settings/countries</code></td><td><code>locations.manage</code></td><td>Countries with nested states and cities.</td></tr>
+<tr><td>Taxes</td><td><code>/admin/settings/taxes</code></td><td><code>taxes.manage</code></td><td>Tax classes and rates with priorities.</td></tr>
+<tr><td>Payments</td><td><code>/admin/settings/payment-gateways</code></td><td><code>payments.manage</code></td><td>All fourteen gateway configurations.</td></tr>
+<tr><td>Invoices</td><td><code>/admin/settings/invoices</code></td><td><code>settings.manage</code></td><td>Enable, triggers, number prefix, tax ID, footer.</td></tr>
+<tr><td>SMTP</td><td><code>/admin/settings/smtp</code></td><td><code>settings.manage</code></td><td>Mail server and a test-send button.</td></tr>
+<tr><td>Firebase</td><td><code>/admin/settings/firebase</code></td><td><code>settings.manage</code></td><td>FCM web config and service-account upload.</td></tr>
+<tr><td>Scheduled jobs</td><td><code>/admin/settings/scheduled-jobs</code></td><td><code>settings.manage</code></td><td>Job table with frequency, enable/disable, and run-now.</td></tr>
+<tr><td>Chat</td><td><code>/admin/settings/chat</code></td><td><code>settings.manage</code></td><td>Ably configuration.</td></tr>
+<tr><td>Mobile app</td><td><code>/admin/settings/mobile-app</code></td><td><code>settings.manage</code></td><td>App-facing configuration served to both Flutter clients.</td></tr>
+<tr><td>AI</td><td><code>/admin/settings/ai</code></td><td><code>settings.manage</code></td><td>Providers, model list, and translator, generator, and image model selection.</td></tr>
+<tr><td>Cookie consent</td><td><code>/admin/settings/cookie</code></td><td><code>settings.manage</code></td><td>Consent banner copy and behaviour.</td></tr>
+</tbody></div></table>
+
+<div class="callout callout--warn"><strong>Settings are stored in the database.</strong>
+<p>Everything above is key and value rows in the <code>settings</code> table,
+not environment variables. That is deliberate: it lets an operator change a
+mail server or rotate a payment key without shell access. It also means
+backing up the database backs up your configuration.</p></div>
+        
+</section>
+
+<!-- Section: admin-platform -->
+<section class="doc-section dashboard-card" id="admin-platform" data-section-title="Administrators, roles, languages, and media">
+
+                    <p class="section-kicker">28 / Admin panel</p>
+          <h2 class="section-title">Administrators, roles, languages, and media</h2>
+          <p>These four modules sit in the "Administration" group. They are the ones
+that change who can do what, in what language, and with what imagery.</p>
+
+<h3 class="heading-2">Administrators</h3>
+<p><code>/admin/administrators</code> creates, edits, and deletes admin
+accounts behind <code>admins.manage</code>. There is no public registration
+path: the installer creates the first account, and every account after that
+comes from this screen.</p>
+
+<h3 class="heading-2">Roles</h3>
+<p><code>/admin/roles</code> is where permissions are assigned. Each role is a
+name, a label, an <code>is_super</code> flag, and a set of permissions drawn
+from the 32 available. Changing a role's permission set changes it for every
+administrator holding that role, immediately.</p>
+
+<div class="callout callout--warn"><strong>Guard the last super administrator.</strong>
+<p>An <code>is_super</code> role bypasses <code>hasPermission()</code>
+entirely. If you remove super-admin status from every account, nobody can
+restore it through the panel and you will be editing the database by hand.</p></div>
+
+<h3 class="heading-2">Languages</h3>
+<p><code>/admin/languages</code> manages the three shipped languages plus any
+you add. Each has a web default and an independent mobile default, an
+enable/disable switch, and a per-language translation editor at
+<code>/admin/languages/{language}/translations</code>.</p>
+
+<h3 class="heading-2">Media</h3>
+<p><code>/admin/media</code> is the shared library behind every image picker in
+the panel, with a JSON listing endpoint, upload, delete, and bulk delete.
+Uploads land under <code>storage/app/public</code> in the owner-appropriate
+subdirectory and are served through <code>PublicMedia::url()</code>.</p>
+
+<p>The library is owner-isolated: a vendor only ever sees their own media, while
+an administrator sees everything. <code>MediaIsolationTest</code> guards that
+boundary.</p>
+        
+</section>
+
+
+
+
+
+
+
+
+      </div>
+
+      <!-- DASHBOARD FOOTER -->
+      <footer class="dashboard-footer">
+        <div class="footer-left">
+          <strong>MONO Marketplace — Web Documentation Dashboard</strong>
+          <span>Part of the MONO Multi-Vendor Marketplace Suite</span>
+        </div>
+        <div class="footer-right">
+          <a href="#introduction" class="footer-back-to-top">Back to top &uarr;</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Image Lightbox Modal -->
+  <dialog class="lightbox" id="image-lightbox" hidden aria-labelledby="lightbox-caption">
+    <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer"><span aria-hidden="true">&times;</span></button>
+    <img id="lightbox-image" src="" alt="">
+    <div class="lightbox-bar">
+      <p id="lightbox-caption"></p>
+      <span class="lightbox-counter" id="lightbox-counter"></span>
+    </div>
+    <div class="lightbox-nav">
+      <button class="lightbox-step" type="button" data-lightbox-prev>&larr; Previous</button>
+      <button class="lightbox-step" type="button" data-lightbox-close>Close</button>
+      <button class="lightbox-step" type="button" data-lightbox-next>Next &rarr;</button>
+    </div>
+  </dialog>
+
+</body>
+</html>

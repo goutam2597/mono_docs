@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261019_all3_in_row">
+  <link rel="stylesheet" href="styles.css?v=20261025_docs1">
   <script src="script.js" defer></script>
 </head>
 <body class="dashboard-body">
@@ -110,6 +110,11 @@
 </div>
 <div class="sidebar-group-label">BUILD & RELEASE</div>
 <div class="sidebar-group-items">
+<a href="#rebranding" class="sidebar-nav-link" data-nav-id="rebranding">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7h.01"/></svg>
+  <span class="sidebar-link-text">Rebranding Guide</span>
+
+</a>
 <a href="#build-run" class="sidebar-nav-link" data-nav-id="build-run">
   <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3m0 0l5-5c1.5-1.5 3.5-2 5-2 0 1.5-.5 3.5-2 5l-5 5z"/></svg>
   <span class="sidebar-link-text">Build & Run</span>
@@ -129,6 +134,11 @@
   <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zm0-7v.01M12 11a2 2 0 1 0-2-2"/></svg>
   <span class="sidebar-link-text">Support & Limitations</span>
   
+</a>
+<a href="#troubleshooting" class="sidebar-nav-link" data-nav-id="troubleshooting">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+  <span class="sidebar-link-text">Troubleshooting & FAQ</span>
+
 </a>
 </div>
     </nav>
@@ -697,6 +707,17 @@
     <p><strong>Current change paths:</strong> update the constant in source, call <code>setBaseUrl</code> from code, or pre-seed the SharedPreferences key. A documented settings screen or dart-define override would be a future source change, not a current capability.</p>
   </div>
 
+  <h3 class="heading-2">Point the app at your server — step by step</h3>
+  <p>Connect the vendor app to your own backend once, before any real testing — one file, five minutes:</p>
+  <ol class="walkthrough">
+    <li><strong>Open the API client file.</strong><p>In your Flutter project, open <code>lib/services/api_client.dart</code> in any code editor (VS Code or Android Studio).</p></li>
+    <li><strong>Find the default URL.</strong><p>Search the file for <code>defaultBaseUrl</code> (around line 48). You will see <code>static const defaultBaseUrl = '...';</code> — this single value decides which server the whole app talks to.</p></li>
+    <li><strong>Replace it with your domain.</strong><p>Change the value to your own API root, keeping the <code>/api/v1</code> suffix: <code>static const defaultBaseUrl = 'https://your-domain.com/api/v1';</code>. Save the file.</p></li>
+    <li><strong>Optional — override on one device.</strong><p>To point a single test device at a different server without rebuilding, pre-seed the <code>vendor_api_base_url</code> key in the app's SharedPreferences with your URL; a non-empty value always wins over the compiled constant.</p></li>
+    <li><strong>Run and log in.</strong><p>Start the app with <code>flutter run -d &lt;device&gt;</code>, then log in with a vendor account that is approved in your admin panel. The dashboard should load your store's real data.</p></li>
+  </ol>
+  <div class="info-block is-warning"><p><strong>Release rule:</strong> published builds must use <code>https://</code>, and the vendor account you log in with must exist and be active in <code>/admin</code> — a 401 here almost always means the account, not the code.</p></div>
+
   <h3 class="heading-2">Transport security flags</h3>
   <div class="table-wrap">
     <table class="packages-table">
@@ -806,8 +827,8 @@
   <h2 class="section-title">iOS setup: signing, Firebase, and push notifications</h2>
   <p>Complete the setup below to take the generated iOS target from local development to a signed build with APNs and Firebase Cloud Messaging. The Flutter shell and bundle identifier are present in the repository; Apple credentials, APNs credentials, and the Firebase iOS configuration are supplied through Xcode, Firebase, and the Apple Developer portal.</p>
 
-  <div class="info-block">
-    <p><strong>Before you begin:</strong> use macOS with Xcode, Flutter 3.44.0 or newer, CocoaPods, an Apple Developer team, and access to the Firebase project. Keep the APNs <code>.p8</code> key, signing assets, and private credentials outside source control.</p>
+  <div class="info-block is-warning">
+    <p><strong>Read this first — push notifications are not free to switch on.</strong> iOS push requires a paid <strong>Apple Developer Program enrollment (US$99/year)</strong>, <strong>Xcode on macOS</strong>, an Apple Developer team, and access to the Firebase project for the APNs <code>.p8</code> key. Without enrollment you can run the app on the simulator or a personal device, but push notifications, signing for distribution, and App Store upload will not work. Keep the APNs key, signing assets, and private credentials outside source control.</p>
   </div>
 
   <div class="table-wrap">
@@ -880,6 +901,52 @@ flutter build ipa --release</code></pre>
     <li>Test login, notification permission, foreground delivery, background delivery, deep links, and logout unregistration on a physical device.</li>
     <li>For TestFlight or the App Store, select the correct team and distribution profile in Xcode, increment the build number, archive the Runner scheme, and validate the IPA before upload.</li>
   </ul>
+
+</section>
+
+<!-- Section: rebranding -->
+<section class="doc-section dashboard-card" id="rebranding" data-section-title="Rebranding guide">
+
+  <h2 class="section-title">Rebrand the vendor app without writing Dart code</h2>
+  <p>The vendor app rebrands entirely through configuration files and two image swaps — <strong>no Dart edits are required at all</strong>. The splash screen is deliberately quiet (a diagonal background wash with the app icon, no wordmark), so regenerating the icon rebrands the launch experience automatically.</p>
+
+  <h3 class="heading-2">Change the app name (Android)</h3>
+  <p>Open <code>android/app/src/main/AndroidManifest.xml</code> and change the application label. The shipped value is <code>Mono V</code>; use your full store name so the home-screen label reads correctly:</p>
+  <div class="code-shell">
+    <div class="code-head"><span>android/app/src/main/AndroidManifest.xml</span><button class="copy-button" type="button" data-copy="#v-rebrand-android-label">Copy</button></div>
+    <pre><code id="v-rebrand-android-label" class="code-block">&lt;application
+    android:label="Your Vendor App Name"
+    ...&gt;</code></pre>
+  </div>
+
+  <h3 class="heading-2">Change the app name (iOS)</h3>
+  <p>Open <code>ios/Runner/Info.plist</code> and set <code>CFBundleDisplayName</code> — the shipped value is <code>Mono Vendor</code>. The internal <code>CFBundleName</code> (<code>mono_vendor</code>) can stay as-is:</p>
+  <div class="code-shell">
+    <div class="code-head"><span>ios/Runner/Info.plist</span><button class="copy-button" type="button" data-copy="#v-rebrand-ios-name">Copy</button></div>
+    <pre><code id="v-rebrand-ios-name" class="code-block">&lt;key&gt;CFBundleDisplayName&lt;/key&gt;
+&lt;string&gt;Your Vendor App Name&lt;/string&gt;</code></pre>
+  </div>
+
+  <h3 class="heading-2">Replace the launcher icon</h3>
+  <p>The pipeline is pre-configured in <code>pubspec.yaml</code>: <code>image_path</code> points at <code>assets/icons/app_icon.png</code>, the adaptive foreground at <code>assets/icons/app_icon_foreground.png</code>, and the adaptive background is emerald <code>#059669</code>. Replace both PNGs (1024×1024 recommended, foreground with transparent padding) and run:</p>
+  <div class="code-shell">
+    <div class="code-head"><span>Terminal / mono_vendor</span><button class="copy-button" type="button" data-copy="#v-rebrand-icon-cmd">Copy</button></div>
+    <pre><code id="v-rebrand-icon-cmd" class="code-block code-block-run">dart run flutter_launcher_icons</code></pre>
+  </div>
+  <div class="info-block"><p><strong>Match your brand color.</strong> If your brand is not emerald, also update <code>adaptive_icon_background</code> in the <code>flutter_launcher_icons:</code> block of <code>pubspec.yaml</code> before running the command — Android 12+ renders the launch screen on that color.</p></div>
+
+  <h3 class="heading-2">Rebrand checklist</h3>
+  <div class="code-shell">
+    <div class="code-head"><span>Verify after each step</span><button class="copy-button" type="button" data-copy="#v-rebrand-checklist">Copy</button></div>
+    <pre><code id="v-rebrand-checklist" class="code-block code-block-run">1. Replace assets/icons/app_icon.png + app_icon_foreground.png
+2. (optional) adaptive_icon_background in pubspec.yaml
+3. dart run flutter_launcher_icons
+4. AndroidManifest.xml  -> android:label
+5. Info.plist           -> CFBundleDisplayName
+6. flutter clean && flutter run -d &lt;device&gt;   # icons need a clean build</code></pre>
+  </div>
+
+  <div class="info-block is-warning"><p><strong>Before you publish:</strong> the bundle identifier (<code>com.mono.vendor.app</code>) is separate from the display name and must belong to your store accounts. The rename procedure is covered in the <a href="#build-run">Build &amp; Run</a> section, and the Firebase Android app must be re-registered under the new package name.</p></div>
 
 </section>
 
@@ -1003,6 +1070,50 @@ main.dart                                  ← register provider (if app-wide)</
   <div class="info-block">
     <p><strong>Keep navigation truthful.</strong> The shell drawer belongs on Overview. Internal subviews should remain inside their owning screen unless a new public <code>*Screen</code> class is deliberately added and counted in the inventory.</p>
   </div>
+
+</section>
+
+<!-- Section: troubleshooting -->
+<section class="doc-section dashboard-card" id="troubleshooting" data-section-title="Troubleshooting and FAQ">
+
+  <h2 class="section-title">Troubleshooting and FAQ</h2>
+  <p>Concrete fixes for the errors that come up most during installation and first runs. Each answer names the file or setting responsible; the linked sections hold the deeper explanation.</p>
+
+  <h3 class="heading-2">Install &amp; build</h3>
+
+  <h3 class="heading-2">“Version solving failed” when running <code>flutter pub get</code></h3>
+  <p>The lockfile pins the toolchain (verified with Flutter <code>3.47.7</code> / Dart <code>3.13.5</code>). Upgrade your Flutter SDK (<code>flutter upgrade</code>) to a release that satisfies the lockfile instead of editing package constraints.</p>
+
+  <h3 class="heading-2">Gradle errors on a clean clone</h3>
+  <p>Gradle wrapper artifacts are not tracked. Generate them (<code>gradle wrapper</code> inside <code>android/</code>, or let Android Studio sync), and build with <strong>JDK 17</strong> and the AGP/Gradle versions pinned in <code>android/app/build.gradle.kts</code>.</p>
+
+  <h3 class="heading-2">“Namespace” or manifest error after changing the application ID</h3>
+  <p>Moving the ID means moving the Kotlin source: <code>android/app/src/main/kotlin/com/mono/vendor/app/MainActivity.kt</code> must live under folders matching the new package, with its <code>package</code> line updated. The rename table is in the <a href="#build-run">Build &amp; Run</a> section.</p>
+
+  <h3 class="heading-2"><code>Default FirebaseApp is not initialized</code> at startup</h3>
+  <p><code>google-services.json</code> is missing or misplaced. It must be exactly <code>android/app/google-services.json</code>, replacing the bundled demo file. Config changes need a <strong>full rebuild</strong>, not a hot reload.</p>
+
+  <h3 class="heading-2">Google Play rejects the release bundle</h3>
+  <p>The release build type ships with debug signing. Add your upload keystore and <code>android/key.properties</code>, then point the <code>release</code> build type at it — the walkthrough is in the <a href="#build-run">Build &amp; Run</a> section and the store checklist in <a href="#publish-app">Release readiness</a>.</p>
+
+  <h3 class="heading-2">Networking, login &amp; realtime</h3>
+
+  <h3 class="heading-2">Login fails with a network error on first run</h3>
+  <p>The compiled default API URL is a placeholder (<code>https://example.com/api/v1</code>). Point the app at your server: change <code>defaultBaseUrl</code> in <code>lib/services/api_client.dart</code> and rebuild, or pre-seed the <code>vendor_api_base_url</code> SharedPreferences key — both paths are documented in <a href="#environment-configuration">Environment configuration</a>. There is no settings UI for this by design.</p>
+
+  <h3 class="heading-2">Login returns 401 even though the URL is correct</h3>
+  <p>The account must exist as an approved vendor in the admin panel, and credentials must match a vendor with sign-in enabled. Check the vendor's status in <code>/admin</code> before debugging the app.</p>
+
+  <h3 class="heading-2">Push notifications never arrive</h3>
+  <p>Three gates must all pass: (1) FCM initializes <strong>only after the authenticated vendor shell mounts</strong>, so log in first; (2) the Firebase server key must be configured in the admin panel's Firebase settings so the backend can send; (3) Android 13+ requires the notification permission to be granted. iOS push additionally needs the full Apple setup in the <a href="#ios-setup">iOS section</a>.</p>
+
+  <h3 class="heading-2">Live chat shows offline or messages do not send</h3>
+  <p>Ably tokens are requested per conversation from <code>GET /chat/token?conversationId=...</code>. A failure here usually means the backend's Ably credentials are missing or the API base URL points at the wrong environment. Verify the backend Ably configuration, then re-enter the conversation (tokens are fetched per conversation, not at login).</p>
+
+  <h3 class="heading-2">Products load but images are broken</h3>
+  <p>Media URLs are relative and resolve against the active base URL. A wrong base URL breaks images even when JSON loads; on the backend, <code>php artisan storage:link</code> must have been run and <code>storage/app/public</code> must be reachable under <code>/storage</code>.</p>
+
+  <div class="info-block"><p><strong>Still stuck?</strong> Reproduce with <code>flutter run -d &lt;device&gt; --verbose</code>, note the first exception, and compare with the source-backed limitations in <a href="#publish-app">Release readiness</a> — most reported issues are a classified limitation or a configuration step above, not a new defect.</p></div>
 
 </section>
 

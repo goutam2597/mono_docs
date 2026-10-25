@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MONO Marketplace — Web Documentation Dashboard">
+  <meta name="theme-color" content="#18284D">
+  <title>Mono Web — Vendor Portal Documentation Dashboard</title>
+  <link rel="icon" type="image/png" href="assets/images/mono-web-icon.png">
+  <link rel="shortcut icon" href="assets/images/mono-web-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261025_docs1">
+  <script src="script.js" defer></script>
+</head>
+<body class="dashboard-body">
+
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop" aria-hidden="true"></div>
+
+  <!-- FIXED FULL-HEIGHT SIDEBAR (Exact Backend Admin Panel Layout) -->
+  <aside id="admin-sidebar" class="admin-sidebar" aria-label="Documentation Navigation">
+    <div class="sidebar-header">
+      <a href="#introduction" class="sidebar-brand">
+        <span class="brand-logo-frame">
+          <img src="assets/images/mono-web-icon.png" alt="Brand Logo" class="brand-logo-img">
+        </span>
+        <div class="brand-meta">
+          <strong class="brand-name">MONO WEB</strong>
+          <span class="brand-tag">WEB SUITE</span>
+        </div>
+      </a>
+      <button type="button" id="sidebar-toggle-btn" class="sidebar-toggle-btn" aria-label="Toggle Sidebar Navigation">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 17l4-5-4-5M4 17l4-5-4-5"/></svg>
+      </button>
+    </div>
+
+    <!-- Quick Search Filter in Sidebar -->
+    <div class="sidebar-search-box">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="sidebar-search-input" placeholder="Search documentation..." autocomplete="off" aria-label="Search documentation topics">
+      <kbd class="search-kbd">/</kbd>
+    </div>
+
+    <!-- Grouped Sidebar Navigation -->
+    <nav class="sidebar-nav-scroll" id="sidebar-nav" aria-label="Documentation Topics">
+<div class="sidebar-group-label">OVERVIEW & ARCHITECTURE</div>
+<div class="sidebar-group-items">
+<a href="#introduction" class="sidebar-nav-link" data-nav-id="introduction">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
+  <span class="sidebar-link-text">Codebase Overview</span>
+  
+</a>
+</div>
+<div class="sidebar-group-label">VENDOR PORTAL</div>
+<div class="sidebar-group-items">
+<a href="#vendor-dashboard" class="sidebar-nav-link" data-nav-id="vendor-dashboard">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5m-4 0h4"/></svg>
+  <span class="sidebar-link-text">Vendor Store Operations</span>
+  
+</a>
+<a href="#vendor-catalog-finance" class="sidebar-nav-link" data-nav-id="vendor-catalog-finance">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+  <span class="sidebar-link-text">Products, Payouts & AI</span>
+
+</a>
+<a href="#vendor-onboarding" class="sidebar-nav-link" data-nav-id="vendor-onboarding">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM12 14a7 7 0 0 0-7 7h14a7 7 0 0 0-7-7z"/></svg>
+  <span class="sidebar-link-text">Vendor Onboarding</span>
+
+</a>
+<a href="#vendor-modules" class="sidebar-nav-link" data-nav-id="vendor-modules">
+  <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6zm0 4h16M8 8h.01M11 8h.01"/></svg>
+  <span class="sidebar-link-text">Panel Modules Detail</span>
+
+</a>
+</div>
+    </nav>
+
+    <!-- Sidebar System Footer -->
+    <div class="sidebar-footer">
+      <div class="system-status-indicator">
+        <span class="live-dot" aria-hidden="true"></span>
+        <div class="system-status-text">
+          <strong>Web Marketplace 1.0.0</strong>
+          <small>Laravel 11 · MySQL · PHP 8.3</small>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN DASHBOARD CONTENT AREA -->
+  <div id="admin-main" class="admin-main">
+    
+    <!-- TOP STICKY DASHBOARD NAVBAR -->
+    <header class="top-navbar">
+      <div class="top-navbar-left">
+        <button type="button" id="mobile-toggle-btn" class="mobile-menu-btn" aria-label="Open sidebar menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <nav class="breadcrumb-trail" aria-label="Breadcrumb">
+          <span class="crumb-root">Documentation</span>
+          <span class="crumb-divider">/</span>
+          <span class="crumb-section">MONO WEB · VENDOR PORTAL</span>
+          <span class="crumb-divider">/</span>
+          <span class="crumb-active" id="active-breadcrumb-label">Codebase Overview</span>
+        </nav>
+      </div>
+        <nav class="scope-tabs" aria-label="Documentation scope">
+          <a href="index.html" class="scope-tab">Web Storefront</a>
+          <a href="vendor.html" class="scope-tab is-active">Vendor Portal</a>
+          <a href="admin.html" class="scope-tab">Admin Panel</a>
+        </nav>
+    </header>
+
+    <!-- DASHBOARD STAGE -->
+    <main class="dashboard-stage" id="main-content">
+
+      <!-- Executive Overview Banner -->
+      
+      <section class="executive-banner" aria-label="Executive Overview">
+        <div class="banner-body">
+          <div class="banner-badge-row">
+            <span class="banner-kicker">MONO VENDOR PORTAL ENGINEERING CONSOLE</span>
+            <span class="banner-tag">Seller Suite</span>
+          </div>
+          <h1 class="banner-title">Vendor Web Portal Operations &amp; Engineering Dashboard</h1>
+          <p class="banner-desc">Field manual for the MONO vendor web portal: store branding and policies, the catalog and variant matrix with bulk CSV uploads, the order fulfillment pipeline, settlements and withdrawals, and store promotions.</p>
+        </div>
+      </section>
+
+      <!-- 4-Column KPI Metrics Summary Grid -->
+      
+      <section class="kpi-grid" aria-label="System Metrics">
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">SELLER / 01</span>
+    <span class="kpi-pill kpi-pill-blue">Store</span>
+  </div>
+  <strong class="kpi-metric">Branding &amp; Policies</strong>
+  <p class="kpi-label">Independent storefront workspace: banners, business info, and policies per vendor.</p>
+</div>
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">SELLER / 02</span>
+    <span class="kpi-pill kpi-pill-green">Catalog</span>
+  </div>
+  <strong class="kpi-metric">Variants + CSV Upload</strong>
+  <p class="kpi-label">Multi-tier pricing, SKU tracking, low-stock alerts, and bulk import.</p>
+</div>
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">SELLER / 03</span>
+    <span class="kpi-pill kpi-pill-navy">Orders</span>
+  </div>
+  <strong class="kpi-metric">Fulfillment Pipeline</strong>
+  <p class="kpi-label">Verification, packing slips, dispatch handover, and tracking updates.</p>
+</div>
+<div class="kpi-card">
+  <div class="kpi-card-header">
+    <span class="kpi-code">SELLER / 04</span>
+    <span class="kpi-pill kpi-pill-amber">Money</span>
+  </div>
+  <strong class="kpi-metric">Settlements &amp; Wallet</strong>
+  <p class="kpi-label">Commission breakdown per item and one-click withdrawal requests.</p>
+</div>
+      </section>
+
+      <!-- DOCUMENTATION SECTIONS (Wrapped in Elevated Dashboard Cards) -->
+      <div class="dashboard-cards-container">
+<!-- Section: introduction -->
+<section class="doc-section dashboard-card dashboard-card--hero" id="introduction" data-section-title="One codebase, three front doors">
+
+                    
+            <div class="ov" id="top" aria-labelledby="ov-title">
+            <div class="ov-bar">
+              <p class="ov-kicker"><span>Vendor portal documentation</span><span>Sell &middot; Manage &middot; Get paid</span></p>
+              <span class="ov-signal"><i aria-hidden="true"></i>Web portal</span>
+            </div>
+
+            <div class="ov-head">
+              <div class="ov-heading">
+                <h1 id="ov-title">Mono.<em> Vendor Portal.</em></h1>
+                <p class="ov-note"><span aria-hidden="true">&bull;</span> The seller web workspace, end to end.</p>
+              </div>
+              <div class="ov-side">
+                <p class="ov-lede">The vendor web portal served at <code>/dashboard</code>: brand your store, build the catalog with variants and bulk CSV uploads, run the order fulfillment pipeline, and manage settlements, wallet, and withdrawals.</p>
+                <div class="ov-actions">
+                  <a href="https://monomarket.site/vendor" target="_blank" rel="noopener" class="action-button action-button--primary">Live Vendor Panel <span aria-hidden="true">&nearr;</span></a>
+                  <a href="index.html#installation" class="action-button">Installation Guide <span aria-hidden="true">&darr;</span></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="ov-kpis" aria-label="Vendor portal headline facts">
+              <article class="ov-kpi"><span class="status-index">A / 01</span><p>Surface</p><strong>/dashboard portal</strong><span class="status-badge status-badge--blue">Vendor Portal</span></article>
+              <article class="ov-kpi"><span class="status-index">A / 02</span><p>Catalog</p><strong>Variants + CSV uploads</strong><span class="status-badge status-badge--teal">Full control</span></article>
+              <article class="ov-kpi"><span class="status-index">A / 03</span><p>Money</p><strong>Settlements &amp; withdrawals</strong><span class="status-badge status-badge--amber">Transparent</span></article>
+            </div>
+          </div>
+          <p class="section-kicker">01 / Overview</p>
+          <h2 class="section-title">One codebase, three front doors</h2>
+          <p>MONO Marketplace is a multi-vendor commerce platform. A single Laravel
+application serves three completely separate front doors, and they all share
+one database, one permission system, and one theme engine.</p>
+
+<div class="service-grid service-grid--3col">
+  <article class="service-card"><span>STOREFRONT</span><h3>Customer website</h3>
+  <ul><li>Themeable catalog with nine shipped storefront themes.</li>
+  <li>Cart, coupons, vouchers, wishlist, loyalty, and wallet.</li>
+  <li>Fourteen payment methods including cash on delivery and bank transfer.</li>
+  <li>Digital goods, bundles, and vendor chat with realtime delivery.</li></ul>
+  <div style="margin-top: 14px;"><a href="https://monomarket.site/" target="_blank" rel="noopener" class="action-button" style="display: inline-block; padding: 6px 12px; font-size: 11px;">View Storefront &nearr;</a></div>
+  </article>
+
+  <article class="service-card service-card--teal"><span>VENDOR PANEL</span><h3>Seller dashboard</h3>
+  <ul><li>Applications, product, bundle, and taxonomy management.</li>
+  <li>Order fulfilment with per-item digital delivery.</li>
+  <li>Settlements, withdrawal requests, subscription packages.</li>
+  <li>AI suite with metered text, translation, and image quotas.</li></ul>
+  <div style="margin-top: 14px;"><a href="https://monomarket.site/vendor" target="_blank" rel="noopener" class="action-button" style="display: inline-block; padding: 6px 12px; font-size: 11px;">View Live Vendor Panel &nearr;</a></div>
+  </article>
+
+  <article class="service-card service-card--amber"><span>ADMIN PANEL</span><h3>Platform control</h3>
+  <ul><li>Orders, invoices, refunds, and a full finance ledger.</li>
+  <li>Vendor approvals, subscriptions, payouts, and delivery operations.</li>
+  <li>Roles, permissions, languages, media, and site settings.</li>
+  <li>Push broadcasting, newsletters, and an AI administration toolset.</li></ul>
+  <div style="margin-top: 14px;"><a href="https://monomarket.site/admin" target="_blank" rel="noopener" class="action-button" style="display: inline-block; padding: 6px 12px; font-size: 11px;">View Live Admin Panel &nearr;</a></div>
+  </article>
+</div>
+
+<h3 class="heading-2">What ships in the package</h3>
+<div class="callout-grid callout-grid--3col">
+  <div class="callout"><strong>Storefront themes</strong><p>Nine themes on disk: <code>mono</code> (built in), plus <code>beauty</code>, <code>electronics</code>, <code>fashion</code>, <code>fullwidth</code>, <code>grocery</code>, <code>home</code>, <code>petshop</code>, and <code>sports</code>. Each is a self-contained package with its own views, assets, palette, and optional database tables.</p></div>
+  <div class="callout"><strong>Mobile applications</strong><p>Two Flutter clients ship alongside: the customer app and the vendor app. Both talk to the same versioned API described in this document.</p></div>
+  <div class="callout"><strong>Web installer</strong><p><code>public/install.php</code> is a self-contained wizard that creates the database, writes the environment file, creates the first administrator, and activates a theme. No Composer, Node, or shell access is required on the host.</p></div>
+</div>
+
+<h3 class="heading-2">The three front doors, at a glance</h3>
+<p>Each interface is purpose-built for desktop web workflows &mdash; responsive Blade templates styled with Tailwind CSS, with zero client-side compilation steps.</p>
+<div class="screenshot-grid">
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/storefront/storefront-home-desktop.jpg" data-caption="Storefront — themeable customer web marketplace"><img src="assets/storefront/storefront-home-desktop.jpg" alt="MONO Storefront home page with announcement bar, search, category strip, hero slider, and trust badges." loading="lazy"><span>Open capture</span></button><figcaption>Storefront &mdash; Customer web marketplace</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/vendor/vendor-dashboard.png" data-caption="Vendor Panel — seller dashboard, catalog, earnings &amp; orders"><img src="assets/vendor/vendor-dashboard.png" alt="MONO Vendor Dashboard showing net earnings, order counts, AI quota tracker, revenue chart, and top products." loading="lazy"><span>Open capture</span></button><figcaption>Vendor Panel &mdash; Seller dashboard &amp; catalog</figcaption></figure>
+  <figure class="shot"><button class="shot-button" type="button" data-lightbox="assets/admin/admin-dashboard.png" data-caption="Admin Panel — platform control, live operations &amp; orders"><img src="assets/admin/admin-dashboard.png" alt="MONO Admin Dashboard showing platform commission, orders, active vendors, customers, and order status pipeline." loading="lazy"><span>Open capture</span></button><figcaption>Admin Panel &mdash; Platform operations control</figcaption></figure>
+</div>
+
+<h3 class="heading-2">Who this documentation is for</h3>
+<p>This guide covers the web product: the storefront, the vendor panel, the
+admin panel, and the backend services that support them. The two Flutter
+applications have their own companion documents. Everything here is written
+against the shipped source, so route names, table names, and permission keys
+match what you will find in the package.</p>
+
+<div class="api-url"><span>API PREFIX</span><code>https://your-domain.com/api/v1</code></div>
+        
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Section: vendor-dashboard -->
+<section class="doc-section dashboard-card" id="vendor-dashboard" data-section-title="Vendor dashboard and store operations">
+
+                    <p class="section-kicker">13 / Vendor panel</p>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 18px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Vendor dashboard and store operations</h2>
+            <a href="https://monomarket.site/vendor" target="_blank" rel="noopener" class="action-button action-button--primary" style="display: inline-flex; align-items: center; gap: 6px;">
+              <span>Live Vendor Panel Demo &nearr;</span>
+            </a>
+          </div>
+          <p>The vendor portal is served from <code>/dashboard</code> (on your domain: <a href="https://your-domain.com/vendor" target="_blank" rel="noopener"><code>https://your-domain.com/vendor</code></a>) behind the
+<code>auth:vendor</code> guard, <code>vendor.verified</code>, and
+<code>vendor.approved</code> middleware. Each vendor operates inside an isolated
+tenancy boundary: every query is scoped to <code>vendor_id</code>, so merchants
+only ever see and manage their own store catalog, orders, media, and finances.</p>
+
+<figure class="doc-figure">
+  <button class="doc-shot-btn" type="button" data-lightbox="assets/vendor/vendor-dashboard.png" data-caption="Vendor Panel — Seller Dashboard Overview"><img class="doc-shot" src="assets/vendor/vendor-dashboard.png" alt="MONO Vendor Dashboard showing net earnings, order counts, average order value, live products count, AI quota tracker, revenue chart, and top products." loading="lazy"></button>
+  <figcaption>Vendor Dashboard — seller KPIs, real-time revenue trend, AI quotas, and quick actions</figcaption>
+</figure>
+
+<h3 class="heading-2">Dashboard metrics</h3>
+<p>The landing page provides immediate operational visibility for merchants:</p>
+<ul>
+  <li><strong>Net Earnings (30d):</strong> Net income from paid, fulfilled items minus marketplace commission and refunds.</li>
+  <li><strong>Order Volume:</strong> Total order count with monthly delta comparisons.</li>
+  <li><strong>Average Order Value (AOV):</strong> Average transaction spend across store orders.</li>
+  <li><strong>Live Products:</strong> Published catalog count with inventory growth metrics.</li>
+  <li><strong>AI Usage &amp; Quotas:</strong> Real-time consumption meter for text generation tokens, translation tokens, and generated product imagery. Displays clear status indicators when allowances are reached.</li>
+  <li><strong>12-Week Revenue Trajectory:</strong> Rolling financial bar chart plotting sales momentum.</li>
+  <li><strong>Top Products Leaderboard:</strong> Top 5 revenue-generating items in the vendor's catalog.</li>
+</ul>
+
+<h3 class="heading-2">Vendor portal navigation</h3>
+<div class="table-scroll"><table class="data-table">
+<thead><tr><th>Module</th><th>Route</th><th>Capabilities</th></tr></thead>
+<tbody>
+<tr><td>Overview</td><td><code>/dashboard</code></td><td>High-level store performance, revenue charts, and quota indicators.</td></tr>
+<tr><td>Manage Products</td><td><code>/dashboard/products</code></td><td>Full catalog CRUD, attribute variations, digital asset uploads, and bundle manager.</td></tr>
+<tr><td>Media Library</td><td><code>/dashboard/media</code></td><td>Dedicated vendor image and document repository scoped to the merchant.</td></tr>
+<tr><td>Manage Orders</td><td><code>/dashboard/orders</code></td><td>Order status updates, customer delivery info, and 1-click digital delivery dispatch.</td></tr>
+<tr><td>Delivery &amp; Pickup</td><td><code>/dashboard/delivery</code></td><td>Operational delivery tracking and shipping partner handoffs.</td></tr>
+<tr><td>Direct Messaging</td><td><code>/dashboard/messages</code></td><td>Real-time peer-to-peer customer chat powered by Ably channels.</td></tr>
+<tr><td>Settlements &amp; Ledger</td><td><code>/dashboard/settlements</code></td><td>Itemized commissions, sales ledger, and CSV financial exports.</td></tr>
+<tr><td>Withdrawals</td><td><code>/dashboard/withdrawals</code></td><td>Payout requests to bank accounts or payment channels against system minimum thresholds.</td></tr>
+<tr><td>Store Followers</td><td><code>/dashboard/followers</code></td><td>Customer audience engagement and broadcast conversation initiator.</td></tr>
+<tr><td>Packages</td><td><code>/dashboard/packages</code></td><td>Tiered vendor membership upgrades with listing quotas and commission discounts.</td></tr>
+<tr><td>AI Credits</td><td><code>/dashboard/ai-credits</code></td><td>Credit pack purchases for AI description generation and automated translations.</td></tr>
+<tr><td>Store Settings</td><td><code>/dashboard/settings</code></td><td>Store name, banner, logo, business address, and payment preferences.</td></tr>
+</tbody></div></table>
+        
+</section>
+
+<!-- Section: vendor-catalog-finance -->
+<section class="doc-section dashboard-card" id="vendor-catalog-finance" data-section-title="Products, digital fulfilment, settlements, and AI">
+
+                    <p class="section-kicker">14 / Vendor panel</p>
+          <h2 class="section-title">Products, digital fulfilment, settlements, and AI</h2>
+          <p>Vendors manage their complete ecommerce lifecycle from the web dashboard,
+supporting physical goods with complex variations as well as instantly deliverable
+digital goods.</p>
+
+<h3 class="heading-2">Catalog and variations</h3>
+<p>Product creation in <code>DashboardController</code> handles both simple and
+variable products. Variable products synchronize attribute combinations (sizes,
+colors, fabrics) using <code>VariationSyncService</code>:</p>
+<ul>
+  <li>Each variation has its own SKU, inventory stock, regular price, and sale price.</li>
+  <li>Dynamic matrix creation generates all valid permutations without manual database configuration.</li>
+  <li>Vendors can request new categories (<code>/dashboard/categories/request</code>) or register custom brand names (<code>/dashboard/brands</code>) subject to admin review.</li>
+</ul>
+
+<h3 class="heading-2">Product bundles</h3>
+<p>The bundle editor at <code>/dashboard/product-bundles</code> lets vendors group
+complementary products into discounted bundle packages. <code>ProductBundleController</code>
+validates inventory across all bundle items and ensures accurate pricing on checkout.</p>
+
+<h3 class="heading-2">Digital goods &amp; instant delivery</h3>
+<p>Products marked <code>is_digital</code> support downloadable files, license keys,
+and digital entitlements. When an order is placed and paid:</p>
+<ul>
+  <li>The vendor accesses <code>/dashboard/orders/{order}</code> and triggers <code>orders.digital-deliver</code>.</li>
+  <li>The system mints a <code>DigitalEntitlement</code> record with access limits and secure download tokens.</li>
+  <li>The customer immediately receives download access in their account library and via email notification.</li>
+</ul>
+
+<h3 class="heading-2">Settlements and withdrawals</h3>
+<p>Every completed sale generates a settlement row calculating the exact revenue breakdown:</p>
+<div class="callout">
+  <strong>Settlement Equation:</strong>
+  <code>Net Vendor Payout = Item Subtotal - Platform Commission + Tax (if vendor-collected)</code>
+</div>
+<p>The settlements table at <code>/dashboard/settlements</code> tracks pending,
+available, and paid earnings. Vendors request payouts via <code>/dashboard/withdrawals</code>
+once their balance satisfies the minimum withdrawal threshold configured in platform settings.</p>
+
+<h3 class="heading-2">Featured sponsorships</h3>
+<p>Vendors can promote individual products to prime homepage and category slots
+via <code>/dashboard/products/{product}/feature</code>. The vendor chooses a featured
+duration package and completes payment directly in the panel using Stripe,
+SSLCommerz, or PayPal. Upon payment verification, the product is flagged
+<code>is_featured = 1</code> until the expiration timestamp.</p>
+
+<h3 class="heading-2">Vendor AI suite</h3>
+<p>The dashboard incorporates integrated AI tooling powered by OpenAI / Google Gemini providers:</p>
+<ul>
+  <li><strong>Product Description Writer:</strong> Generates compelling ecommerce copy and bullet points from minimal attribute inputs.</li>
+  <li><strong>Multilingual Translation:</strong> 1-click translation of titles and descriptions across English, Arabic, and Bengali.</li>
+  <li><strong>Credit Packs:</strong> When monthly package quotas are exhausted, merchants purchase non-expiring AI credit packs directly through <code>/dashboard/ai-credits</code>.</li>
+</ul>
+
+</section>
+
+<!-- Section: vendor-onboarding -->
+<section class="doc-section dashboard-card" id="vendor-onboarding" data-section-title="Vendor onboarding: sign-up to first sale">
+
+                    <p class="section-kicker">15 / Vendor panel</p>
+          <h2 class="section-title">Becoming a vendor: from sign-up to first sale</h2>
+          <p>New merchants join without any admin-side work: registration, document
+verification, and approval are all handled through the storefront and the
+vendor portal. This is the exact path a new vendor walks:</p>
+
+<ol class="walkthrough">
+  <li><strong>Open a store.</strong>
+    <p>On the vendor portal sign-in page (<code>your-domain.com/vendor</code>), click
+    <strong>Open a store</strong>. The multi-step registration asks for the store
+    name, contact details, and the owner's account credentials.</p></li>
+  <li><strong>Submit verification documents (KYC).</strong>
+    <p>Depending on the platform's onboarding settings, the vendor uploads
+    business/trade documents during registration or from the dashboard. The
+    store enters the <em>verified pending</em> state (<code>vendor.verified</code>).</p></li>
+  <li><strong>Wait for admin approval.</strong>
+    <p>The marketplace owner reviews the application under
+    <strong>Admin &rarr; Vendors</strong> and approves the store
+    (<code>vendor.approved</code>). Until both checks pass, the
+    <code>auth:vendor</code> guard refuses dashboard access — a rejected vendor
+    sees the exact reason on the sign-in screen.</p></li>
+  <li><strong>Sign in and land on the overview.</strong>
+    <p>After approval, sign in at <code>your-domain.com/vendor</code>; the dashboard
+    at <code>/dashboard</code> opens with net earnings, order volume, live products,
+    and the AI quota meter.</p></li>
+  <li><strong>Complete the store profile.</strong>
+    <p>Open <strong>Settings</strong> (<code>/dashboard/settings</code>) before adding
+    products: upload the store logo, fill the multilingual store name and
+    description, contact email/phone, category, and full address, then set the
+    <strong>payout method</strong> under the Payouts tab so settlements have
+    somewhere to go.</p></li>
+  <li><strong>Add products and go live.</strong>
+    <p>Create the catalog (next section), keep everything within the package
+    listing quota, and publish. Products appear on the storefront immediately.</p></li>
+</ol>
+
+<div class="info-block"><p><strong>Trying the demo?</strong> The vendor sign-in page shows a
+<strong>Demo vendor login</strong> box with copy-and-autofill credentials. Demo mode
+disables write actions — you can look around every screen but nothing you click
+changes data.</p></div>
+
+</section>
+
+<!-- Section: vendor-modules -->
+<section class="doc-section dashboard-card" id="vendor-modules" data-section-title="Vendor panel modules in detail">
+
+                    <p class="section-kicker">16 / Vendor panel</p>
+          <h2 class="section-title">Every vendor panel module, in detail</h2>
+          <p>The sidebar in <code>/dashboard</code> maps one-to-one to the modules
+below. Each subsection covers what the module does and the fields you will
+actually fill in.</p>
+
+<h3 class="heading-2">Catalog toolkit</h3>
+<div class="table-wrap"><table class="data-table">
+<thead><tr><th scope="col">Module</th><th scope="col">Route</th><th scope="col">What you do there</th></tr></thead>
+<tbody>
+<tr><td>Products</td><td><code>/dashboard/products</code></td><td>Create simple and variable products; the attribute matrix generates every size/color/fabric combination with its own SKU, stock, and pricing.</td></tr>
+<tr><td>Categories</td><td><code>/dashboard/categories</code></td><td>Browse the platform taxonomy and request a new category when your niche is missing — requests go to admin review.</td></tr>
+<tr><td>Brands</td><td><code>/dashboard/brands</code></td><td>Register custom brand names for your products, also subject to admin review.</td></tr>
+<tr><td>Attributes</td><td><code>/dashboard/attributes</code></td><td>Manage the attribute sets (size, color, fabric…) that power product variation matrices.</td></tr>
+<tr><td>Product FAQs</td><td><code>/dashboard/faqs</code></td><td>Add question/answer pairs that appear on your product pages — buyers see these before asking in chat. Add, edit, and save rows directly.</td></tr>
+<tr><td>Product bundles</td><td><code>/dashboard/product-bundles</code></td><td>Group complementary products into discounted bundles with inventory validation.</td></tr>
+<tr><td>Media</td><td><code>/dashboard/media</code></td><td>Your private image and document library; everything uploaded here is scoped to your store only.</td></tr>
+</tbody></table></div>
+
+<h3 class="heading-2">Orders &amp; delivery</h3>
+<div class="table-wrap"><table class="data-table">
+<thead><tr><th scope="col">Module</th><th scope="col">Route</th><th scope="col">What you do there</th></tr></thead>
+<tbody>
+<tr><td>Manage Orders</td><td><code>/dashboard/orders</code></td><td>Process orders, update statuses, view customer delivery info, and trigger 1-click digital delivery for downloadable goods.</td></tr>
+<tr><td>Delivery &rarr; Requests</td><td><code>/dashboard/delivery/requests</code></td><td><strong>Create Delivery Request:</strong> pickup address, contact person and number, the admin warehouse to collect from, preferred pickup date/time, package quantity and weight, and notes — then submit the pickup request.</td></tr>
+<tr><td>Delivery &rarr; Shipment</td><td><code>/dashboard/delivery/requests</code></td><td><strong>Create Shipment:</strong> record the courier/delivery provider, courier name, tracking number, optional tracking URL, and estimated delivery so buyers can follow the parcel.</td></tr>
+<tr><td>Delivery &rarr; History</td><td><code>/dashboard/delivery/history</code></td><td>Every past pickup and shipment with its current state.</td></tr>
+<tr><td>Delivery &rarr; Tracking</td><td><code>/dashboard/delivery/tracking</code></td><td>Live tracking view for in-flight shipments.</td></tr>
+</tbody></table></div>
+
+<h3 class="heading-2">Customer engagement</h3>
+<div class="workflow-columns">
+  <article><h3>Inbox — real-time chat</h3><p><code>/dashboard/messages</code> is the vendor side of the Ably-powered chat: answer pre-sale questions, negotiate, and share files. Conversations open from orders and product pages on the storefront.</p></article>
+  <article><h3>Followers &amp; broadcasts</h3><p><code>/dashboard/followers</code> lists the customers following your store and lets you start broadcast conversations — the direct channel for announcements and offers.</p></article>
+</div>
+
+<h3 class="heading-2">Money &amp; growth</h3>
+<div class="workflow-columns">
+  <article><h3>Settlements &amp; withdrawals</h3><p><code>/dashboard/settlements</code> itemizes every sale (subtotal − commission + tax) across pending, available, and paid balances; <code>/dashboard/withdrawals</code> requests payouts once the platform minimum is met. Configure where the money goes under <strong>Settings &rarr; Payouts</strong>.</p></article>
+  <article><h3>Packages &amp; AI credits</h3><p><code>/dashboard/packages</code> shows your membership tier — listing quotas and commission discounts — and offers upgrades. <code>/dashboard/ai-credits</code> buys non-expiring credit packs when the monthly AI allowance runs out.</p></article>
+</div>
+
+<h3 class="heading-2">Store settings reference</h3>
+<p><code>/dashboard/settings</code> has two tabs. <strong>Store profile:</strong> logo
+(choose from the media library or remove), store name and description in
+English, Arabic, and Bengali, store URL slug, contact email and phone, business
+category, and full location (street, country, state, city, postal code).
+<strong>Payouts:</strong> payout method and account details used for withdrawals.
+Save changes applies to the storefront immediately.</p>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+
+      <!-- DASHBOARD FOOTER -->
+      <footer class="dashboard-footer">
+        <div class="footer-left">
+          <strong>MONO Marketplace — Web Documentation Dashboard</strong>
+          <span>Part of the MONO Multi-Vendor Marketplace Suite</span>
+        </div>
+        <div class="footer-right">
+          <a href="#introduction" class="footer-back-to-top">Back to top &uarr;</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Image Lightbox Modal -->
+  <dialog class="lightbox" id="image-lightbox" hidden aria-labelledby="lightbox-caption">
+    <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer"><span aria-hidden="true">&times;</span></button>
+    <img id="lightbox-image" src="" alt="">
+    <div class="lightbox-bar">
+      <p id="lightbox-caption"></p>
+      <span class="lightbox-counter" id="lightbox-counter"></span>
+    </div>
+    <div class="lightbox-nav">
+      <button class="lightbox-step" type="button" data-lightbox-prev>&larr; Previous</button>
+      <button class="lightbox-step" type="button" data-lightbox-close>Close</button>
+      <button class="lightbox-step" type="button" data-lightbox-next>Next &rarr;</button>
+    </div>
+  </dialog>
+
+</body>
+</html>

@@ -17,6 +17,7 @@
   const lightbox = $('#image-lightbox');
   const lightboxImage = $('#lightbox-image');
   const lightboxCaption = $('#lightbox-caption');
+  const lightboxCounter = $('#lightbox-counter');
 
   let toastTimer = null;
   let rafId = null;
@@ -207,19 +208,66 @@
       }
     }
 
+    const lightboxTrigger = e.target.closest('[data-lightbox]');
+    if (lightboxTrigger) {
+      openLightbox(lightboxTrigger);
+    }
+
     if (e.target.closest('[data-lightbox-close]')) {
       closeLightbox();
     }
   });
 
-  // Lightbox helpers
-  const closeLightbox = () => {
-    if (lightbox) {
-      lightbox.hidden = true;
-      lightbox.removeAttribute('open');
-      document.body.classList.remove('drawer-open');
+  // Keyboard navigation inside the open lightbox
+  document.addEventListener('keydown', (e) => {
+    if (lightbox && !lightbox.hidden) {
+      if (e.key === 'ArrowLeft') moveLightbox(-1);
+      if (e.key === 'ArrowRight') moveLightbox(1);
     }
+  });
+
+  // Lightbox helpers
+  let lightboxImages = [];
+  let lightboxIndex = 0;
+
+  const showLightboxImage = () => {
+    const trigger = lightboxImages[lightboxIndex];
+    if (!trigger || !lightboxImage) return;
+    lightboxImage.src = trigger.getAttribute('data-lightbox') || '';
+    lightboxImage.alt = trigger.querySelector('img')?.alt || '';
+    if (lightboxCaption) lightboxCaption.textContent = trigger.getAttribute('data-caption') || '';
+    if (lightboxCounter) lightboxCounter.textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
   };
+
+  const openLightbox = (trigger) => {
+    if (!lightbox) return;
+    lightboxImages = $$('[data-lightbox]');
+    if (!lightboxImages.length) return;
+    lightboxIndex = Math.max(0, lightboxImages.indexOf(trigger));
+    showLightboxImage();
+    lightbox.hidden = false;
+    lightbox.setAttribute('open', '');
+    document.body.classList.add('drawer-open');
+  };
+
+  const closeLightbox = () => {
+    if (!lightbox || lightbox.hidden) return;
+    lightbox.hidden = true;
+    lightbox.removeAttribute('open');
+    document.body.classList.remove('drawer-open');
+  };
+
+  const moveLightbox = (delta) => {
+    if (!lightboxImages.length) return;
+    lightboxIndex = (lightboxIndex + delta + lightboxImages.length) % lightboxImages.length;
+    showLightboxImage();
+  };
+
+  document.querySelector('[data-lightbox-prev]')?.addEventListener('click', () => moveLightbox(-1));
+  document.querySelector('[data-lightbox-next]')?.addEventListener('click', () => moveLightbox(1));
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
 
   // Initial update
   updateActiveSection();
